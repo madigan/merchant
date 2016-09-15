@@ -47,6 +47,11 @@ task dist(dependsOn: [clean, compileGwt]) {
             from "war"
             into "build/dist"
         }
+	delete "../../madigan.github.io/merchant/"
+	copy {
+	    from "build/dist"
+            into "../../madigan.github.io/merchant/"
+        }
     }
 }
 

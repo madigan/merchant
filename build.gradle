@@ -23,6 +23,8 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
+        kiwiVersion = '1.8.1.9.4-b1'
+	visVersion = '1.2.2'
     }
 
     repositories {
@@ -42,6 +44,7 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        compile "com.github.czyzby:gdx-kiwi:$kiwiVersion"
     }
 }
 
@@ -73,8 +76,8 @@ project(":html") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
-        compile "com.github.czyzby:gdx-kiwi:1.7.1.9.3:sources"
-        compile "com.kotcrab.vis:vis-ui:1.1.1:sources"
+        compile "com.github.czyzby:gdx-kiwi:$kiwiVersion:sources"
+        compile "com.kotcrab.vis:vis-ui:$visVersion:sources"
     }
 }
 
@@ -85,8 +88,8 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        compile "com.github.czyzby:gdx-kiwi:1.7.1.9.3"
-        compile "com.kotcrab.vis:vis-ui:1.1.1"
+        compile "com.github.czyzby:gdx-kiwi:$kiwiVersion"
+        compile "com.kotcrab.vis:vis-ui:$visVersion"
     }
 }
 
