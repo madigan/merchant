@@ -1,33 +1,49 @@
 package tech.otter.merchant;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
+import com.kotcrab.vis.ui.VisUI;
 
-public class MerchantGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+import tech.otter.merchant.screens.IntroScreen;
+import tech.otter.merchant.screens.MainMenuScreen;
+
+public class MerchantGame extends Game {
+	Screen mainMenu;
+	// libGDX Game Methods //
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		VisUI.load();
+
+		mainMenu = new MainMenuScreen(this);
+		this.setScreen(mainMenu);
 	}
 
 	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
-	
-	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		mainMenu.dispose();
+		VisUI.dispose();
+	}
+
+	// Real Game Methods //
+	private boolean gameActive = false;
+	/**
+	 * Create a new game, starting with the story screen
+	 */
+	public void newGame() {
+		gameActive = true;
+
+		this.setScreen(new IntroScreen(this));
+	}
+
+	public boolean isGameActive() {
+		return gameActive;
+	}
+
+	public void loadGame() {
+
+	}
+
+	public void saveGame() {
+
 	}
 }
