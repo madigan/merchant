@@ -1,6 +1,6 @@
 package tech.otter.merchant.screens;
 
-import com.kotcrab.vis.ui.widget.VisTextButton;
+import com.kotcrab.vis.ui.widget.VisTable;
 
 import tech.otter.merchant.MerchantGame;
 
@@ -13,6 +13,6 @@ public class StationScreen extends AbstractScreen {
 	
 	@Override
 	public void show() {
-		ui.addActor(new VisTextButton("Hello!"));
+		VisTable tbl = new VisTable();
 	}
 }
