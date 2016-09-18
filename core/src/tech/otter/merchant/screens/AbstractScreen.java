@@ -24,6 +24,10 @@ public abstract class AbstractScreen implements Screen {
 		ui = new Stage(new ScreenViewport());
 		InputMultiplexer input = new InputMultiplexer();
 		input.addProcessor(ui);
+
+		// Set Debug Mode
+		ui.setDebugAll(parent.isDebugOn());
+
 		// Add an input processor to toggle debug mode via F3.
 		input.addProcessor(new InputProcessor() {
 			@Override
