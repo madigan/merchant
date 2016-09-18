@@ -1,6 +1,9 @@
 package tech.otter.merchant.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,11 +18,59 @@ public abstract class AbstractScreen implements Screen {
 	protected MerchantGame parent;
 	protected Stage ui;
 	
-	public AbstractScreen(MerchantGame parent) {
+	public AbstractScreen(final MerchantGame parent) {
 		this.parent = parent;
 		
 		ui = new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(ui);
+		InputMultiplexer input = new InputMultiplexer();
+		input.addProcessor(ui);
+		// Add an input processor to toggle debug mode via F3.
+		input.addProcessor(new InputProcessor() {
+			@Override
+			public boolean keyDown(int keycode) {
+				return false;
+			}
+
+			@Override
+			public boolean keyUp(int keycode) {
+				if(keycode == Input.Keys.F3) {
+					parent.setDebugOn(!parent.isDebugOn());
+					ui.setDebugAll(parent.isDebugOn());
+				}
+				return true;
+			}
+
+			@Override
+			public boolean keyTyped(char character) {
+				return false;
+			}
+
+			@Override
+			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+				return false;
+			}
+
+			@Override
+			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+				return false;
+			}
+
+			@Override
+			public boolean touchDragged(int screenX, int screenY, int pointer) {
+				return false;
+			}
+
+			@Override
+			public boolean mouseMoved(int screenX, int screenY) {
+				return false;
+			}
+
+			@Override
+			public boolean scrolled(int amount) {
+				return false;
+			}
+		});
+		Gdx.input.setInputProcessor(input);
 	}
 
 	@Override
