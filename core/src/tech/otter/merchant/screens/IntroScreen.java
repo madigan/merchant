@@ -35,7 +35,7 @@ public class IntroScreen extends AbstractScreen {
 		story.add("");
 		story.add("But not all hope is lost...");
 		story.add("Through great sacrifice, your family has procured a humble starship ...");
-		story.add("  ... and enough goods to make a new life as an independant trader ...");
+		story.add("  ... and enough goods to make a new life as an independent trader ...");
 		story.add("    ... the opportunity that they never had.");
 		story.add("");
 		story.add("");

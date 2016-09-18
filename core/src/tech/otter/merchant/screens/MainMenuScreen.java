@@ -24,14 +24,14 @@ public class MainMenuScreen extends AbstractScreen {
 		btnContinue = new VisTextButton("Continue Game", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.log("DEBUG", "Continue Game Clicked");
+				logger.debug("Continue Game Clicked");
 			}
 		});
 		
 		btnNewGame = new VisTextButton("New Game", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.log("DEBUG", "New Game Clicked");
+				logger.debug("New Game Clicked");
 				changeScreen(new IntroScreen(parent));
 			}
 		});
@@ -39,28 +39,28 @@ public class MainMenuScreen extends AbstractScreen {
 		btnLoadGame  = new VisTextButton("Load Game", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.log("DEBUG", "Load Game Clicked");
+				logger.debug("Load Game Clicked");
 			}
 		});
 		
 		btnSaveGame = new VisTextButton("Save Game", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.log("DEBUG", "Save Game Clicked");
+				logger.debug("Save Game Clicked");
 			}
 		});
 		
 		btnOptions = new VisTextButton("Options", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.log("DEBUG", "Options Clicked");
+				logger.debug("Options Clicked");
 			}
 		});
 		
 		btnExit = new VisTextButton("Exit", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.log("DEBUG", "Exit Clicked");
+				logger.debug("Exit Clicked");
 				Gdx.app.exit();
 			}
 		});
