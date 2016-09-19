@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.github.czyzby.kiwi.log.LoggerService;
 import com.kotcrab.vis.ui.VisUI;
 
+import tech.otter.merchant.data.Station;
 import tech.otter.merchant.screens.IntroScreen;
 import tech.otter.merchant.screens.MainMenuScreen;
 
@@ -59,5 +60,15 @@ public class MerchantGame extends Game {
 
 	public boolean isDebugOn() {
 		return debugOn;
+	}
+
+	// TODO: Track a current station instead of returning a new one every time.
+	public Station getCurrentStation() {
+		return new Station("Homeworld", "This is the place where you used to live. It has a population of 3 Billion and it is known for its Cubic Yak farms.", null);
+	}
+
+	// TODO: Make this intelligent
+	public boolean isHomeWorld(Station station) {
+		return true;
 	}
 }
