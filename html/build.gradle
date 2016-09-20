@@ -47,12 +47,20 @@ task dist(dependsOn: [clean, compileGwt]) {
             from "war"
             into "build/dist"
         }
-	delete "../../madigan.github.io/merchant/"
-	copy {
-	    from "build/dist"
+        delete "../../madigan.github.io/merchant/"
+        copy {
+            from "build/dist"
             into "../../madigan.github.io/merchant/"
         }
+        doGit
     }
+
+}
+
+task doGit(type: Exec) {
+    commandLine 'git', '-C', '../../madigan.github.io', 'add', '.'
+    commandLine 'git', '-C', '../../madigan.github.io', 'commit', '-m', '"Distribution."'
+    commandLine 'git', '-C', '../../madigan.github.io', 'push'
 }
 
 draftWar {
