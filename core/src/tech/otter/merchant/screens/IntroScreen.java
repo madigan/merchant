@@ -24,6 +24,7 @@ public class IntroScreen extends AbstractScreen {
 	
 	@Override
 	public void show() {
+		super.show();
 		ui.clear();
 		
 		List<String> story = new ArrayList<String>();

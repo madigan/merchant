@@ -1,5 +1,7 @@
 package tech.otter.merchant.screens;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTable;
@@ -7,6 +9,7 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 
 import tech.otter.merchant.MerchantGame;
 import tech.otter.merchant.data.Station;
+import tech.otter.merchant.factories.MerchantFactory;
 
 public class StationScreen extends AbstractScreen {
 
@@ -17,6 +20,7 @@ public class StationScreen extends AbstractScreen {
 	
 	@Override
 	public void show() {
+		super.show();
 		Station station = parent.getCurrentStation();
 
 		VisTable tblLayout = new VisTable();
@@ -43,7 +47,12 @@ public class StationScreen extends AbstractScreen {
 		}
 
 		// TODO: Add Trader Screen
-		VisTextButton btnTrader = new VisTextButton("Visit Trader");
+		VisTextButton btnTrader = new VisTextButton("Visit Trader", new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				changeScreen(new TradeScreen(parent, MerchantFactory.get().make(), StationScreen.this));
+			}
+		});
 		// TODO: Add Bar Screen
 		VisTextButton btnBar = new VisTextButton("Visit Bar");
 		// TODO: Add Cargo Screen

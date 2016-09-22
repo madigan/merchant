@@ -22,6 +22,10 @@ public abstract class AbstractScreen implements Screen {
 		this.parent = parent;
 		
 		ui = new Stage(new ScreenViewport());
+	}
+
+	@Override
+	public void show() {
 		InputMultiplexer input = new InputMultiplexer();
 		input.addProcessor(ui);
 
@@ -75,10 +79,8 @@ public abstract class AbstractScreen implements Screen {
 			}
 		});
 		Gdx.input.setInputProcessor(input);
+		logger.info("TEST");
 	}
-
-	@Override
-	public void show() { }
 
 	@Override
 	public void pause() { }

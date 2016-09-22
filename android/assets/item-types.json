@@ -1,0 +1,44 @@
+[
+  {
+    class: tech.otter.merchant.data.ItemType
+    name: "Bindookian Spices"
+    description: "Sweet, yet spicy."
+    baseValue: 100
+    baseQuantity: 1000
+    tags: {
+      class: java.util.LinkedList
+      items: [
+        category-food
+        category-luxery
+      ]
+    }
+  },
+  {
+    class: tech.otter.merchant.data.ItemType
+    name: "Italiluminum Rods"
+    description: "Shiny."
+    baseValue: 100
+    baseQuantity: 1000
+    tags: {
+      class: java.util.LinkedList
+      items: [
+        category-valuable
+        category-material
+      ]
+    }
+  },
+  {
+    class: tech.otter.merchant.data.ItemType
+    name: "Cryo-Pod"
+    description: "Used for refrigeration."
+    baseValue: 100
+    baseQuantity: 1000
+    tags: {
+      class: java.util.LinkedList
+      items: [
+        category-food
+        category-appliance
+      ]
+    }
+  }
+]

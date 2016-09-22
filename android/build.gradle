@@ -18,6 +18,10 @@ android {
         applicationId "tech.otter.merchant"
         minSdkVersion 16
         targetSdkVersion 24
+
+        jackOptions {
+            enabled true
+        }
     }
 }
 
@@ -82,8 +86,8 @@ eclipse {
     }
 
     jdt {
-        sourceCompatibility = 1.7
-        targetCompatibility = 1.7
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     classpath {

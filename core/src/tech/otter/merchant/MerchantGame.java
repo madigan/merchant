@@ -2,6 +2,7 @@ package tech.otter.merchant;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.github.czyzby.kiwi.log.LoggerService;
 import com.kotcrab.vis.ui.VisUI;
 
@@ -12,11 +13,15 @@ import tech.otter.merchant.screens.MainMenuScreen;
 public class MerchantGame extends Game {
 	Screen mainMenu;
 	private boolean debugOn = false;
+	private AssetManager assets;
+
 	// libGDX Game Methods //
 	@Override
 	public void create () {
+		assets = new AssetManager();
 		VisUI.load();
 		this.setDebugOn(false);
+
 
 		mainMenu = new MainMenuScreen(this);
 		this.setScreen(mainMenu);
@@ -27,6 +32,11 @@ public class MerchantGame extends Game {
 	public void dispose () {
 		mainMenu.dispose();
 		VisUI.dispose();
+		assets.dispose();
+	}
+
+	public AssetManager getAssets() {
+		return assets;
 	}
 
 	// Real Game Methods //
@@ -36,7 +46,6 @@ public class MerchantGame extends Game {
 	 */
 	public void newGame() {
 		gameActive = true;
-
 		this.setScreen(new IntroScreen(this));
 	}
 
