@@ -11,6 +11,7 @@ public class NewGameScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
+		parent.newGame();
 		// TODO: Add the new game screen stuff
 		changeScreen(new StationScreen(parent));
 	}

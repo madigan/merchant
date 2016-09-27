@@ -1,44 +1,73 @@
 [
   {
-    class: tech.otter.merchant.data.ItemType
-    name: "Bindookian Spices"
-    description: "Sweet, yet spicy."
-    baseValue: 100
-    baseQuantity: 1000
-    tags: {
-      class: java.util.LinkedList
-      items: [
-        category-food
-        category-luxery
-      ]
-    }
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Bindookian Spices",
+    "description": "Sweet, yet spicy.",
+    "image": "images/goods_0.png",
+    "baseValue": 100,
+    "baseQuantity": 1000,
+    "tags": [
+      "category-food",
+      "category-luxury"
+    ]
   },
   {
-    class: tech.otter.merchant.data.ItemType
-    name: "Italiluminum Rods"
-    description: "Shiny."
-    baseValue: 100
-    baseQuantity: 1000
-    tags: {
-      class: java.util.LinkedList
-      items: [
-        category-valuable
-        category-material
-      ]
-    }
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Italiluminum Rods",
+    "description": "Shiny.",
+    "image": "images/raw/goods_1.png",
+    "baseValue": 100,
+    "baseQuantity": 1000,
+    "tags": [
+      "category-valuable",
+      "category-material"
+    ]
   },
   {
-    class: tech.otter.merchant.data.ItemType
-    name: "Cryo-Pod"
-    description: "Used for refrigeration."
-    baseValue: 100
-    baseQuantity: 1000
-    tags: {
-      class: java.util.LinkedList
-      items: [
-        category-food
-        category-appliance
-      ]
-    }
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Cryo-Pod",
+    "description": "Used for refrigeration.",
+    "image": "images/raw/goods_2.png",
+    "baseValue": 100,
+    "baseQuantity": 1000,
+    "tags": [
+      "category-food",
+      "category-appliance"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Zandooki Holo-Crystal",
+    "description": "The future of nano-digital entertainment! No home is complete without one.",
+    "image": "images/raw/goods_3.png",
+    "baseValue": 100,
+    "baseQuantity": 1000,
+    "tags": [
+      "category-entertainment",
+      "category-appliance"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Cubic Yaks",
+    "description": "Highly priced for their milk and cheese.",
+    "image": "images/goods_6.png",
+    "baseValue": 100,
+    "baseQuantity": 1000,
+    "tags": [
+      "category-food",
+      "category-livestock"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "ASTRO(C) Nano-Beans",
+    "description": "So technologically advanced they might as well be magic!",
+    "image": "images/raw/goods_11.png",
+    "baseValue": 100,
+    "baseQuantity": 1000,
+    "tags": [
+      "category-food"
+    ]
   }
 ]

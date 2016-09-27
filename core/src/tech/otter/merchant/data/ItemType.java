@@ -1,6 +1,6 @@
 package tech.otter.merchant.data;
 
-import java.util.List;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by john on 9/19/16.
@@ -12,15 +12,16 @@ public class ItemType {
 	private String image;
 	private float baseValue;
 	private int baseQuantity;
-	private List<String> tags;
+	private Array<String> tags;
 
 	public ItemType() {
 
 	}
 
-	public ItemType(String name, String description, String image, float baseValue, int baseQuantity, List<String> tags) {
+	public ItemType(String name, String description, String image, float baseValue, int baseQuantity, Array<String> tags) {
 		this.name = name;
 		this.description = description;
+		this.image = image;
 		this.baseValue = baseValue;
 		this.baseQuantity = baseQuantity;
 		this.tags = tags;
@@ -46,7 +47,7 @@ public class ItemType {
 		return baseQuantity;
 	}
 
-	public List<String> getTags() {
+	public Array<String> getTags() {
 		return tags;
 	}
 

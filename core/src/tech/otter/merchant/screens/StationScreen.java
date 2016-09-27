@@ -15,7 +15,6 @@ public class StationScreen extends AbstractScreen {
 
 	public StationScreen(MerchantGame parent) {
 		super(parent);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

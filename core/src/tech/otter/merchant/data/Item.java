@@ -34,4 +34,10 @@ public class Item {
 		this.count = count;
 		return this;
 	}
+
+	@Override
+	public String toString() {
+		if(type.getName() == null || type.getName().equals("")) return "";
+		return this.type.getName() + " (" + this.count + ")";
+	}
 }

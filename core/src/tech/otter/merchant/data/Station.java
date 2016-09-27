@@ -38,4 +38,8 @@ public class Station {
 	public void setBackground(String background) {
 		this.background = background;
 	}
+
+	public static Station mock() {
+		return new Station("Homeworld", "This is the place where you used to live. It has a population of 3 Billion and it is known for its Cubic Yak farms.", null);
+	}
 }

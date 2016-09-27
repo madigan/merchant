@@ -6,14 +6,17 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.github.czyzby.kiwi.log.LoggerService;
 import com.kotcrab.vis.ui.VisUI;
 
+import tech.otter.merchant.data.Player;
 import tech.otter.merchant.data.Station;
 import tech.otter.merchant.screens.IntroScreen;
 import tech.otter.merchant.screens.MainMenuScreen;
 
 public class MerchantGame extends Game {
-	Screen mainMenu;
+	private Screen mainMenu;
 	private boolean debugOn = false;
 	private AssetManager assets;
+
+	private Player player;
 
 	// libGDX Game Methods //
 	@Override
@@ -21,7 +24,6 @@ public class MerchantGame extends Game {
 		assets = new AssetManager();
 		VisUI.load();
 		this.setDebugOn(false);
-
 
 		mainMenu = new MainMenuScreen(this);
 		this.setScreen(mainMenu);
@@ -39,6 +41,10 @@ public class MerchantGame extends Game {
 		return assets;
 	}
 
+	public Player getPlayer() {
+		return player;
+	}
+
 	// Real Game Methods //
 	private boolean gameActive = false;
 	/**
@@ -46,6 +52,7 @@ public class MerchantGame extends Game {
 	 */
 	public void newGame() {
 		gameActive = true;
+		this.player = Player.mock(); // TODO: Set the player in the "New Game" screen.
 		this.setScreen(new IntroScreen(this));
 	}
 
@@ -73,10 +80,10 @@ public class MerchantGame extends Game {
 
 	// TODO: Track a current station instead of returning a new one every time.
 	public Station getCurrentStation() {
-		return new Station("Homeworld", "This is the place where you used to live. It has a population of 3 Billion and it is known for its Cubic Yak farms.", null);
+		return Station.mock();
 	}
 
-	// TODO: Make this intelligent
+	// TODO: Move to player class
 	public boolean isHomeWorld(Station station) {
 		return true;
 	}

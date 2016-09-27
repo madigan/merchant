@@ -2,4 +2,5 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit trunk//EN" "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
 <module>
 	<source path="tech/otter/merchant" />
+	<extend-configuration-property name="gdx.reflect.include" value="tech.otter.merchant.data" />
 </module>

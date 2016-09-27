@@ -79,7 +79,6 @@ public abstract class AbstractScreen implements Screen {
 			}
 		});
 		Gdx.input.setInputProcessor(input);
-		logger.info("TEST");
 	}
 
 	@Override
