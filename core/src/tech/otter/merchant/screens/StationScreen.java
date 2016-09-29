@@ -45,7 +45,6 @@ public class StationScreen extends AbstractScreen {
 			tblButtons.row();
 		}
 
-		// TODO: Add Trader Screen
 		VisTextButton btnTrader = new VisTextButton("Visit Trader", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -54,8 +53,13 @@ public class StationScreen extends AbstractScreen {
 		});
 		// TODO: Add Bar Screen
 		VisTextButton btnBar = new VisTextButton("Visit Bar");
-		// TODO: Add Cargo Screen
-		VisTextButton btnCargo = new VisTextButton("View Cargo");
+
+		VisTextButton btnCargo = new VisTextButton("View Cargo", new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				changeScreen(new CargoScreen(parent));
+			}
+		});
 		// TODO: Add Travel Screen
 		VisTextButton btnLeave = new VisTextButton("Leave Station");
 
