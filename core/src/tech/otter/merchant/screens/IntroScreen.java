@@ -27,7 +27,7 @@ public class IntroScreen extends AbstractScreen {
 		super.show();
 		ui.clear();
 		
-		List<String> story = new ArrayList<String>();
+		List<String> story = new ArrayList<>();
 		story.add("Your planet is dying ...");
 		story.add("  ... Your people struggle for survival amidst the dust ...");
 		story.add("    ... with the right technology, your world might be saved ...");
@@ -35,18 +35,18 @@ public class IntroScreen extends AbstractScreen {
 		story.add("");
 		story.add("");
 		story.add("But not all hope is lost...");
-		story.add("Through great sacrifice, your family has procured a humble starship ...");
+		story.add("Through great sacrifice, your family has procured a humble star ship ...");
 		story.add("  ... and enough goods to make a new life as an independent trader ...");
 		story.add("    ... the opportunity that they never had.");
 		story.add("");
 		story.add("");
-		story.add("You will enbark on a search for riches...");
+		story.add("You will embark on a search for riches...");
 		story.add("  ... accumulating the wealth and power to save your planet... ");
 		story.add("    ... or become the brightest star in the universe on your own.");
 		story.add("");
 		story.add("");
 		story.add("This story is yours.");
-		
+
 		for(int i = 0; i < story.size(); i++) {
 			Actor label = getFadedLabel(story.get(i), i * DELAY, LENGTH);
 			label.setPosition(10f, ui.getHeight() - label.getHeight() * (i+1));
@@ -63,12 +63,12 @@ public class IntroScreen extends AbstractScreen {
 			}
 			
 		}));
-		// Add a keylistener so that players can skip the intro using ESCAPE, ENTER, or SPACE.
+		// Add a key listener so that players can skip the intro using ESCAPE, ENTER, or SPACE.
 		// Inescapable text dialogues is definitely a no-twinkie scenario.
 		ui.addListener(new InputListener() {
 			@Override
 			public boolean keyUp (InputEvent event, int keyCode) {
-				boolean consumed = false;
+				boolean consumed;
 				if(consumed = (keyCode == Keys.ESCAPE || keyCode == Keys.ENTER || keyCode == Keys.SPACE)) {
 					changeScreen(new NewGameScreen(parent));
 				}

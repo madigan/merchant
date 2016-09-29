@@ -2,15 +2,11 @@ package tech.otter.merchant.data;
 
 import com.badlogic.gdx.utils.Array;
 
-/**
- * Created by john on 9/26/16.
- */
-
 public class AbstractTrader implements iTrader {
 	private Array<Item> inventory;
 
 	public AbstractTrader() {
-		this(new Array<Item>());
+		this(new Array<>());
 	}
 	public AbstractTrader(Array<Item> inventory) {
 		this.inventory = inventory;
@@ -23,7 +19,6 @@ public class AbstractTrader implements iTrader {
 
 	@Override
 	public void remove(ItemType type, int quantity) {
-		// TODO: Add error handling for if there aren't enough items to remove.
 		for(Item item : inventory) {
 			if(item.getType().equals(type)) {
 				item.setCount(item.getCount() - quantity);

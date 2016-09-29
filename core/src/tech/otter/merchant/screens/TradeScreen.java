@@ -24,10 +24,6 @@ import tech.otter.merchant.data.Item;
 import tech.otter.merchant.data.ItemType;
 import tech.otter.merchant.data.Merchant;
 
-/**
- * Created by john on 9/19/16.
- */
-
 public class TradeScreen extends AbstractScreen {
 	private VisTextButton btnOffer;
 
@@ -42,7 +38,7 @@ public class TradeScreen extends AbstractScreen {
 
 	private VerticalGroup messages;
 
-	final Item EMPTY = new Item( new ItemType("", "", "images/empty.png", 0, 0, null));
+	final Item EMPTY = new Item( new ItemType("", "", "images/empty.png", 0, 0, 0, null));
 
 	public TradeScreen(MerchantGame parent, Merchant merchant, final AbstractScreen next) {
 		super(parent);
@@ -61,8 +57,8 @@ public class TradeScreen extends AbstractScreen {
 		// Assemble the player's trade options
 		imgPlayerOffer = new VisImage();
 		imgPlayerOffer.setSize(200f, 200f);
-		sbPlayerItems = new VisSelectBox<Item>();
-		Array<Item> selections = new Array(parent.getPlayer().getInventory());
+		sbPlayerItems = new VisSelectBox<>();
+		Array<Item> selections = new Array<>(parent.getPlayer().getInventory());
 		selections.add(EMPTY);
 		selections.sort(new ItemComparator());
 		sbPlayerItems.setItems(selections);
@@ -72,8 +68,8 @@ public class TradeScreen extends AbstractScreen {
 		// Assemble the merchant's trade options
 		imgMerchantOffer = new VisImage();
 		imgMerchantOffer.setSize(200f, 200f);
-		sbMerchantItems = new VisSelectBox<Item>();
-		selections = new Array(merchant.getInventory());
+		sbMerchantItems = new VisSelectBox<>();
+		selections = new Array<>(merchant.getInventory());
 		selections.add(EMPTY);
 		selections.sort(new ItemComparator());
 		sbMerchantItems.setItems(selections);
@@ -161,19 +157,13 @@ public class TradeScreen extends AbstractScreen {
 
 		// If one side is incomplete, ask the merchant to complete the offer
 		if(merchantItem.equals(EMPTY)) {
+			// Get the offer from the merchant
 			Item offer = merchant.getOffer(playerItem, playerQty);
-			if(offer == null) offer = EMPTY;
-			sbMerchantItems.setSelected(getByType(offer.getType(), merchant.getInventory()));
-			((IntSpinnerModel)spnMerchantQty.getModel()).setValue(offer.getCount());
-			addMessage("How about " + offer.getCount() + " " + offer.getType().getName() + "?");
-			logger.debug("How about {0} {1}?", offer.getCount(), offer.getType().getName());
+			processOffer(offer, merchant.getInventory(), sbMerchantItems, spnMerchantQty);
 		} else if(playerItem.equals(EMPTY)) {
+			// Get the offer from the merchant
 			Item offer = merchant.getOffer(merchantItem, merchantQty, parent.getPlayer().getInventory());
-			if(offer == null) offer = EMPTY;
-			sbPlayerItems.setSelected(getByType(offer.getType(), merchant.getInventory()));
-			((IntSpinnerModel)spnPlayerQty.getModel()).setValue(offer.getCount());
-			addMessage("How about " + offer.getCount() + " " + offer.getType().getName() + "?");
-			logger.debug("How about {0} {1}?", offer.getCount(), offer.getType().getName());
+			processOffer(offer, parent.getPlayer().getInventory(), sbPlayerItems, spnPlayerQty);
 		} else {
 			if(playerItem.getType().equals(merchantItem.getType())) {
 				addMessage("Don't be silly.");
@@ -186,7 +176,7 @@ public class TradeScreen extends AbstractScreen {
 					addMessage("I accept!");
 					parent.getPlayer().addItem(merchantItem.getType(), merchantQty);
 					parent.getPlayer().remove(playerItem.getType(), playerQty);
-					Array<Item> selections = new Array(parent.getPlayer().getInventory());
+					Array<Item> selections = new Array<>(parent.getPlayer().getInventory());
 					selections.add(EMPTY);
 					selections.sort(new ItemComparator());
 					sbPlayerItems.setItems(selections);
@@ -194,7 +184,7 @@ public class TradeScreen extends AbstractScreen {
 
 					merchant.addItem(playerItem.getType(), playerQty);
 					merchant.remove(merchantItem.getType(), merchantQty);
-					selections = new Array(merchant.getInventory());
+					selections = new Array<>(merchant.getInventory());
 					selections.add(EMPTY);
 					selections.sort(new ItemComparator());
 					sbMerchantItems.setItems(selections);
@@ -218,13 +208,27 @@ public class TradeScreen extends AbstractScreen {
 
 	// Helper methods / classes //
 
+	private void processOffer(Item offer, Array<Item> inventory, VisSelectBox<Item> selectBox, Spinner spinner) {
+		// If an offer isn't possible, tell the player.
+		if(offer == null) {
+			addMessage("I can't make an offer for that.");
+			logger.debug("I can't make an offer for that.");
+		} else {
+			// Otherwise update the UI.
+			selectBox.setSelected(getByType(offer.getType(), inventory));
+			((IntSpinnerModel)spinner.getModel()).setValue(offer.getCount());
+			addMessage("How about " + offer.getCount() + " " + offer.getType().getName() + "?");
+			logger.debug("How about {0} {1}?", offer.getCount(), offer.getType().getName());
+		}
+	}
+
 	/**
 	 * Helper method to convert an array of Items to ItemTypes.
 	 * @param items
 	 * @return
 	 */
 	private Array<ItemType> convert(Array<Item> items) {
-		Array<ItemType> types = new Array<ItemType>();
+		Array<ItemType> types = new Array<>();
 		for(Item i : items) {
 			types.add(i.getType());
 		}

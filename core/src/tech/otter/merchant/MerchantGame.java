@@ -7,7 +7,6 @@ import com.github.czyzby.kiwi.log.LoggerService;
 import com.kotcrab.vis.ui.VisUI;
 
 import tech.otter.merchant.data.Player;
-import tech.otter.merchant.data.Station;
 import tech.otter.merchant.screens.IntroScreen;
 import tech.otter.merchant.screens.MainMenuScreen;
 
@@ -52,20 +51,12 @@ public class MerchantGame extends Game {
 	 */
 	public void newGame() {
 		gameActive = true;
-		this.player = Player.mock(); // TODO: Set the player in the "New Game" screen.
+		this.player = Player.mock();
 		this.setScreen(new IntroScreen(this));
 	}
 
 	public boolean isGameActive() {
 		return gameActive;
-	}
-
-	public void loadGame() {
-
-	}
-
-	public void saveGame() {
-
 	}
 
 	public MerchantGame setDebugOn(boolean on) {
@@ -76,15 +67,5 @@ public class MerchantGame extends Game {
 
 	public boolean isDebugOn() {
 		return debugOn;
-	}
-
-	// TODO: Track a current station instead of returning a new one every time.
-	public Station getCurrentStation() {
-		return Station.mock();
-	}
-
-	// TODO: Move to player class
-	public boolean isHomeWorld(Station station) {
-		return true;
 	}
 }

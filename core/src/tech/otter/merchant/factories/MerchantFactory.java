@@ -19,7 +19,6 @@ public class MerchantFactory {
 	}
 
 	// TODO: Load merchants from a file
-	// TODO: Give merchants random names?
 	public Merchant make() {
 		return Merchant.mock();
 	}

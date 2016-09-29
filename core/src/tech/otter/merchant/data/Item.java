@@ -1,9 +1,5 @@
 package tech.otter.merchant.data;
 
-/**
- * Created by john on 9/21/16.
- */
-
 public class Item {
 	private ItemType type;
 	private int count;

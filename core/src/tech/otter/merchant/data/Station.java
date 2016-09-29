@@ -1,8 +1,5 @@
 package tech.otter.merchant.data;
 
-/**
- * Created by john on 9/17/16.
- */
 public class Station {
 
 	private String name;

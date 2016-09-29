@@ -20,7 +20,7 @@ public class StationScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		Station station = parent.getCurrentStation();
+		Station station = parent.getPlayer().getCurrentStation();
 
 		VisTable tblLayout = new VisTable();
 		tblLayout.setFillParent(true);
@@ -38,7 +38,7 @@ public class StationScreen extends AbstractScreen {
 		VisTable tblButtons = new VisTable();
 		tblButtons.columnDefaults(0).pad(2f).width(300f);
 
-		if(parent.isHomeWorld(station)) {
+		if(parent.getPlayer().isHomeWorld(station)) {
 			// TODO: Add Clan Screen
 			VisTextButton btnClan = new VisTextButton("Visit Clan");
 			tblButtons.add(btnClan);

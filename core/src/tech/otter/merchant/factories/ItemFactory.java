@@ -17,21 +17,21 @@ import tech.otter.merchant.data.ItemType;
 public class ItemFactory {
 	private Logger logger = LoggerService.forClass(getClass());
 	private static ItemFactory INSTANCE;
-	private List<ItemType> types;
+	private Array<ItemType> types;
 	private HashMap<String, List<ItemType>> typesByTag;
 
 	private ItemFactory() {
-		types = new ArrayList<ItemType>();
-		typesByTag = new HashMap<String, List<ItemType>>();
+		types = new Array<>();
+		typesByTag = new HashMap<>();
 
 
 		Json json = new Json();
-		types = json.fromJson(ArrayList.class, ItemType.class, Gdx.files.internal("item-types.json") );
+		types = json.fromJson(Array.class, ItemType.class, Gdx.files.internal("item-types.json") );
 
 		// Create lists of types by tag to make lookups faster
 		for(ItemType type : types) {
 			for(String tag : type.getTags()) {
-				if(!typesByTag.containsKey(tag)) typesByTag.put(tag, new ArrayList<ItemType>());
+				if(!typesByTag.containsKey(tag)) typesByTag.put(tag, new ArrayList<>());
 				typesByTag.get(tag).add(type);
 			}
 		}
@@ -50,7 +50,7 @@ public class ItemFactory {
 			}
 		}
 		logger.error("Couldn't find an item named '{0}'", name);
-		return new Item(new ItemType("Sneaky Droids", "This is not the item you're looking for.", null, 1.0f, 1, null));
+		return new Item(new ItemType("Sneaky Droids", "This is not the item you're looking for.", null, 1.0f, 1, 1.0f, null));
 	}
 
 	/**
@@ -59,15 +59,29 @@ public class ItemFactory {
 	 * @return
 	 */
 	public Array<Item> make(Array<String> tags) {
-		Array<Item> items = new Array<Item>();
+		Array<Item> items = new Array<>();
 		for(String tag : tags) {
 			if(!typesByTag.containsKey(tag)) continue;
 			for(ItemType type : typesByTag.get(tag)) {
-				// TODO: Add rarity index check
-				// FIXME: Remove duplicate values
-				items.add(new Item(type, type.getBaseQuantity() + MathUtils.ceil(type.getBaseQuantity() * MathUtils.random(-0.5f, 0.5f))));
+				// Only add the item if it falls below the rarity index (make some items less common)
+				if(MathUtils.random(0, 1) <= type.getRarityIndex()) {
+					// Don't add duplicate items
+					if (!contains(items, type)) {
+						items.add(
+								new Item(
+										type,
+										type.getBaseQuantity() + MathUtils.ceil(type.getBaseQuantity() * MathUtils.random(-0.5f, 0.5f))));
+					}
+				}
 			}
 		}
 		return items;
+	}
+
+	private boolean contains(Array<Item> items, ItemType type) {
+		for(Item item : items) {
+			if(item.getType().equals(type)) return false;
+		}
+		return true;
 	}
 }

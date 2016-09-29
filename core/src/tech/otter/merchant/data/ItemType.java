@@ -2,28 +2,26 @@ package tech.otter.merchant.data;
 
 import com.badlogic.gdx.utils.Array;
 
-/**
- * Created by john on 9/19/16.
- */
-
 public class ItemType {
 	private String name;
 	private String description;
 	private String image;
 	private float baseValue;
 	private int baseQuantity;
+	private float rarityIndex;
 	private Array<String> tags;
 
 	public ItemType() {
 
 	}
 
-	public ItemType(String name, String description, String image, float baseValue, int baseQuantity, Array<String> tags) {
+	public ItemType(String name, String description, String image, float baseValue, int baseQuantity, float rarityIndex, Array<String> tags) {
 		this.name = name;
 		this.description = description;
 		this.image = image;
 		this.baseValue = baseValue;
 		this.baseQuantity = baseQuantity;
+		this.rarityIndex = rarityIndex;
 		this.tags = tags;
 	}
 
@@ -47,6 +45,8 @@ public class ItemType {
 		return baseQuantity;
 	}
 
+	public float getRarityIndex() { return rarityIndex; }
+
 	public Array<String> getTags() {
 		return tags;
 	}
@@ -59,9 +59,7 @@ public class ItemType {
 		ItemType itemType = (ItemType) o;
 
 		if (name != null ? !name.equals(itemType.name) : itemType.name != null) return false;
-		if (description != null ? !description.equals(itemType.description) : itemType.description != null)
-			return false;
-		return image != null ? image.equals(itemType.image) : itemType.image == null;
+		return description != null ? description.equals(itemType.description) : itemType.description == null && (image != null ? image.equals(itemType.image) : itemType.image == null);
 
 	}
 

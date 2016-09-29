@@ -4,8 +4,9 @@
     "name": "Bindookian Spices",
     "description": "Sweet, yet spicy.",
     "image": "images/goods_0.png",
-    "baseValue": 100,
+    "baseValue": 150,
     "baseQuantity": 1000,
+    "rarityIndex": 0.25,
     "tags": [
       "category-food",
       "category-luxury"
@@ -16,8 +17,9 @@
     "name": "Italiluminum Rods",
     "description": "Shiny.",
     "image": "images/raw/goods_1.png",
-    "baseValue": 100,
+    "baseValue": 400,
     "baseQuantity": 1000,
+    "rarityIndex": 0.25,
     "tags": [
       "category-valuable",
       "category-material"
@@ -28,8 +30,9 @@
     "name": "Cryo-Pod",
     "description": "Used for refrigeration.",
     "image": "images/raw/goods_2.png",
-    "baseValue": 100,
+    "baseValue": 200,
     "baseQuantity": 1000,
+    "rarityIndex": 0.75,
     "tags": [
       "category-food",
       "category-appliance"
@@ -40,8 +43,9 @@
     "name": "Zandooki Holo-Crystal",
     "description": "The future of nano-digital entertainment! No home is complete without one.",
     "image": "images/raw/goods_3.png",
-    "baseValue": 100,
+    "baseValue": 300,
     "baseQuantity": 1000,
+    "rarityIndex": 0.75,
     "tags": [
       "category-entertainment",
       "category-appliance"
@@ -50,10 +54,11 @@
   {
     "class": "tech.otter.merchant.data.ItemType",
     "name": "Cubic Yaks",
-    "description": "Highly priced for their milk and cheese.",
+    "description": "Highly prized for their milk and cheese.",
     "image": "images/goods_6.png",
-    "baseValue": 100,
+    "baseValue": 50,
     "baseQuantity": 1000,
+    "rarityIndex": 0.50,
     "tags": [
       "category-food",
       "category-livestock"
@@ -64,8 +69,9 @@
     "name": "ASTRO(C) Nano-Beans",
     "description": "So technologically advanced they might as well be magic!",
     "image": "images/raw/goods_11.png",
-    "baseValue": 100,
+    "baseValue": 50,
     "baseQuantity": 1000,
+    "rarityIndex": 0.75,
     "tags": [
       "category-food"
     ]

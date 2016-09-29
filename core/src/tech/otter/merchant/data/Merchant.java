@@ -2,10 +2,15 @@ package tech.otter.merchant.data;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.github.czyzby.kiwi.log.Logger;
+import com.github.czyzby.kiwi.log.LoggerService;
 
 import tech.otter.merchant.factories.ItemFactory;
 
 public class Merchant extends AbstractTrader {
+	private Logger logger = LoggerService.forClass(getClass());
+	private final static float VARIANCE = 0.1f; // 10%
+
 	private String name;
 	private String portrait;
 
@@ -15,8 +20,6 @@ public class Merchant extends AbstractTrader {
 		this.portrait = portrait;
 	}
 
-	private final static float VARIANCE = 0.1f; // 10%
-	// FIXME: Returns "0" offers
 	/**
 	 * Offer a "fair" deal based on the player offer. A "fair" deal is currently 10% lower than the
 	 * actual value, although more parameters will be added in the future.
@@ -26,38 +29,59 @@ public class Merchant extends AbstractTrader {
 	 */
 	public Item getOffer(Item playerItem, int playerQty) {
 		// "Fair value" is the base value * number offered - 10% profit margin
-		float targetValue = playerItem.getType().getBaseValue() * playerQty * (1-VARIANCE);
-		Array<Item> candidates = new Array<Item>();
-		for(Item item : getInventory()) {
-			if(playerItem.getType().equals(item.getType())) continue;
-
-			int count = MathUtils.floor(targetValue / item.getType().getBaseValue());
-			if( count < item.getCount() ) {
-				candidates.add(new Item(item.getType(), count));
-			}
-		}
-		return candidates.random();
+		return getOfferHelper(playerItem, playerQty, getInventory(), 1-VARIANCE);
 	}
 	public Item getOffer(Item merchantItem, int merchantQty, Array<Item> playerItems) {
 		// "Fair value" is the base value * number offered + 10% profit margin
-		float targetValue = merchantItem.getType().getBaseValue() * merchantQty * (1+VARIANCE);
-		Array<Item> candidates = new Array<Item>();
-		for(Item item : playerItems) {
-			if(merchantItem.getType().equals(item.getType())) continue;
+		return getOfferHelper(merchantItem, merchantQty, playerItems, 1+VARIANCE);
+	}
 
-			int count = MathUtils.floor(targetValue / item.getType().getBaseValue());
-			if( count < item.getCount() ) {
-				candidates.add(new Item(item.getType(), count));
+	/**
+	 * Helper method
+	 * @param item
+	 * @param qty
+	 * @param alternatives
+	 * @param variance
+	 * @return
+	 */
+	private Item getOfferHelper(Item item, int qty, Array<Item> alternatives, float variance) {
+		// "Fair value" is the base value * number offered * variance for profit margin
+		float targetValue = item.getType().getBaseValue() * qty * variance;
+		Array<Item> candidates = new Array<>();
+		for(Item alternative : alternatives) {
+			if(alternative.getType().equals(item.getType())) continue;
+
+			int count = MathUtils.floor(targetValue / alternative.getType().getBaseValue());
+			if( count < alternative.getCount() && count > 0) {
+				candidates.add(new Item(alternative.getType(), count));
+				logger.debug(
+						"Potential Offer: {0} {1} [{2} for {3}]; merchant wants {4}",
+						count,
+						alternative.getType().getName(),
+						item.getType().getBaseValue() * qty,
+						alternative.getType().getBaseValue() * count,
+						targetValue);
 			}
 		}
 		return candidates.random();
 	}
+
+	/**
+	 * Evaluates an offer where an item and quantity have already been provided by both parties.
+	 * @param playerItem The item the player is offering (and how many they have)
+	 * @param playerQty The quantity the player is offering
+	 * @param merchantItem The item the merchant is offering (and how many they have)
+	 * @param merchantQty The quantity the merchant is offering
+	 * @return A fair trade (same as "playerItem" if the trade is "fair").
+	 */
 	public Item getOffer(Item playerItem, int playerQty, Item merchantItem, int merchantQty) {
 		float playerValue = playerItem.getType().getBaseValue() * playerQty;
 		float merchantValue = merchantItem.getType().getBaseValue() * merchantQty;
 		float lowerLimit = merchantValue * (1-VARIANCE);
+		logger.debug("Offer: [{0} for {1}]; merchant wants at least {2}", playerValue, merchantValue, lowerLimit);
 		// If the player is offering more than the merchant's lower limit, accept the trade.
-		if(playerValue > lowerLimit) {
+		if(playerValue >= lowerLimit) {
+			logger.debug("{0} >= {1}", playerValue, lowerLimit);
 			return new Item(playerItem.getType(), playerQty);
 		} else {
 			// Otherwise, make a counter offer
