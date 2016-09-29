@@ -2,9 +2,9 @@ package tech.otter.merchant.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -36,7 +36,8 @@ public class TradeScreen extends AbstractScreen {
 	private VisSelectBox<Item> sbMerchantItems;
 	private Spinner spnMerchantQty;
 
-	private VerticalGroup messages;
+	private VisTable tblMessages;
+	private VisScrollPane spMessages;
 
 	final Item EMPTY = new Item( new ItemType("", "", "images/empty.png", 0, 0, 0, null));
 
@@ -44,10 +45,6 @@ public class TradeScreen extends AbstractScreen {
 		super(parent);
 
 		this.merchant = merchant;
-
-		VisTable layout = new VisTable();
-		layout.setFillParent(true);
-		layout.columnDefaults(0).pad(2f).width(300f);
 
 		// TODO: Use asset loader
 		// TODO: Redistribute functionality between constructor and show()
@@ -84,41 +81,47 @@ public class TradeScreen extends AbstractScreen {
 		});
 		updateCaption();
 
-		messages = new VerticalGroup();
-		for(int i = 0; i < 5; i++) messages.addActor(new VisLabel(""));
-
-		// Set layout defaults //
-		layout.columnDefaults(0).width(ui.getWidth() / 3);
-		layout.columnDefaults(1).width(ui.getWidth() / 3);
-		layout.columnDefaults(2).width(ui.getWidth() / 3);
+		tblMessages = new VisTable();
 
 		// Populate the layout //
+		float PADDING = 5f;
+		VisTable layout = new VisTable();
+		layout.setFillParent(true);
+		layout.setWidth(ui.getWidth());
+		layout.columnDefaults(0).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
+		layout.columnDefaults(1).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
+		layout.columnDefaults(2).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
+
+
 		layout.add(new VisLabel("You'll give ...", Align.center));
 		layout.add(new VisLabel(merchant.getName(), Align.center));
 		layout.add(new VisLabel("... in exchange for ...", Align.center));
 
 		layout.row();
 		layout.add(imgPlayerOffer).width(ui.getWidth() / 4).height(ui.getWidth() / 4).pad(ui.getWidth() / 24);
-		layout.add(imgPortrait).height(ui.getWidth() / 3);
+		layout.add(imgPortrait).height(layout.getWidth() / 3 - 2*PADDING);
 		layout.add(imgMerchantOffer).width(ui.getWidth() / 4).height(ui.getWidth() / 4).pad(ui.getWidth() / 24);
 
 		layout.row();
-		layout.add(sbPlayerItems);
-		layout.add(btnOffer);
-		layout.add(sbMerchantItems);
+		layout.add(sbPlayerItems).uniform();
+		layout.add(btnOffer).uniform();
+		layout.add(sbMerchantItems).uniform();
 
 		layout.row();
-		layout.add(spnPlayerQty);
+		layout.add(spnPlayerQty).uniform();
 		layout.add(new VisTextButton("Back", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				changeScreen(next);
 			}
-		}));
-		layout.add(spnMerchantQty);
+		})).uniform();
+		layout.add(spnMerchantQty).uniform();
 
 		layout.row();
-		layout.add(new VisScrollPane(messages)).colspan(3).width(ui.getWidth()).align(Align.left);
+		spMessages = new VisScrollPane(tblMessages);
+		spMessages.setScrollingDisabled(true, false);
+		spMessages.setFlickScroll(false);
+		layout.add(spMessages).height(100f).padLeft(10f).colspan(3).width(layout.getWidth() - 2*PADDING);
 
 		ui.addActor(layout);
 	}
@@ -241,15 +244,20 @@ public class TradeScreen extends AbstractScreen {
 		}
 		return null;
 	}
-	// TODO: Make the messages align left
+
 	private void addMessage(String message) {
-		message = "[" + merchant.getName() + "]: " + message;
-		messages.removeActor(messages.getChildren().get(messages.getChildren().size-1));
-		VisLabel label = new VisLabel(message);
-		label.setAlignment(Align.left);
+		VisLabel label = new VisLabel("[" + merchant.getName() + "]: " + message);
 		label.setColor(1.0f, 1.0f, 1.0f, 0);
 		label.addAction(Actions.fadeIn(0.5f));
-		messages.addActorBefore(messages.getChildren().first(), label);
+
+		tblMessages.add(label).fillX().expandX().row();
+		spMessages.addAction(Actions.sequence(Actions.delay(0.0f), new Action() {
+			@Override
+			public boolean act(float delta) {
+				spMessages.setScrollPercentY(1.0f);
+				return true;
+			}
+		}));
 	}
 
 	private Spinner makeSpinner(VisSelectBox<Item> selectBox) {
