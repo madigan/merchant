@@ -5,9 +5,13 @@ public class Station {
 	private String name;
 	private String description;
 	private String background;
+	private float x;
+	private float y;
 
-	public Station(String name, String description, String background) {
+	public Station(String name, float x, float y, String description, String background) {
 		this.name = name;
+		this.x = x;
+		this.y = y;
 		this.description = description;
 		this.background = background;
 	}
@@ -36,7 +40,30 @@ public class Station {
 		this.background = background;
 	}
 
-	public static Station mock() {
-		return new Station("Homeworld", "This is the place where you used to live. It has a population of 3 Billion and it is known for its Cubic Yak farms.", null);
+	public float getY() {
+		return y;
+	}
+
+	public float getX() {
+		return x;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Station station = (Station) o;
+
+		if (name != null ? !name.equals(station.name) : station.name != null) return false;
+		return description != null ? description.equals(station.description) : station.description == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = name != null ? name.hashCode() : 0;
+		result = 31 * result + (description != null ? description.hashCode() : 0);
+		return result;
 	}
 }

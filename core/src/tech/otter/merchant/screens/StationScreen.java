@@ -27,7 +27,7 @@ public class StationScreen extends AbstractScreen {
 		if(station.getBackground() != null) tblLayout.setBackground(station.getBackground());
 
 		VisLabel lblStationName = new VisLabel(station.getName());
-		// TODO: Make this label bigger
+		// TODO: Make this lblTitle bigger
 
 
 		VisLabel lblStationDescription = new VisLabel(station.getDescription());
@@ -38,7 +38,7 @@ public class StationScreen extends AbstractScreen {
 		VisTable tblButtons = new VisTable();
 		tblButtons.columnDefaults(0).pad(2f).width(300f);
 
-		if(parent.getPlayer().isHomeWorld(station)) {
+		if(parent.getPlayer().isAtHomeWorld()) {
 			// TODO: Add Clan Screen
 			VisTextButton btnClan = new VisTextButton("Visit Clan");
 			tblButtons.add(btnClan);
@@ -47,7 +47,7 @@ public class StationScreen extends AbstractScreen {
 
 		VisTextButton btnTrader = new VisTextButton("Visit Trader", new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor) {
+			public void changed(ChangeEvent event, Actor actor) { // TODO: Make merchants children of stations
 				changeScreen(new TradeScreen(parent, MerchantFactory.get().make(), StationScreen.this));
 			}
 		});
@@ -60,8 +60,13 @@ public class StationScreen extends AbstractScreen {
 				changeScreen(new CargoScreen(parent));
 			}
 		});
-		// TODO: Add Travel Screen
-		VisTextButton btnLeave = new VisTextButton("Leave Station");
+
+		VisTextButton btnLeave = new VisTextButton("Leave Station", new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				changeScreen(new DepartureScreen(parent, StationScreen.this));
+			}
+		});
 
 		tblButtons.add(btnTrader);
 		tblButtons.row();

@@ -6,7 +6,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.github.czyzby.kiwi.log.LoggerService;
 import com.kotcrab.vis.ui.VisUI;
 
+import tech.otter.merchant.data.Galaxy;
 import tech.otter.merchant.data.Player;
+import tech.otter.merchant.factories.GalaxyFactory;
 import tech.otter.merchant.screens.IntroScreen;
 import tech.otter.merchant.screens.MainMenuScreen;
 
@@ -15,6 +17,7 @@ public class MerchantGame extends Game {
 	private boolean debugOn = false;
 	private AssetManager assets;
 
+	private Galaxy galaxy;
 	private Player player;
 
 	// libGDX Game Methods //
@@ -26,12 +29,11 @@ public class MerchantGame extends Game {
 
 		mainMenu = new MainMenuScreen(this);
 		this.setScreen(mainMenu);
-
 	}
 
 	@Override
 	public void dispose () {
-		mainMenu.dispose();
+		mainMenu.dispose(); // TODO: Make sure the other screens are disposing correctly.
 		VisUI.dispose();
 		assets.dispose();
 	}
@@ -44,6 +46,8 @@ public class MerchantGame extends Game {
 		return player;
 	}
 
+	public Galaxy getGalaxy() { return galaxy; }
+
 	// Real Game Methods //
 	private boolean gameActive = false;
 	/**
@@ -52,6 +56,7 @@ public class MerchantGame extends Game {
 	public void newGame() {
 		gameActive = true;
 		this.player = Player.mock();
+		this.galaxy = GalaxyFactory.get().mock();
 		this.setScreen(new IntroScreen(this));
 	}
 
