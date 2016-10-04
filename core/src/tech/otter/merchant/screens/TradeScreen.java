@@ -1,7 +1,5 @@
 package tech.otter.merchant.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -39,7 +37,7 @@ public class TradeScreen extends AbstractScreen {
 	private VisTable tblMessages;
 	private VisScrollPane spMessages;
 
-	final Item EMPTY = new Item( new ItemType("", "", "images/empty.png", 0, 0, 0, null));
+	final Item EMPTY = new Item( new ItemType("", "", null, 0, 0, 0, null));
 
 	public TradeScreen(MerchantGame parent, Merchant merchant, final AbstractScreen next) {
 		super(parent);
@@ -48,7 +46,8 @@ public class TradeScreen extends AbstractScreen {
 
 		// TODO: Use asset loader
 		// TODO: Redistribute functionality between constructor and show()
-		VisImage imgPortrait = new VisImage(new Texture(Gdx.files.internal(merchant.getPortrait())));
+		VisImage imgPortrait = new VisImage(parent.getManagedTexture("images/merchants.atlas", merchant.getPortrait()));
+
 		imgPortrait.setSize(300f, 300f);
 
 		// Assemble the player's trade options
@@ -281,7 +280,11 @@ public class TradeScreen extends AbstractScreen {
 		@Override
 		public void changed(ChangeEvent event, Actor actor) {
 			Item selected = ((VisSelectBox<Item>)actor).getSelected();
-			image.setDrawable(new Texture(Gdx.files.internal(selected.getType().getImage())));
+			if(selected.getType().getImage() != null) {
+				image.setDrawable(parent.getManagedTexture("images/goods.atlas", selected.getType().getImage()));
+			} else {
+				image.clear();
+			}
 			IntSpinnerModel spinnerModel = ((IntSpinnerModel)spinner.getModel());
 			if(selected.equals(EMPTY)) {
 				spinnerModel.setMin(0);

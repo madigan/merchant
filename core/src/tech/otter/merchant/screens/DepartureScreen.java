@@ -1,7 +1,5 @@
 package tech.otter.merchant.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -31,7 +29,7 @@ public class DepartureScreen extends AbstractScreen {
 		tblLayout.align(Align.bottom);
 
 		// Create star map
-		VisImage starMapBackground = new VisImage(new Texture(Gdx.files.internal("images/ui/map.png")));
+		VisImage starMapBackground = new VisImage(parent.getManagedTexture("images/ui.atlas", "map"));
 		starMapBackground.setFillParent(true);
 		starMapBackground.setZIndex(1);
 
@@ -59,8 +57,7 @@ public class DepartureScreen extends AbstractScreen {
 		super.show();
 
 		for(Station station : parent.getGalaxy().getStations().values()) {
-			// TODO: Use asset manager
-			VisImage icon = new VisImage(new Texture(Gdx.files.internal("images/ui/dot2.png")));
+			VisImage icon = new VisImage(parent.getManagedTexture("images/ui.atlas", "dot2"));
 			// TODO: Set relative to the map
 			VisTextButton btn = new VisTextButton(station.getName(), new ChangeListener() {
 				@Override

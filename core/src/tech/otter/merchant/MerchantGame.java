@@ -3,7 +3,11 @@ package tech.otter.merchant;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.tools.texturepacker.TexturePacker;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.github.czyzby.kiwi.log.Logger;
 import com.github.czyzby.kiwi.log.LoggerService;
 import com.kotcrab.vis.ui.VisUI;
@@ -31,10 +35,11 @@ public class MerchantGame extends Game {
 		VisUI.load();
 		this.setDebugOn(false);
 
-		TexturePacker.Settings settings = new TexturePacker.Settings();
-		TexturePacker.process(settings, "images/goods", "images", "goods");
-		TexturePacker.process(settings, "images/merchants", "images", "merchants");
-		TexturePacker.process(settings, "images/ui", "images", "ui");
+		// TODO: Make a snazzy loading bar
+		assetManager.load("images/goods.atlas", TextureAtlas.class);
+		assetManager.load("images/merchants.atlas", TextureAtlas.class);
+		assetManager.load("images/ui.atlas", TextureAtlas.class);
+		assetManager.finishLoading();
 
 		mainMenu = new MainMenuScreen(this);
 		this.setScreen(mainMenu);
@@ -47,8 +52,13 @@ public class MerchantGame extends Game {
 		assetManager.dispose();
 	}
 
-	public AssetManager getAssetManager() {
-		return assetManager;
+	public TextureRegionDrawable getManagedTexture(String atlas, String image) {
+		try {
+			return new TextureRegionDrawable(assetManager.get(atlas, TextureAtlas.class).findRegion(image));
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+			return new TextureRegionDrawable(new TextureRegion(new Texture(new Pixmap(1,1, Pixmap.Format.RGBA8888))));
+		}
 	}
 
 	public Player getPlayer() {

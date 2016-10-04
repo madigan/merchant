@@ -108,6 +108,6 @@ public class Merchant extends AbstractTrader {
 		Array<Item> inventory = Array.with(
 				ItemFactory.get().make("ASTRO(C) Nano-Beans").setCount(152)
 		);
-		return new Merchant("Freddy's General Store", "images/raw/merchant_1.png", inventory);
+		return new Merchant("Freddy's General Store", "merchant1", inventory);
 	}
 }
