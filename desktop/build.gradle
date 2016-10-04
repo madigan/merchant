@@ -44,3 +44,10 @@ task afterEclipseImport(description: "Post processing after project generation",
     printer.print(classpath)
   }
 }
+
+task texturePacker << {
+    if (project.ext.has('texturePacker')) {
+        logger.info "Calling TexturePacker: "+texturePacker
+        TexturePacker.process(texturePacker[0], texturePacker[1], texturePacker[2])
+    }
+}

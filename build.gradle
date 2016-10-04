@@ -24,7 +24,7 @@ allprojects {
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
         kiwiVersion = '1.8.1.9.4-b1'
-	visVersion = '1.2.2'
+	    visVersion = '1.2.2'
     }
 
     repositories {
