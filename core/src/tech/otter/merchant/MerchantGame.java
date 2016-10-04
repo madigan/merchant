@@ -32,9 +32,9 @@ public class MerchantGame extends Game {
 		this.setDebugOn(false);
 
 		TexturePacker.Settings settings = new TexturePacker.Settings();
-		settings.maxWidth = 1024;
-		settings.maxHeight = 1024;
-		TexturePacker.process(settings, "images", "images", "game");
+		TexturePacker.process(settings, "images/goods", "images", "goods");
+		TexturePacker.process(settings, "images/merchants", "images", "merchants");
+		TexturePacker.process(settings, "images/ui", "images", "ui");
 
 		mainMenu = new MainMenuScreen(this);
 		this.setScreen(mainMenu);

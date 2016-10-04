@@ -1,0 +1,48 @@
+
+merchants.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+merchant
+  rotate: false
+  xy: 2, 1357
+  size: 683, 679
+  orig: 683, 679
+  offset: 0, 0
+  index: 4
+merchant
+  rotate: false
+  xy: 2, 678
+  size: 681, 677
+  orig: 681, 677
+  offset: 0, 0
+  index: 5
+merchant
+  rotate: false
+  xy: 687, 1362
+  size: 682, 674
+  orig: 682, 674
+  offset: 0, 0
+  index: 2
+merchant
+  rotate: false
+  xy: 2, 2
+  size: 680, 674
+  orig: 680, 674
+  offset: 0, 0
+  index: 6
+merchant
+  rotate: false
+  xy: 687, 687
+  size: 679, 673
+  orig: 679, 673
+  offset: 0, 0
+  index: 1
+merchant
+  rotate: false
+  xy: 685, 11
+  size: 679, 674
+  orig: 679, 674
+  offset: 0, 0
+  index: 3
