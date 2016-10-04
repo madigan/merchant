@@ -95,8 +95,10 @@ public abstract class AbstractScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		draw(delta);
-		ui.act(delta);
-		ui.draw();
+		if(ui != null) {
+			ui.act(delta);
+			ui.draw();
+		}
 	}
 
 	/**
@@ -113,6 +115,7 @@ public abstract class AbstractScreen implements Screen {
 	@Override
 	public void dispose() {
 		if(ui != null) ui.dispose();
+		ui = null;
 	}
 	
 	/**

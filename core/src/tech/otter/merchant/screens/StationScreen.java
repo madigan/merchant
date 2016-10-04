@@ -68,6 +68,13 @@ public class StationScreen extends AbstractScreen {
 			}
 		});
 
+		VisTextButton btnMenu = new VisTextButton("Quit to Main Menu", new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				changeScreen(new MainMenuScreen(parent));
+			}
+		});
+
 		tblButtons.add(btnTrader);
 		tblButtons.row();
 		tblButtons.add(btnBar);
@@ -75,6 +82,10 @@ public class StationScreen extends AbstractScreen {
 		tblButtons.add(btnCargo);
 		tblButtons.row();
 		tblButtons.add(btnLeave);
+		tblButtons.row();
+		tblButtons.addSeparator();
+		tblButtons.row();
+		tblButtons.add(btnMenu);
 
 		// === Add elements to the screen === //
 		tblLayout.add(lblStationName).colspan(2).pad(10f);

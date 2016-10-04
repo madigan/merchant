@@ -1,7 +1,6 @@
 package tech.otter.merchant;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,7 +19,6 @@ import tech.otter.merchant.screens.MainMenuScreen;
 
 public class MerchantGame extends Game {
 	private Logger logger;
-	private Screen mainMenu;
 	private boolean debugOn = false;
 	private AssetManager assetManager;
 
@@ -41,13 +39,12 @@ public class MerchantGame extends Game {
 		assetManager.load("images/ui.atlas", TextureAtlas.class);
 		assetManager.finishLoading();
 
-		mainMenu = new MainMenuScreen(this);
-		this.setScreen(mainMenu);
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
 	public void dispose () {
-		mainMenu.dispose(); // TODO: Make sure the other screens are disposing correctly.
+		this.setScreen(null);  // TODO: Make sure all the screens are disposing correctly
 		VisUI.dispose();
 		assetManager.dispose();
 	}

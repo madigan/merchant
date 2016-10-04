@@ -18,6 +18,7 @@ public class MainMenuScreen extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				logger.debug("Continue Game Clicked");
+				changeScreen(new StationScreen(parent));
 			}
 		});
 
