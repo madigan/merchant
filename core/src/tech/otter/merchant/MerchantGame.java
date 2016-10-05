@@ -38,7 +38,7 @@ public class MerchantGame extends Game {
 		assetManager.load("images/merchants.atlas", TextureAtlas.class);
 		assetManager.load("images/ui.atlas", TextureAtlas.class);
 		assetManager.finishLoading();
-
+		// TODO: Create a manager for the screens
 		this.setScreen(new MainMenuScreen(this));
 	}
 
