@@ -1,22 +1,22 @@
 package tech.otter.merchant.data;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ArrayMap;
+import com.badlogic.gdx.utils.OrderedMap;
 
 public class Galaxy {
-	private ArrayMap<String, Station> stations;
+	private OrderedMap<String, Station> stations;
 	private Array<StarLane> lanes;
 
 	public Galaxy() {
-		this.stations = new ArrayMap<>();
+		this.stations = new OrderedMap<>();
 		this.lanes = new Array<>();
 	}
 
-	public ArrayMap<String, Station> getStations() {
+	public OrderedMap<String, Station> getStations() {
 		return stations;
 	}
 
-	public Galaxy setStations(ArrayMap<String, Station> stations) {
+	public Galaxy setStations(OrderedMap<String, Station> stations) {
 		this.stations = stations;
 		return this;
 	}
