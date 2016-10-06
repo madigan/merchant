@@ -1,6 +1,5 @@
 package tech.otter.merchant.screens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
@@ -79,7 +78,7 @@ public class CargoScreen extends AbstractScreen {
 	}
 
 	private void updateSelection(Item selected) {
-		imgItem.setDrawable(new Texture(selected.getType().getImage()));
+		imgItem.setDrawable(parent.getManagedTexture("images/goods.atlas", selected.getType().getImage()));
 		txtDescription.setText(selected.getType().getDescription());
 	}
 }

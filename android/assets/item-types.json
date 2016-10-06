@@ -53,6 +53,32 @@
   },
   {
     "class": "tech.otter.merchant.data.ItemType",
+    "name": "Hypnoponics Bay",
+    "description": "Watched plants *do* grow, it just takes a while. Fortunately, you aren't going anywhere with this mesmerizing device.",
+    "image": "goods4",
+    "baseValue": 289,
+    "baseQuantity": 20,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-appliance",
+      "category-food"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "MuffMouse Puff",
+    "description": "This inflatable treat may be considered less-than-ethical by some, but the Kleeth love it!",
+    "image": "goods5",
+    "baseValue": 75,
+    "baseQuantity": 100,
+    "rarityIndex": 0.25,
+    "tags": [
+      "category-food",
+      "category-livestock"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
     "name": "Cubic Yaks",
     "description": "Highly prized for their milk and cheese.",
     "image": "goods6",
@@ -66,6 +92,58 @@
   },
   {
     "class": "tech.otter.merchant.data.ItemType",
+    "name": "Organic Moon Crisps",
+    "description": "Made with genuine moon dust!",
+    "image": "goods7",
+    "baseValue": 20,
+    "baseQuantity": 1000,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-food"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Boco Levicrystals",
+    "description": "Some lovers of physics find these objects profoundly offensive.",
+    "image": "goods8",
+    "baseValue": 187,
+    "baseQuantity": 50,
+    "rarityIndex": 0.40,
+    "tags": [
+      "category-material"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Kleeth Astrocharts",
+    "description": "Through arcane ceremonies known only to Kreeth mystics, these crystal spheres are imbued with complex star charts.",
+    "image": "goods9",
+    "baseValue": 758,
+    "baseQuantity": 10,
+    "rarityIndex": 0.25,
+    "tags": [
+      "category-material",
+      "category-appliance",
+      "category-kreeth"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Glurf Bonzai Bush",
+    "description": "The Glurf trim consider these plants a sign of sophistication and artistry- the Ewian consider them a snack.",
+    "image": "goods10",
+    "baseValue": 130,
+    "baseQuantity": 70,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-food",
+      "category-art",
+      "category-glurf"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
     "name": "ASTRO(C) Nano-Beans",
     "description": "So technologically advanced they might as well be magic!",
     "image": "goods11",
@@ -74,6 +152,164 @@
     "rarityIndex": 0.75,
     "tags": [
       "category-food"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Zapatronic 5000",
+    "description": "This baby can heat food faster than a Bartoolian Supernova! Don't use it with MuffMice though.",
+    "image": "goods12",
+    "baseValue": 150,
+    "baseQuantity": 30,
+    "rarityIndex": 0.75,
+    "tags": [
+      "category-food",
+      "category-appliance"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Hyooman Abstract Art",
+    "description": "Many races find these objects to be puzzling... or sophisticated?",
+    "image": "goods13",
+    "baseValue": 500,
+    "baseQuantity": 10,
+    "rarityIndex": 0.25,
+    "tags": [
+      "category-art",
+      "category-luxery"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "MuffMice",
+    "description": "These cute little critters taste Surprisingly Fantastic(C) whether they're live, fried and battered, or frozen on a stick!",
+    "image": "goods14",
+    "baseValue": 25,
+    "baseQuantity": 1000,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-food",
+      "category-livestock"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Zymmick Plastiques",
+    "description": "These plastiques are used to manufacture all sorts of things- from toothbrushes to starships!",
+    "image": "goods15",
+    "baseValue": 20,
+    "baseQuantity": 1000,
+    "rarityIndex": 0.75,
+    "tags": [
+      "category-material"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Hyooman Exotic Hair Products",
+    "description": "Prized by hairless races everywhere!",
+    "image": "goods16",
+    "baseValue": 790,
+    "baseQuantity": 10,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-luxury",
+      "category-glurf",
+      "category-hyooman"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Ewian Jewelry",
+    "description": "Ewian craftsheep have perfected the art of carving intricate tear-shaped gemstones and fasioning them into beautiful works of art that all neck-enabled creatures will enjoy!",
+    "image": "goods17",
+    "baseValue": 700,
+    "baseQuantity": 10,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-luxery",
+      "category-ewian"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Triple-Zork Batteries",
+    "description": "They aren't included with most products.",
+    "image": "goods18",
+    "baseValue": 75,
+    "baseQuantity": 100,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-material",
+      "category-appliance"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Plutranium Kleeth Tea Set",
+    "description": "A sign of sophistication and culture in any Kleeth world.",
+    "image": "goods19",
+    "baseValue": 670,
+    "baseQuantity": 20,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-appliance",
+      "category-luxury",
+      "category-kleeth"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Ewian Ginger",
+    "description": "Highly regarded for its medical and ... recreational uses.",
+    "image": "goods20",
+    "baseValue": 247,
+    "baseQuantity": 50,
+    "rarityIndex": 0.25,
+    "tags": [
+      "category-food",
+      "category-ewian"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Data Cubes",
+    "description": "Everybody likes data! Cyntix even eat them!",
+    "image": "goods21",
+    "baseValue": 125,
+    "baseQuantity": 140,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-material",
+      "category-food",
+      "category-cyntix"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Glurf Fuzzy-Silk",
+    "description": "This curious cloth is naturally plaid-colored and completely natural!",
+    "image": "goods22",
+    "baseValue": 920,
+    "baseQuantity": 30,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-luxury",
+      "category-glurf"
+    ]
+  },
+  {
+    "class": "tech.otter.merchant.data.ItemType",
+    "name": "Universal Credit",
+    "description": "These credits are the galaxy's universal credit- so long as you're Cyntix.",
+    "image": "goods23",
+    "baseValue": 7,
+    "baseQuantity": 10000,
+    "rarityIndex": 0.50,
+    "tags": [
+      "category-currency",
+      "category-cyntix"
     ]
   }
 ]
