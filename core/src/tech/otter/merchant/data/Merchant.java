@@ -14,6 +14,8 @@ public class Merchant extends AbstractTrader {
 	private String name;
 	private String portrait;
 
+	public Merchant() {}
+
 	public Merchant(String name, String portrait, Array<Item> inventory) {
 		super(inventory);
 		this.name = name;
@@ -96,6 +98,14 @@ public class Merchant extends AbstractTrader {
 		}
 	}
 
+	public void restock() {
+		logger.debug("Clearing inventory ... ");
+		this.getInventory().clear();
+		logger.debug("Adding items ... ");
+		this.getInventory().addAll(ItemFactory.get().make(5));
+	}
+
+	// == Getters / Setters == //
 	public String getName() {
 		return name;
 	}
@@ -104,6 +114,7 @@ public class Merchant extends AbstractTrader {
 		return portrait;
 	}
 
+	// == Convenience Methods == //
 	public static Merchant mock() {
 		Array<Item> inventory = Array.with(
 				ItemFactory.get().make("ASTRO(C) Nano-Beans").setCount(152)

@@ -7,9 +7,7 @@ import com.badlogic.gdx.utils.Json;
 import com.github.czyzby.kiwi.log.Logger;
 import com.github.czyzby.kiwi.log.LoggerService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import tech.otter.merchant.data.Item;
 import tech.otter.merchant.data.ItemType;
@@ -18,7 +16,7 @@ public class ItemFactory {
 	private Logger logger = LoggerService.forClass(getClass());
 	private static ItemFactory INSTANCE;
 	private Array<ItemType> types;
-	private HashMap<String, List<ItemType>> typesByTag;
+	private HashMap<String, Array<ItemType>> typesByTag;
 
 	private ItemFactory() {
 		types = new Array<>();
@@ -31,7 +29,7 @@ public class ItemFactory {
 		// Create lists of types by tag to make lookups faster
 		for(ItemType type : types) {
 			for(String tag : type.getTags()) {
-				if(!typesByTag.containsKey(tag)) typesByTag.put(tag, new ArrayList<>());
+				if(!typesByTag.containsKey(tag)) typesByTag.put(tag, new Array<>());
 				typesByTag.get(tag).add(type);
 			}
 		}
@@ -54,6 +52,28 @@ public class ItemFactory {
 	}
 
 	/**
+	 * Generate a list of random items
+	 * @param count The number of items to generate
+	 * @return The generated items.
+	 */
+	public Array<Item> make(int count) {
+		Array<Item> items = new Array<>();
+		for(int i = 0; i < count; i++) {
+			ItemType type = types.random();
+			logger.debug("Random type is: {0}", type.getName());
+			if(contains(items, type)) {
+				logger.debug(" ... but we already have that one in {0}", items);
+				i--;
+				continue;
+			} else {
+				logger.debug(" ... we don't have that one yet!");
+				items.add(generateItem(type));
+			}
+		}
+		return items;
+	}
+
+	/**
 	 * Returns a list of items that contain one or more of the tags listed.
 	 * @param tags
 	 * @return
@@ -67,10 +87,7 @@ public class ItemFactory {
 				if(MathUtils.random(0, 1) <= type.getRarityIndex()) {
 					// Don't add duplicate items
 					if (!contains(items, type)) {
-						items.add(
-								new Item(
-										type,
-										type.getBaseQuantity() + MathUtils.ceil(type.getBaseQuantity() * MathUtils.random(-0.5f, 0.5f))));
+						items.add(generateItem(type));
 					}
 				}
 			}
@@ -78,10 +95,21 @@ public class ItemFactory {
 		return items;
 	}
 
+	/**
+	 * Helper method that encapsulates the algorithm used to determine how many items to return.
+	 * @param type The type of item to create
+	 * @return The generated item.
+	 */
+	private Item generateItem(ItemType type) {
+		return new Item(
+				type,
+				type.getBaseQuantity() + MathUtils.ceil(type.getBaseQuantity() * MathUtils.random(-0.5f, 0.5f)));
+	}
+
 	private boolean contains(Array<Item> items, ItemType type) {
 		for(Item item : items) {
-			if(item.getType().equals(type)) return false;
+			if(item.getType().equals(type)) return true;
 		}
-		return true;
+		return false;
 	}
 }

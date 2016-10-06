@@ -7,13 +7,17 @@ public class Station {
 	private String background;
 	private float x;
 	private float y;
+	private Merchant merchant;
 
-	public Station(String name, float x, float y, String description, String background) {
+	public Station() {}
+
+	public Station(String name, float x, float y, String description, String background, Merchant merchant) {
 		this.name = name;
 		this.x = x;
 		this.y = y;
 		this.description = description;
 		this.background = background;
+		this.merchant = merchant;
 	}
 
 	public String getName() {
@@ -38,6 +42,10 @@ public class Station {
 
 	public void setBackground(String background) {
 		this.background = background;
+	}
+
+	public Merchant getMerchant() {
+		return merchant;
 	}
 
 	public float getY() {

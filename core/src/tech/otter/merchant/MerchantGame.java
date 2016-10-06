@@ -14,6 +14,7 @@ import com.kotcrab.vis.ui.VisUI;
 import tech.otter.merchant.data.Galaxy;
 import tech.otter.merchant.data.Player;
 import tech.otter.merchant.factories.GalaxyFactory;
+import tech.otter.merchant.factories.ItemFactory;
 import tech.otter.merchant.screens.IntroScreen;
 import tech.otter.merchant.screens.MainMenuScreen;
 
@@ -71,8 +72,8 @@ public class MerchantGame extends Game {
 	 */
 	public void newGame() {
 		gameActive = true;
-		this.player = Player.mock();
-		this.galaxy = GalaxyFactory.get().mock();
+		this.galaxy = GalaxyFactory.get().make();
+		this.player = new Player(ItemFactory.get().make(5), galaxy.getStations().get("Homeworld"), galaxy.getStations().get("Homeworld"));
 		this.setScreen(new IntroScreen(this));
 	}
 

@@ -9,7 +9,6 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 
 import tech.otter.merchant.MerchantGame;
 import tech.otter.merchant.data.Station;
-import tech.otter.merchant.factories.MerchantFactory;
 
 public class StationScreen extends AbstractScreen {
 
@@ -47,8 +46,8 @@ public class StationScreen extends AbstractScreen {
 
 		VisTextButton btnTrader = new VisTextButton("Visit Trader", new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor) { // TODO: Make merchants children of stations
-				changeScreen(new TradeScreen(parent, MerchantFactory.get().make(), StationScreen.this));
+			public void changed(ChangeEvent event, Actor actor) {
+				changeScreen(new TradeScreen(parent, station.getMerchant(), StationScreen.this));
 			}
 		});
 		// TODO: Add Bar Screen
