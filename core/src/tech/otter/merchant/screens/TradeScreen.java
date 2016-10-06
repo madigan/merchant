@@ -1,9 +1,13 @@
 package tech.otter.merchant.screens;
 
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisImage;
@@ -283,7 +287,7 @@ public class TradeScreen extends AbstractScreen {
 			if(selected.getType().getImage() != null) {
 				image.setDrawable(parent.getManagedTexture("images/goods.atlas", selected.getType().getImage()));
 			} else {
-				image.clear();
+				image.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(new Pixmap(1,1, Pixmap.Format.RGBA8888)))));
 			}
 			IntSpinnerModel spinnerModel = ((IntSpinnerModel)spinner.getModel());
 			if(selected.equals(EMPTY)) {
