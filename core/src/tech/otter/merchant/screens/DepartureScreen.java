@@ -21,7 +21,7 @@ public class DepartureScreen extends AbstractScreen {
 
 	private ScalingGroup starMap;
 
-	public DepartureScreen(MerchantGame parent, AbstractScreen previous) {
+	public DepartureScreen(MerchantGame parent, final AbstractScreen previous) {
 		super(parent);
 		// Create UI Objects
 		VisTable tblLayout = new VisTable();
@@ -56,7 +56,7 @@ public class DepartureScreen extends AbstractScreen {
 	public void show() {
 		super.show();
 
-		for(Station station : parent.getGalaxy().getStations().values()) {
+		for(final Station station : parent.getGalaxy().getStations().values()) {
 			VisImage icon = new VisImage(parent.getManagedTexture("images/ui.atlas", "dot2"));
 			// TODO: Set relative to the map
 			VisTextButton btn = new VisTextButton(station.getName(), new ChangeListener() {

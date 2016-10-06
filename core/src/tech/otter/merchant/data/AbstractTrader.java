@@ -6,7 +6,7 @@ public class AbstractTrader implements iTrader {
 	private Array<Item> inventory;
 
 	public AbstractTrader() {
-		this(new Array<>());
+		this(new Array<Item>());
 	}
 	public AbstractTrader(Array<Item> inventory) {
 		this.inventory = inventory;

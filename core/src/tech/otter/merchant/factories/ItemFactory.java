@@ -19,8 +19,8 @@ public class ItemFactory {
 	private HashMap<String, Array<ItemType>> typesByTag;
 
 	private ItemFactory() {
-		types = new Array<>();
-		typesByTag = new HashMap<>();
+		types = new Array<ItemType>();
+		typesByTag = new HashMap<String, Array<ItemType>>();
 
 
 		Json json = new Json();
@@ -29,7 +29,7 @@ public class ItemFactory {
 		// Create lists of types by tag to make lookups faster
 		for(ItemType type : types) {
 			for(String tag : type.getTags()) {
-				if(!typesByTag.containsKey(tag)) typesByTag.put(tag, new Array<>());
+				if(!typesByTag.containsKey(tag)) typesByTag.put(tag, new Array<ItemType>());
 				typesByTag.get(tag).add(type);
 			}
 		}

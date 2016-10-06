@@ -19,7 +19,7 @@ public class StationScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		Station station = parent.getPlayer().getCurrentStation();
+		final Station station = parent.getPlayer().getCurrentStation();
 
 		VisTable tblLayout = new VisTable();
 		tblLayout.setFillParent(true);

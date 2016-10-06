@@ -24,7 +24,7 @@ public class CargoScreen extends AbstractScreen {
 	private VisImage imgItem;
 	private VisTextArea txtDescription;
 
-	public CargoScreen(MerchantGame parent) {
+	public CargoScreen(final MerchantGame parent) {
 		super(parent);
 
 		VisTable tblLayout = new VisTable();

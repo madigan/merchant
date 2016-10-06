@@ -8,13 +8,15 @@ import com.github.czyzby.kiwi.log.LoggerService;
 import tech.otter.merchant.factories.ItemFactory;
 
 public class Merchant extends AbstractTrader {
-	private Logger logger = LoggerService.forClass(getClass());
+
+	private transient Logger logger = LoggerService.forClass(getClass());
 	private final static float VARIANCE = 0.1f; // 10%
 
 	private String name;
 	private String portrait;
 
-	public Merchant() {}
+	public Merchant() {
+	}
 
 	public Merchant(String name, String portrait, Array<Item> inventory) {
 		super(inventory);
