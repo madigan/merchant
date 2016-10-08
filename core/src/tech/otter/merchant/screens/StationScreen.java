@@ -1,7 +1,9 @@
 package tech.otter.merchant.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.kotcrab.vis.ui.widget.VisImage;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTable;
@@ -23,7 +25,6 @@ public class StationScreen extends AbstractScreen {
 
 		VisTable tblLayout = new VisTable();
 		tblLayout.setFillParent(true);
-		if(station.getBackground() != null) tblLayout.setBackground(station.getBackground());
 
 		VisLabel lblStationName = new VisLabel(station.getName());
 		// TODO: Make this lblTitle bigger
@@ -74,6 +75,13 @@ public class StationScreen extends AbstractScreen {
 			}
 		});
 
+		VisImage background = new VisImage(parent.getManagedTexture("images/ui.atlas", station.getBackground()));
+		background.setSize(ui.getWidth(), ui.getWidth());
+		background.setPosition(0, -background.getHeight());
+		background.setColor(background.getColor().r, background.getColor().g, background.getColor().b, 0);
+		background.addAction(Actions.fadeIn(2.0f));
+		background.addAction(Actions.moveBy(0, ui.getHeight(), 2.0f));
+
 		tblButtons.add(btnTrader);
 		tblButtons.row();
 		tblButtons.add(btnBar);
@@ -91,6 +99,8 @@ public class StationScreen extends AbstractScreen {
 		tblLayout.row();
 		tblLayout.add(spStationDescription).width(200f).height(141f).top();
 		tblLayout.add(tblButtons);
+
+		ui.addActor(background);
 		ui.addActor(tblLayout);
 	}
 }

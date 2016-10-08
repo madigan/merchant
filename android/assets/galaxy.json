@@ -4,7 +4,7 @@
       "class": "tech.otter.merchant.data.Station",
       "name": "Homeworld",
       "description": "The barren landscape of this world is dotted with ancient stone ruins that remind its inhabitants of better days. Most of its inhabitants are nomadic Yak-herders.",
-      "background": null,
+      "background": "planet1",
       "x": 246.0,
       "y": 280.0,
       "merchant": {
