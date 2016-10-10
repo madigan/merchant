@@ -82,16 +82,11 @@ public class StationScreen extends AbstractScreen {
 		background.addAction(Actions.fadeIn(2.0f));
 		background.addAction(Actions.moveBy(0, ui.getHeight(), 2.0f));
 
-		tblButtons.add(btnTrader);
-		tblButtons.row();
-		tblButtons.add(btnBar);
-		tblButtons.row();
-		tblButtons.add(btnCargo);
-		tblButtons.row();
-		tblButtons.add(btnLeave);
-		tblButtons.row();
-		tblButtons.addSeparator();
-		tblButtons.row();
+		tblButtons.add(btnTrader).row();
+		tblButtons.add(btnBar).row();
+		tblButtons.add(btnCargo).row();
+		tblButtons.add(btnLeave).row();
+		tblButtons.addSeparator().row();
 		tblButtons.add(btnMenu);
 
 		// === Add elements to the screen === //
