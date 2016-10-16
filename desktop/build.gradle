@@ -2,15 +2,10 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker
 
 apply plugin: "java"
 
-sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 project.ext.mainClassName = "tech.otter.merchant.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets");
-project.ext.texturePacker = [
-        ["android/assets/unpacked/goods", "android/assets/images/", "goods"],
-        ["android/assets/unpacked/merchants", "android/assets/images/", "merchants"],
-        ["android/assets/unpacked/ui", "android/assets/images/", "ui"]]
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
@@ -51,6 +46,10 @@ task afterEclipseImport(description: "Post processing after project generation",
   }
 }
 
+project.ext.texturePacker = [
+        ["assets/unpacked/goods", "android/assets/images/", "goods"],
+        ["assets/unpacked/merchants", "android/assets/images/", "merchants"],
+        ["assets/unpacked/ui", "android/assets/images/", "ui"]]
 task texturePacker << {
     if (project.ext.has('texturePacker')) {
         logger.info "Calling TexturePacker: "+texturePacker
