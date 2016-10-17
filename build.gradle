@@ -39,7 +39,6 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
-
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
@@ -70,7 +69,6 @@ project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
 
-
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
@@ -84,7 +82,6 @@ project(":html") {
 
 project(":core") {
     apply plugin: "java"
-
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
