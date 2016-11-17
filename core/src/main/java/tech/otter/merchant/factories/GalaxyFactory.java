@@ -38,22 +38,4 @@ public class GalaxyFactory {
 
 		return galaxy;
 	}
-
-	public Galaxy mock() {
-		Galaxy galaxy = new Galaxy();
-		Array<Station> stations = StationFactory.get().mockMultiple();
-
-		Array<StarLane> lanes = new Array<>();
-		for(int i = 1; i < stations.size; i++) {
-			lanes.add(new StarLane(stations.get(i-1), stations.get(i), MathUtils.random(10)));
-		}
-		for(int i = 0; i < stations.size / 2; i++) {
-			StarLane lane = new StarLane(stations.random(), stations.random(), MathUtils.random(10));
-			if(lane.getTo() != lane.getFrom() && !lanes.contains(lane, false)) lanes.add(lane);
-		}
-
-		galaxy.setStations(stations);
-		galaxy.setLanes(lanes);
-		return galaxy;
-	}
 }

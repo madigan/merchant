@@ -1,9 +1,6 @@
 package tech.otter.merchant.data;
 
-import com.badlogic.gdx.utils.Array;
-
-import tech.otter.merchant.factories.ItemFactory;
-import tech.otter.merchant.factories.StationFactory;
+import com.badlogic.gdx.utils.ObjectIntMap;
 
 public class Player extends AbstractTrader {
 	private Station currentStation;
@@ -13,7 +10,7 @@ public class Player extends AbstractTrader {
 		super();
 	}
 
-	public Player(Array<Item> inventory, Station currentStation, Station homeworld) {
+	public Player(ObjectIntMap<Item> inventory, Station currentStation, Station homeworld) {
 		super(inventory);
 		this.currentStation = currentStation;
 		this.homeworld = homeworld;
@@ -30,14 +27,5 @@ public class Player extends AbstractTrader {
 
 	public boolean isAtHomeWorld() {
 		return this.homeworld.equals(currentStation);
-	}
-
-	public static Player mock() {
-		Array<Item> inventory = Array.with(
-				ItemFactory.get().make("Cubic Yaks").setCount(20),
-				ItemFactory.get().make("Bindookian Spices").setCount(5),
-				ItemFactory.get().make("Cryo-Pod").setCount(2));
-		Station world = StationFactory.get().mock();
-		return new Player(inventory, world, world);
 	}
 }

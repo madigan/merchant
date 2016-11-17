@@ -10,17 +10,12 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextArea;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import java.util.Comparator;
-
 import tech.otter.merchant.MerchantGame;
-import tech.otter.merchant.data.Item;
+import tech.otter.merchant.util.ItemEntry;
 
-/**
- * Created by john on 9/28/16.
- */
 
 public class CargoScreen extends AbstractScreen {
-	private VisList<Item> lstItems;
+	private VisList<ItemEntry> lstItems;
 	private VisImage imgItem;
 	private VisTextArea txtDescription;
 
@@ -66,18 +61,14 @@ public class CargoScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		Array<Item> items = new Array<>(parent.getPlayer().getInventory());
-		items.sort(new Comparator<Item>() {
-			@Override
-			public int compare(Item item1, Item item2) {
-				return item1.getType().getName().compareTo(item2.getType().getName());
-			}
-		});
+		Array<ItemEntry> items = new Array<>();
+		parent.getPlayer().getInventory().forEach(i -> items.add(new ItemEntry(i.key, i.value)));
+		items.sort(new ItemEntry.ItemEntryComparator());
 		lstItems.setItems(items);
 		updateSelection(lstItems.getSelected());
 	}
 
-	private void updateSelection(Item selected) {
+	private void updateSelection(ItemEntry selected) {
 		imgItem.setDrawable(parent.getManagedTexture("images/goods.atlas", selected.getType().getImage()));
 		txtDescription.setText(selected.getType().getDescription());
 	}

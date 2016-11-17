@@ -10,7 +10,9 @@
       "merchant": {
         "class": "tech.otter.merchant.data.Merchant",
         "name": "Jaak Bill",
-        "portrait": "merchant1"
+        "portrait": "merchant1",
+        "desires": ["category-appliances", "category-kreen"],
+        "provides": ["category-food"]
       }
     },
     "Kreen": {
@@ -23,7 +25,9 @@
       "merchant": {
         "class": "tech.otter.merchant.data.Merchant",
         "name": "Erk Groll",
-        "portrait": "merchant1"
+        "portrait": "merchant1",
+        "desires": ["category-appliance", "category-luxury"],
+        "provides": ["category-kreen"]
       }
     },
     "Bocan": {
@@ -36,7 +40,9 @@
       "merchant": {
         "class": "tech.otter.merchant.data.Merchant",
         "name": "Lukluk",
-        "portrait": "merchant2"
+        "portrait": "merchant2",
+        "desires": ["category-material"],
+        "provides": ["category-bocan", "category-appliance"]
       }
     },
     "Tethsmun": {
@@ -49,7 +55,9 @@
       "merchant": {
         "class": "tech.otter.merchant.data.Merchant",
         "name": "Gran Xu",
-        "portrait": "merchant3"
+        "portrait": "merchant3",
+        "desires": ["category-luxury"],
+        "provides": ["category-ewian", "category-food"]
       }
     },
     "Pondera": {
@@ -62,7 +70,9 @@
       "merchant": {
         "class": "tech.otter.merchant.data.Merchant",
         "name": "Klevick",
-        "portrait": "merchant5"
+        "portrait": "merchant5",
+        "desires": ["category-food"],
+        "provides": ["category-glurf"]
       }
     }
   }

@@ -10,4 +10,5 @@ eclipse.project {
 
 dependencies {
     compile 'com.badlogicgames.gdx:gdx-tools:1.9.4'
+    testCompile 'junit:junit:4.12'
 }

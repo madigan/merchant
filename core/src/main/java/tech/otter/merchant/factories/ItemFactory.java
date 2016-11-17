@@ -4,36 +4,38 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.ObjectIntMap;
 import com.github.czyzby.kiwi.log.Logger;
 import com.github.czyzby.kiwi.log.LoggerService;
 
 import java.util.HashMap;
 
 import tech.otter.merchant.data.Item;
-import tech.otter.merchant.data.ItemType;
 
 public class ItemFactory {
+    private static final String FILE = "items.json";
+
 	private Logger logger = LoggerService.forClass(getClass());
 	private static ItemFactory INSTANCE;
-	private Array<ItemType> types;
-	private HashMap<String, Array<ItemType>> typesByTag;
+	private Array<Item> types;
+	private HashMap<String, Array<Item>> typesByTag;
 
 	private ItemFactory() {
-		types = new Array<ItemType>();
-		typesByTag = new HashMap<String, Array<ItemType>>();
+		types = new Array<>();
+		typesByTag = new HashMap<>();
 
 
 		Json json = new Json();
-		types = json.fromJson(Array.class, ItemType.class, Gdx.files.internal("item-types.json") );
+		types = json.fromJson(Array.class, Item.class, Gdx.files.internal(FILE) );
 
 		// Create lists of types by tag to make lookups faster
-		for(ItemType type : types) {
+		for(Item type : types) {
 			for(String tag : type.getTags()) {
-				if(!typesByTag.containsKey(tag)) typesByTag.put(tag, new Array<ItemType>());
+				if(!typesByTag.containsKey(tag)) typesByTag.put(tag, new Array<Item>());
 				typesByTag.get(tag).add(type);
 			}
 		}
-		for(ItemType i : types) logger.debug("Loaded ItemType: '{0}'", i.getName());
+		for(Item i : types) Gdx.app.debug(getClass().getCanonicalName(), String.format("Loaded Item: '%s'", i.getName()));
 	}
 
 	public static ItemFactory get() {
@@ -41,14 +43,17 @@ public class ItemFactory {
 		return INSTANCE;
 	}
 
-	public Item make(String name) {
-		for(ItemType type : types) {
+	public ObjectIntMap<Item> make(String name) {
+		ObjectIntMap<Item> map = new ObjectIntMap<>();
+		for(Item type : types) {
 			if(type.getName().equals(name)) {
-				return new Item(type);
+				map.put(type, 0);
+				return map;
 			}
 		}
-		logger.error("Couldn't find an item named '{0}'", name);
-		return new Item(new ItemType("Sneaky Droids", "This is not the item you're looking for.", null, 1.0f, 1, 1.0f, null));
+		Gdx.app.error(getClass().getCanonicalName(), String.format("Couldn't find an item named '%s'", name));
+		map.put(new Item("Sneaky Droids", "This is not the item you're looking for.", null, 1.0f, 1, 1.0f, null), 0);
+		return map;
 	}
 
 	/**
@@ -56,19 +61,11 @@ public class ItemFactory {
 	 * @param count The number of items to generate
 	 * @return The generated items.
 	 */
-	public Array<Item> make(int count) {
-		Array<Item> items = new Array<>();
+	public ObjectIntMap<Item> make(int count) {
+		ObjectIntMap<Item> items = new ObjectIntMap<>();
+		types.shuffle();
 		for(int i = 0; i < count; i++) {
-			ItemType type = types.random();
-			logger.debug("Random type is: {0}", type.getName());
-			if(contains(items, type)) {
-				logger.debug(" ... but we already have that one in {0}", items);
-				i--;
-				continue;
-			} else {
-				logger.debug(" ... we don't have that one yet!");
-				items.add(generateItem(type));
-			}
+			items.putAll(generateItem(types.get(i)));
 		}
 		return items;
 	}
@@ -78,17 +75,14 @@ public class ItemFactory {
 	 * @param tags
 	 * @return
 	 */
-	public Array<Item> make(Array<String> tags) {
-		Array<Item> items = new Array<>();
+	public ObjectIntMap<Item> make(Array<String> tags) {
+		ObjectIntMap<Item> items = new ObjectIntMap<>();
 		for(String tag : tags) {
 			if(!typesByTag.containsKey(tag)) continue;
-			for(ItemType type : typesByTag.get(tag)) {
+			for(Item type : typesByTag.get(tag)) {
 				// Only add the item if it falls below the rarity index (make some items less common)
 				if(MathUtils.random(0, 1) <= type.getRarityIndex()) {
-					// Don't add duplicate items
-					if (!contains(items, type)) {
-						items.add(generateItem(type));
-					}
+					items.putAll(generateItem(type));
 				}
 			}
 		}
@@ -100,16 +94,9 @@ public class ItemFactory {
 	 * @param type The type of item to create
 	 * @return The generated item.
 	 */
-	private Item generateItem(ItemType type) {
-		return new Item(
-				type,
-				type.getBaseQuantity() + MathUtils.ceil(type.getBaseQuantity() * MathUtils.random(-0.5f, 0.5f)));
-	}
-
-	private boolean contains(Array<Item> items, ItemType type) {
-		for(Item item : items) {
-			if(item.getType().equals(type)) return true;
-		}
-		return false;
+	private ObjectIntMap<Item> generateItem(Item type) {
+		ObjectIntMap<Item> item = new ObjectIntMap<>();
+		item.put(type, type.getBaseQuantity() + MathUtils.ceil(type.getBaseQuantity() * MathUtils.random(-0.5f, 0.5f)));
+		return item;
 	}
 }

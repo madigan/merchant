@@ -1,6 +1,8 @@
 package tech.otter.merchant;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,11 +19,13 @@ import tech.otter.merchant.factories.GalaxyFactory;
 import tech.otter.merchant.factories.ItemFactory;
 import tech.otter.merchant.screens.IntroScreen;
 import tech.otter.merchant.screens.MainMenuScreen;
+import tech.otter.merchant.util.GameLogger;
+import tech.otter.merchant.util.MultiLogger;
 
 public class MerchantGame extends Game {
-	private Logger logger;
 	private boolean debugOn = false;
 	private AssetManager assetManager;
+	private GameLogger logger;
 
 	private Galaxy galaxy;
 	private Player player;
@@ -29,7 +33,13 @@ public class MerchantGame extends Game {
 	// libGDX Game Methods //
 	@Override
 	public void create () {
-		logger = LoggerService.forClass(getClass());
+		// Inject the game logger
+		logger = new GameLogger();
+		Gdx.app.setApplicationLogger(
+				new MultiLogger()
+						.addLogger(Gdx.app.getApplicationLogger())
+						.addLogger(logger));
+		// Initialize the asset manager
 		assetManager = new AssetManager();
 		VisUI.load();
 		this.setDebugOn(false);
@@ -39,6 +49,7 @@ public class MerchantGame extends Game {
 		assetManager.load("images/merchants.atlas", TextureAtlas.class);
 		assetManager.load("images/ui.atlas", TextureAtlas.class);
 		assetManager.finishLoading();
+
 		// TODO: Create a manager for the screens
 		this.setScreen(new MainMenuScreen(this));
 	}
@@ -54,7 +65,7 @@ public class MerchantGame extends Game {
 		try {
 			return new TextureRegionDrawable(assetManager.get(atlas, TextureAtlas.class).findRegion(image));
 		} catch(Exception e) {
-			logger.error(e.getMessage());
+			Gdx.app.error(getClass().getCanonicalName(), "Couldn't get managed texture.", e);
 			return new TextureRegionDrawable(new TextureRegion(new Texture(new Pixmap(1,1, Pixmap.Format.RGBA8888))));
 		}
 	}
@@ -83,7 +94,7 @@ public class MerchantGame extends Game {
 
 	public MerchantGame setDebugOn(boolean on) {
 		this.debugOn = on;
-		LoggerService.debug(debugOn);
+		Gdx.app.setLogLevel(on ? Application.LOG_DEBUG : Application.LOG_INFO);
 		return this;
 	}
 
