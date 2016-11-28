@@ -179,7 +179,7 @@ public class MerchantTest {
             try {
                 deal = merchant.completeDeal(deal);
             } catch (Merchant.NoProfitableTradesException e) {
-                Assert.fail(e.getMessage());
+                Assert.fail("Couldn't find a profitable trade: " + deal);
             }
 
             Assert.assertTrue("The quantity offered must be greater than 0.", deal.getMerchantQty() > 0);

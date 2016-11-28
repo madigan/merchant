@@ -41,7 +41,7 @@ public class MerchantGame extends Game {
 						.addLogger(logger));
 		// Initialize the asset manager
 		assetManager = new AssetManager();
-		VisUI.load();
+		VisUI.load(Gdx.files.internal("skin/neon-ui.json"));
 		this.setDebugOn(false);
 
 		// TODO: Make a snazzy loading bar

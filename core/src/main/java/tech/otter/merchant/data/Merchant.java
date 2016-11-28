@@ -165,7 +165,7 @@ public class Merchant extends AbstractTrader {
     }
 
     int getPlayerQty(int merchantQty, Item playerItem, Item merchantItem) {
-        return MathUtils.floor(merchantQty * valueOf(merchantItem) * (1+profitMargin) / valueOf(playerItem));
+        return MathUtils.ceil(merchantQty * valueOf(merchantItem) * (1+profitMargin) / valueOf(playerItem));
     }
     int getMerchantQty(int playerQty, Item playerItem, Item merchantItem) {
         return MathUtils.floor(playerQty * valueOf(playerItem) / valueOf(merchantItem) / (1+profitMargin));
