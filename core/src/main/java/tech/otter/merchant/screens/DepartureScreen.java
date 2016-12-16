@@ -9,61 +9,60 @@ import com.kotcrab.vis.ui.widget.VisImage;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.MerchantGame;
+import tech.otter.merchant.GameController;
 import tech.otter.merchant.data.StarLane;
 import tech.otter.merchant.data.Station;
 
 public class DepartureScreen extends AbstractScreen {
 	private final float PADDING = 2f;
 
-	private Array<Station> stations;
-	private Array<StarLane> starLanes;
-
 	private ScalingGroup starMap;
 
-	public DepartureScreen(MerchantGame parent, final AbstractScreen previous) {
+	public DepartureScreen(GameController parent) {
 		super(parent);
-		// Create UI Objects
-		VisTable tblLayout = new VisTable();
-		tblLayout.setFillParent(true);
-		tblLayout.align(Align.bottom);
-
-		// Create star map
-		VisImage starMapBackground = new VisImage(parent.getManagedTexture("images/ui.atlas", "map"));
-		starMapBackground.setFillParent(true);
-		starMapBackground.setZIndex(1);
-
-		starMap = new ScalingGroup();
-		starMap.addActor(starMapBackground);
-
-		// A button to go back to the station.
-		VisTextButton btnBack = new VisTextButton("Back", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				changeScreen(previous);
-			}
-		});
-
-		// Add them to the table layout
-		tblLayout.add(starMap).expand().fillY().center();
-		tblLayout.row();
-		tblLayout.add(btnBack).width(ui.getWidth() / 3 - 2*PADDING).pad(PADDING);
-
-		ui.addActor(tblLayout);
 	}
 
 	@Override
 	public void show() {
 		super.show();
+        ui.clear();
 
-		for(final Station station : parent.getGalaxy().getStations().values()) {
-			VisImage icon = new VisImage(parent.getManagedTexture("images/ui.atlas", "dot2"));
+        // Create UI Objects
+        VisTable tblLayout = new VisTable();
+        tblLayout.setFillParent(true);
+        tblLayout.align(Align.bottom);
+
+        // Create star map
+        VisImage starMapBackground = new VisImage(parent.getManagedTexture("map"));
+        starMapBackground.setFillParent(true);
+        starMapBackground.setZIndex(1);
+
+        starMap = new ScalingGroup();
+        starMap.addActor(starMapBackground);
+
+        // A button to go back to the station.
+        VisTextButton btnBack = new VisTextButton("Back", new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(StationScreen.class);
+            }
+        });
+
+        // Add them to the table layout
+        tblLayout.add(starMap).expand().fillY().center();
+        tblLayout.row();
+        tblLayout.add(btnBack).width(ui.getWidth() / 3 - 2*PADDING).pad(PADDING);
+
+        ui.addActor(tblLayout);
+
+		for(final Station station : world.getGalaxy().getStations().values()) {
+			VisImage icon = new VisImage(parent.getManagedTexture("dot2"));
 			// TODO: Set relative to the map
 			VisTextButton btn = new VisTextButton(station.getName(), new ChangeListener() {
 				@Override
 				public void changed(ChangeEvent event, Actor actor) {
-					parent.getPlayer().setCurrentStation(station);
-					changeScreen(new StationScreen(parent));
+					world.getPlayer().setCurrentStation(station);
+                    parent.changeScreen(StationScreen.class);
 				}
 			});
 			btn.setPosition(station.getX() + btn.getHeight(), station.getY());

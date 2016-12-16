@@ -9,19 +9,19 @@ import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.MerchantGame;
+import tech.otter.merchant.GameController;
 import tech.otter.merchant.data.Station;
 
 public class StationScreen extends AbstractScreen {
 
-	public StationScreen(MerchantGame parent) {
+	public StationScreen(GameController parent) {
 		super(parent);
 	}
 	
 	@Override
 	public void show() {
 		super.show();
-		final Station station = parent.getPlayer().getCurrentStation();
+		final Station station = parent.getWorld().getPlayer().getCurrentStation();
 
 		VisTable tblLayout = new VisTable();
 		tblLayout.setFillParent(true);
@@ -38,7 +38,7 @@ public class StationScreen extends AbstractScreen {
 		VisTable tblButtons = new VisTable();
 		tblButtons.columnDefaults(0).pad(2f).width(300f);
 
-		if(parent.getPlayer().isAtHomeWorld()) {
+		if(parent.getWorld().getPlayer().isAtHomeWorld()) {
 			// TODO: Add Clan Screen
 			VisTextButton btnClan = new VisTextButton("Visit Clan");
 			tblButtons.add(btnClan);
@@ -48,7 +48,7 @@ public class StationScreen extends AbstractScreen {
 		VisTextButton btnTrader = new VisTextButton("Visit Trader", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				changeScreen(new TradeScreen(parent, station.getMerchant(), StationScreen.this));
+				parent.changeScreen(TradeScreen.class);
 			}
 		});
 		// TODO: Add Bar Screen
@@ -57,25 +57,25 @@ public class StationScreen extends AbstractScreen {
 		VisTextButton btnCargo = new VisTextButton("View Cargo", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				changeScreen(new CargoScreen(parent));
+				parent.changeScreen(CargoScreen.class);
 			}
 		});
 
 		VisTextButton btnLeave = new VisTextButton("Leave Station", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				changeScreen(new DepartureScreen(parent, StationScreen.this));
+				parent.changeScreen(DepartureScreen.class);
 			}
 		});
 
 		VisTextButton btnMenu = new VisTextButton("Quit to Main Menu", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				changeScreen(new MainMenuScreen(parent));
+                parent.changeScreen(MainMenuScreen.class);
 			}
 		});
 
-		VisImage background = new VisImage(parent.getManagedTexture("images/ui.atlas", station.getBackground()));
+		VisImage background = new VisImage(parent.getManagedTexture(station.getBackground()));
 		background.setSize(ui.getWidth(), ui.getWidth());
 		background.setPosition(0, -background.getHeight());
 		background.setColor(background.getColor().r, background.getColor().g, background.getColor().b, 0);

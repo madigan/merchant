@@ -3,7 +3,7 @@ package tech.otter.merchant.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import tech.otter.merchant.MerchantGame;
+import tech.otter.merchant.GameController;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -14,6 +14,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new MerchantGame();
+                return new GameController();
         }
 }

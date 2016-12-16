@@ -11,74 +11,78 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.github.czyzby.kiwi.log.Logger;
 import com.github.czyzby.kiwi.log.LoggerService;
 
-import tech.otter.merchant.MerchantGame;
+import tech.otter.merchant.GameController;
+import tech.otter.merchant.data.GameWorld;
 
 public abstract class AbstractScreen implements Screen {
 	protected Logger logger = LoggerService.forClass(getClass());
-	protected MerchantGame parent;
+	protected GameController parent;
+    protected GameWorld world;
 	protected Stage ui;
 	
-	public AbstractScreen(final MerchantGame parent) {
+	public AbstractScreen(final GameController parent) {
 		this.parent = parent;
+        this.world = parent.getWorld();
 		
 		ui = new Stage(new ScreenViewport());
+
+
+        InputMultiplexer input = new InputMultiplexer();
+        input.addProcessor(ui);
+
+        // Add an input processor to toggle debug mode via F3.
+        input.addProcessor(new InputProcessor() {
+            @Override
+            public boolean keyDown(int keycode) {
+                return false;
+            }
+
+            @Override
+            public boolean keyUp(int keycode) {
+                if(keycode == Input.Keys.F3) {
+                    parent.setDebugOn(!parent.isDebugOn());
+                    ui.setDebugAll(parent.isDebugOn());
+                }
+                return true;
+            }
+
+            @Override
+            public boolean keyTyped(char character) {
+                return false;
+            }
+
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                return false;
+            }
+
+            @Override
+            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+                return false;
+            }
+
+            @Override
+            public boolean touchDragged(int screenX, int screenY, int pointer) {
+                return false;
+            }
+
+            @Override
+            public boolean mouseMoved(int screenX, int screenY) {
+                return false;
+            }
+
+            @Override
+            public boolean scrolled(int amount) {
+                return false;
+            }
+        });
+        Gdx.input.setInputProcessor(input);
 	}
 
 	@Override
 	public void show() {
-		InputMultiplexer input = new InputMultiplexer();
-		input.addProcessor(ui);
-
 		// Set Debug Mode
 		ui.setDebugAll(parent.isDebugOn());
-
-		// Add an input processor to toggle debug mode via F3.
-		input.addProcessor(new InputProcessor() {
-			@Override
-			public boolean keyDown(int keycode) {
-				return false;
-			}
-
-			@Override
-			public boolean keyUp(int keycode) {
-				if(keycode == Input.Keys.F3) {
-					parent.setDebugOn(!parent.isDebugOn());
-					ui.setDebugAll(parent.isDebugOn());
-				}
-				return true;
-			}
-
-			@Override
-			public boolean keyTyped(char character) {
-				return false;
-			}
-
-			@Override
-			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-				return false;
-			}
-
-			@Override
-			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-				return false;
-			}
-
-			@Override
-			public boolean touchDragged(int screenX, int screenY, int pointer) {
-				return false;
-			}
-
-			@Override
-			public boolean mouseMoved(int screenX, int screenY) {
-				return false;
-			}
-
-			@Override
-			public boolean scrolled(int amount) {
-				return false;
-			}
-		});
-		Gdx.input.setInputProcessor(input);
 	}
 
 	@Override
@@ -116,14 +120,5 @@ public abstract class AbstractScreen implements Screen {
 	public void dispose() {
 		if(ui != null) ui.dispose();
 		ui = null;
-	}
-	
-	/**
-	 * Convenience method to change screens.
-	 * @param next The next screen.
-	 */
-	public void changeScreen(Screen next) {
-		logger.debug("Changing screen to '{0}'", next.getClass().getSimpleName());
-		this.parent.setScreen(next);
 	}
 }

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import tech.otter.merchant.data.Item;
 
 public class ItemFactory {
-    private static final String FILE = "items.json";
+    private static final String FILE_NAME = "items.json";
 
 	private Logger logger = LoggerService.forClass(getClass());
 	private static ItemFactory INSTANCE;
@@ -26,7 +26,7 @@ public class ItemFactory {
 
 
 		Json json = new Json();
-		types = json.fromJson(Array.class, Item.class, Gdx.files.internal(FILE) );
+		types = json.fromJson(Array.class, Item.class, Gdx.files.internal(FILE_NAME) );
 
 		// Create lists of types by tag to make lookups faster
 		for(Item type : types) {

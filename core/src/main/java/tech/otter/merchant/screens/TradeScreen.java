@@ -1,6 +1,5 @@
 package tech.otter.merchant.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -17,7 +16,7 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.Spinner;
 
-import tech.otter.merchant.MerchantGame;
+import tech.otter.merchant.GameController;
 import tech.otter.merchant.data.Deal;
 import tech.otter.merchant.data.Item;
 import tech.otter.merchant.data.Merchant;
@@ -40,87 +39,87 @@ public class TradeScreen extends AbstractScreen {
 
 	final ItemEntry BLANK = new ItemEntry();
 
-	public TradeScreen(MerchantGame parent, Merchant merchant, final AbstractScreen next) {
+	public TradeScreen(GameController parent) {
 		super(parent);
-
-		this.merchant = merchant;
-
-		// TODO: Use asset loader
-		// TODO: Redistribute functionality between constructor and show()
-		VisImage imgPortrait = new VisImage(parent.getManagedTexture("images/merchants.atlas", merchant.getPortrait()));
-
-		imgPortrait.setSize(300f, 300f);
-
-		// Assemble the player's trade options
-		imgPlayerOffer = new VisImage();
-		imgPlayerOffer.setSize(200f, 200f);
-		sbPlayerItems = new VisSelectBox<>();
-		sbPlayerItems.setItems(Array.with(BLANK));
-		spnPlayerQty = makeSpinner(sbPlayerItems);
-		sbPlayerItems.addListener( new ItemChangeListener(imgPlayerOffer, spnPlayerQty) );
-
-		// Assemble the merchant's trade options
-		imgMerchantOffer = new VisImage();
-		imgMerchantOffer.setSize(200f, 200f);
-		sbMerchantItems = new VisSelectBox<>();
-		sbMerchantItems.setItems(Array.with(BLANK));
-		spnMerchantQty = makeSpinner(sbMerchantItems);
-		sbMerchantItems.addListener( new ItemChangeListener(imgMerchantOffer, spnMerchantQty) );
-
-		btnOffer = new VisTextButton("Make an offer!", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				updateTrade();
-			}
-		});
-		updateCaption();
-
-		tblMessages = new VisTable();
-
-		// Populate the layout //
-		float PADDING = 5f;
-		VisTable layout = new VisTable();
-		layout.setFillParent(true);
-		layout.setWidth(ui.getWidth());
-		layout.columnDefaults(0).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
-		layout.columnDefaults(1).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
-		layout.columnDefaults(2).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
-
-
-		layout.add(new VisLabel("You'll give ...", Align.center));
-		layout.add(new VisLabel(merchant.getName(), Align.center));
-		layout.add(new VisLabel("... in exchange for ...", Align.center));
-
-		layout.row();
-		layout.add(imgPlayerOffer).width(ui.getWidth() / 4).height(ui.getWidth() / 4).pad(ui.getWidth() / 24);
-		layout.add(imgPortrait).height(layout.getWidth() / 3 - 2*PADDING);
-		layout.add(imgMerchantOffer).width(ui.getWidth() / 4).height(ui.getWidth() / 4).pad(ui.getWidth() / 24);
-
-		layout.row();
-		layout.add(sbPlayerItems).uniform();
-		layout.add(btnOffer).uniform();
-		layout.add(sbMerchantItems).uniform();
-
-		layout.row();
-		layout.add(spnPlayerQty).uniform();
-		layout.add(new VisTextButton("Back", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				changeScreen(next);
-			}
-		})).uniform();
-		layout.add(spnMerchantQty).uniform();
-
-		layout.row();
-		spMessages = new VisScrollPane(tblMessages);
-		spMessages.setScrollingDisabled(true, false);
-		spMessages.setFlickScroll(false);
-		layout.add(spMessages).height(100f).padLeft(10f).colspan(3).width(layout.getWidth() - 2*PADDING);
-
-		ui.addActor(layout);
-
-		resetPage();
 	}
+
+	@Override
+    public void show() {
+        super.show();
+
+        VisImage imgPortrait = new VisImage(parent.getManagedTexture(merchant.getPortrait()));
+        imgPortrait.setSize(300f, 300f);
+
+        // Assemble the player's trade options
+        imgPlayerOffer = new VisImage();
+        imgPlayerOffer.setSize(200f, 200f);
+        sbPlayerItems = new VisSelectBox<>();
+        sbPlayerItems.setItems(Array.with(BLANK));
+        spnPlayerQty = makeSpinner(sbPlayerItems);
+        sbPlayerItems.addListener( new ItemChangeListener(imgPlayerOffer, spnPlayerQty) );
+
+        // Assemble the merchant's trade options
+        imgMerchantOffer = new VisImage();
+        imgMerchantOffer.setSize(200f, 200f);
+        sbMerchantItems = new VisSelectBox<>();
+        sbMerchantItems.setItems(Array.with(BLANK));
+        spnMerchantQty = makeSpinner(sbMerchantItems);
+        sbMerchantItems.addListener( new ItemChangeListener(imgMerchantOffer, spnMerchantQty) );
+
+        btnOffer = new VisTextButton("Make an offer!", new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateTrade();
+            }
+        });
+        updateCaption();
+
+        tblMessages = new VisTable();
+
+        // Populate the layout //
+        float PADDING = 5f;
+        VisTable layout = new VisTable();
+        layout.setFillParent(true);
+        layout.setWidth(ui.getWidth());
+        layout.columnDefaults(0).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
+        layout.columnDefaults(1).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
+        layout.columnDefaults(2).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
+
+
+        layout.add(new VisLabel("You'll give ...", Align.center));
+        layout.add(new VisLabel(merchant.getName(), Align.center));
+        layout.add(new VisLabel("... in exchange for ...", Align.center));
+
+        layout.row();
+        layout.add(imgPlayerOffer).width(ui.getWidth() / 4).height(ui.getWidth() / 4).pad(ui.getWidth() / 24);
+        layout.add(imgPortrait).height(layout.getWidth() / 3 - 2*PADDING);
+        layout.add(imgMerchantOffer).width(ui.getWidth() / 4).height(ui.getWidth() / 4).pad(ui.getWidth() / 24);
+
+        layout.row();
+        layout.add(sbPlayerItems).uniform();
+        layout.add(btnOffer).uniform();
+        layout.add(sbMerchantItems).uniform();
+
+        layout.row();
+        layout.add(spnPlayerQty).uniform();
+        layout.add(new VisTextButton("Back", new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(StationScreen.class);
+            }
+        })).uniform();
+        layout.add(spnMerchantQty).uniform();
+
+        layout.row();
+        spMessages = new VisScrollPane(tblMessages);
+        spMessages.setScrollingDisabled(true, false);
+        spMessages.setFlickScroll(false);
+        layout.add(spMessages).height(100f).padLeft(10f).colspan(3).width(layout.getWidth() - 2*PADDING);
+
+        ui.addActor(layout);
+
+        resetPage();
+    }
 
 	/**
 	 * Updates the "Offer Button" caption based on the trade selection.
@@ -128,19 +127,15 @@ public class TradeScreen extends AbstractScreen {
 	public void updateCaption() {
 		if(sbPlayerItems.getSelected().equals(BLANK)) {
 			if(sbMerchantItems.getSelected().equals(BLANK)) {
-				btnOffer.setText("<Select a proposal>");
-				btnOffer.setDisabled(true);
+				btnOffer.setText("Make me a deal.");
 			} else {
 				btnOffer.setText("What do you want for this?");
-				btnOffer.setDisabled(false);
 			}
 		} else {
 			if(sbMerchantItems.getSelected().equals(BLANK)) {
 				btnOffer.setText("What will you give for this?");
-				btnOffer.setDisabled(false);
 			} else {
 				btnOffer.setText("How about this?");
-				btnOffer.setDisabled(false);
 			}
 		}
 	}
@@ -148,7 +143,7 @@ public class TradeScreen extends AbstractScreen {
 	private Deal deal = null;
 	public void updateTrade() {
 		if(deal == null) deal = new Deal();
-		deal.setPlayer(parent.getPlayer());
+		deal.setPlayer(parent.getWorld().getPlayer());
 		deal.setMerchant(merchant);
 
 		deal.setPlayerType(sbPlayerItems.getSelected().getType());
@@ -179,11 +174,6 @@ public class TradeScreen extends AbstractScreen {
                 });
             }
         }
-	}
-
-	@Override
-	public void show() {
-		super.show();
 	}
 
 	// Helper methods / classes //
@@ -225,7 +215,7 @@ public class TradeScreen extends AbstractScreen {
 		public void changed(ChangeEvent event, Actor actor) {
 			ItemEntry selected = ((VisSelectBox<ItemEntry>)actor).getSelected();
 			if(selected.getType() != null) {
-				image.setDrawable(parent.getManagedTexture("images/goods.atlas", selected.getType().getImage()));
+				image.setDrawable(parent.getManagedTexture(selected.getType().getImage()));
 			}
 			// Reset the spinner
 			IntSpinnerModel spinnerModel = ((IntSpinnerModel)spinner.getModel());
@@ -247,7 +237,7 @@ public class TradeScreen extends AbstractScreen {
 
 	private void resetPage() {
 		resetPageHelper(sbMerchantItems, merchant.getInventory());
-		resetPageHelper(sbPlayerItems, parent.getPlayer().getInventory());
+		resetPageHelper(sbPlayerItems, parent.getWorld().getPlayer().getInventory());
 	}
 	private void resetPageHelper(VisSelectBox<ItemEntry> selectBox, ObjectIntMap<Item> inventory) {
 		Array<ItemEntry> entries = Array.with(BLANK);

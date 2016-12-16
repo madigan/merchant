@@ -7,18 +7,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.MerchantGame;
+import tech.otter.merchant.GameController;
 
 public class MainMenuScreen extends AbstractScreen {
 
-	public MainMenuScreen(final MerchantGame parent) {
+	public MainMenuScreen(final GameController parent) {
 		super(parent);
 
 		VisTextButton btnContinue = new VisTextButton("Continue Game", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				logger.debug("Continue Game Clicked");
-				changeScreen(new StationScreen(parent));
+				parent.changeScreen(StationScreen.class);
 			}
 		});
 
@@ -26,7 +26,7 @@ public class MainMenuScreen extends AbstractScreen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				logger.debug("New Game Clicked");
-				changeScreen(new IntroScreen(parent));
+                parent.changeScreen(IntroScreen.class);
 			}
 		});
 
@@ -64,7 +64,7 @@ public class MainMenuScreen extends AbstractScreen {
 		tblButtons.columnDefaults(0).pad(2f).width(300f);
 		
 		// Only give the option to continue if a game is active
-		if( parent.isGameActive() ) {
+		if( parent.getWorld().isActive() ) {
 			tblButtons.add(btnContinue);
 			tblButtons.row();
 		}

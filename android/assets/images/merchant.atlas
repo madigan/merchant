@@ -1,0 +1,276 @@
+
+merchant.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dot
+  rotate: false
+  xy: 162, 1912
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+dot2
+  rotate: false
+  xy: 2, 2008
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+goods0
+  rotate: false
+  xy: 292, 1532
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods1
+  rotate: false
+  xy: 802, 1532
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods10
+  rotate: false
+  xy: 1532, 512
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods11
+  rotate: false
+  xy: 2, 2
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods12
+  rotate: false
+  xy: 512, 2
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods13
+  rotate: false
+  xy: 1022, 2
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods14
+  rotate: false
+  xy: 1532, 2
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods2
+  rotate: false
+  xy: 1312, 1532
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods3
+  rotate: false
+  xy: 2, 1022
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods4
+  rotate: false
+  xy: 512, 1022
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods5
+  rotate: false
+  xy: 1022, 1022
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods6
+  rotate: false
+  xy: 1532, 1022
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods7
+  rotate: false
+  xy: 2, 512
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods8
+  rotate: false
+  xy: 512, 512
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods9
+  rotate: false
+  xy: 1022, 512
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+planet1_icon
+  rotate: false
+  xy: 36, 1916
+  size: 124, 124
+  orig: 124, 124
+  offset: 0, 0
+  index: -1
+
+merchant2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cockpit
+  rotate: false
+  xy: 2, 993
+  size: 745, 1053
+  orig: 745, 1053
+  offset: 0, 0
+  index: -1
+goods15
+  rotate: false
+  xy: 1370, 2
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+map
+  rotate: false
+  xy: 1370, 512
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+merchant4
+  rotate: false
+  xy: 2, 312
+  size: 683, 679
+  orig: 683, 679
+  offset: 0, 0
+  index: -1
+merchant5
+  rotate: false
+  xy: 687, 314
+  size: 681, 677
+  orig: 681, 677
+  offset: 0, 0
+  index: -1
+planet1
+  rotate: false
+  xy: 749, 1026
+  size: 1020, 1020
+  orig: 1020, 1020
+  offset: 0, 0
+  index: -1
+
+merchant3.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+goods16
+  rotate: false
+  xy: 2, 1188
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods17
+  rotate: false
+  xy: 512, 1188
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods18
+  rotate: false
+  xy: 1022, 1188
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods19
+  rotate: false
+  xy: 1532, 1188
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods20
+  rotate: false
+  xy: 2, 678
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods21
+  rotate: false
+  xy: 512, 678
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods22
+  rotate: false
+  xy: 1022, 678
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods23
+  rotate: false
+  xy: 1532, 678
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+merchant1
+  rotate: false
+  xy: 2, 3
+  size: 679, 673
+  orig: 679, 673
+  offset: 0, 0
+  index: -1
+merchant2
+  rotate: false
+  xy: 683, 2
+  size: 682, 674
+  orig: 682, 674
+  offset: 0, 0
+  index: -1
+merchant3
+  rotate: false
+  xy: 1367, 2
+  size: 679, 674
+  orig: 679, 674
+  offset: 0, 0
+  index: -1
+
+merchant4.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+merchant6
+  rotate: false
+  xy: 2, 2
+  size: 680, 674
+  orig: 680, 674
+  offset: 0, 0
+  index: -1

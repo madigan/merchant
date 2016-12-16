@@ -10,7 +10,7 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextArea;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.MerchantGame;
+import tech.otter.merchant.GameController;
 import tech.otter.merchant.util.ItemEntry;
 
 
@@ -19,7 +19,7 @@ public class CargoScreen extends AbstractScreen {
 	private VisImage imgItem;
 	private VisTextArea txtDescription;
 
-	public CargoScreen(final MerchantGame parent) {
+	public CargoScreen(final GameController parent) {
 		super(parent);
 
 		VisTable tblLayout = new VisTable();
@@ -28,7 +28,7 @@ public class CargoScreen extends AbstractScreen {
 		tblLayout.setFillParent(true);
 
 		imgItem = new VisImage();
-		imgItem.setSize(ui.getWidth() / 2, ui.getWidth() / 2);
+		imgItem.setSize(ui.getWidth() / 2, ui.getWidth() / 2); // TODO: Refactor to world size.
 
 		lstItems = new VisList<>();
 		lstItems.addListener(new ChangeListener() {
@@ -44,7 +44,7 @@ public class CargoScreen extends AbstractScreen {
 		VisTextButton btnBack = new VisTextButton("Back", new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				changeScreen(new StationScreen(parent));
+                parent.changeScreen(StationScreen.class);
 			}
 		});
 
@@ -62,14 +62,24 @@ public class CargoScreen extends AbstractScreen {
 	public void show() {
 		super.show();
 		Array<ItemEntry> items = new Array<>();
-		parent.getPlayer().getInventory().forEach(i -> items.add(new ItemEntry(i.key, i.value)));
+		world.getPlayer().getInventory().forEach(i -> items.add(new ItemEntry(i.key, i.value)));
 		items.sort(new ItemEntry.ItemEntryComparator());
 		lstItems.setItems(items);
 		updateSelection(lstItems.getSelected());
 	}
 
+    /**
+     * Flush all stateful data.
+     */
+	@Override
+    public void hide() {
+        super.hide();
+        lstItems.clear();
+        updateSelection(lstItems.getSelected());
+    }
+
 	private void updateSelection(ItemEntry selected) {
-		imgItem.setDrawable(parent.getManagedTexture("images/goods.atlas", selected.getType().getImage()));
+		imgItem.setDrawable(parent.getManagedTexture(selected.getType().getImage()));
 		txtDescription.setText(selected.getType().getDescription());
 	}
 }

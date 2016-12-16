@@ -46,15 +46,10 @@ task afterEclipseImport(description: "Post processing after project generation",
   }
 }
 
-project.ext.texturePacker = [
-        ["assets/unpacked/goods", "android/assets/images/", "goods"],
-        ["assets/unpacked/merchants", "android/assets/images/", "merchants"],
-        ["assets/unpacked/ui", "android/assets/images/", "ui"]]
+project.ext.texturePacker = ["assets/unpacked", "android/assets/images/", "merchant"]
 task texturePacker << {
     if (project.ext.has('texturePacker')) {
         logger.info "Calling TexturePacker: "+texturePacker
-        for (int i = 0; i < texturePacker.size; i++) {
-            TexturePacker.process(texturePacker[i][0], texturePacker[i][1], texturePacker[i][2])
-        }
+        TexturePacker.process(texturePacker[0], texturePacker[1], texturePacker[2])
     }
 }

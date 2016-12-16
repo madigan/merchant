@@ -1,10 +1,10 @@
 package tech.otter.merchant.screens;
 
-import tech.otter.merchant.MerchantGame;
+import tech.otter.merchant.GameController;
 
 public class NewGameScreen extends AbstractScreen {
 
-	public NewGameScreen(MerchantGame parent) {
+	public NewGameScreen(GameController parent) {
 		super(parent);
 	}
 	
@@ -12,7 +12,7 @@ public class NewGameScreen extends AbstractScreen {
 	public void show() {
 		super.show();
 		parent.newGame();
-		changeScreen(new StationScreen(parent));
+        parent.changeScreen(StationScreen.class);
 	}
 
 }

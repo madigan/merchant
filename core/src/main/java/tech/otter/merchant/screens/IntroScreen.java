@@ -11,13 +11,13 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import java.util.ArrayList;
 import java.util.List;
 
-import tech.otter.merchant.MerchantGame;
+import tech.otter.merchant.GameController;
 
 public class IntroScreen extends AbstractScreen {
 	private final float DELAY = 3.0f;
 	private final float LENGTH = 5.0f;
 
-	public IntroScreen(MerchantGame parent) {
+	public IntroScreen(GameController parent) {
 		super(parent);
 		
 	}
@@ -58,7 +58,7 @@ public class IntroScreen extends AbstractScreen {
 
 			@Override
 			public boolean act(float delta) {
-				changeScreen(new NewGameScreen(parent));
+                parent.changeScreen(NewGameScreen.class);
 				return false;
 			}
 			
@@ -70,7 +70,7 @@ public class IntroScreen extends AbstractScreen {
 			public boolean keyUp (InputEvent event, int keyCode) {
 				boolean consumed;
 				if(consumed = (keyCode == Keys.ESCAPE || keyCode == Keys.ENTER || keyCode == Keys.SPACE)) {
-					changeScreen(new NewGameScreen(parent));
+                    parent.changeScreen(NewGameScreen.class);
 				}
 				return consumed;
 			}
