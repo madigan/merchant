@@ -82,9 +82,12 @@ public class GameController extends Game {
 			return new TextureRegionDrawable(assetManager.get(ATLAS_NAME, TextureAtlas.class).findRegion(imageName));
 		} catch(Exception e) {
 			Gdx.app.error(getClass().getCanonicalName(), "Couldn't get managed texture.", e);
-			return new TextureRegionDrawable(new TextureRegion(new Texture(new Pixmap(1,1, Pixmap.Format.RGBA8888))));
+			return getEmptyTexture();
 		}
 	}
+	public TextureRegionDrawable getEmptyTexture() {
+        return new TextureRegionDrawable(new TextureRegion(new Texture(new Pixmap(1,1, Pixmap.Format.RGBA8888))));
+    }
 
 	// Real Game Methods //
 	/**

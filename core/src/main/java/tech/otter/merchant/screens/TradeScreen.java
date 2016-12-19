@@ -1,5 +1,7 @@
 package tech.otter.merchant.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -73,6 +75,7 @@ public class TradeScreen extends AbstractScreen {
         tblMessages = new VisTable();
 
         lblMerchantName = new VisLabel();
+        lblMerchantName.setAlignment(Align.center);
 
         // Populate the layout //
         float PADDING = 5f;
@@ -84,9 +87,9 @@ public class TradeScreen extends AbstractScreen {
         layout.columnDefaults(2).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
 
         // Header Row
-        layout.add(new VisLabel("You'll give ...")).align(Align.center);
-        layout.add(lblMerchantName).align(Align.center);
-        layout.add(new VisLabel("... in exchange for ...")).align(Align.center);
+        layout.add(new VisLabel("You'll give ...", Align.center));
+        layout.add(lblMerchantName);
+        layout.add(new VisLabel("... in exchange for ...", Align.center));
 
         // Image Row
         layout.row();
@@ -156,12 +159,15 @@ public class TradeScreen extends AbstractScreen {
 		deal.setMerchantType(sbMerchantItems.getSelected().getType());
 		deal.setMerchantQty(((IntSpinnerModel)spnMerchantQty.getModel()).getValue());
 
-        deal = merchant.processDeal(deal);
+        Gdx.app.debug("Trade", "Proposal: " + deal);
+        merchant.processDeal(deal);
 
         if(deal.isAccepted()) { // Reset the page to make room for a new deal.
+            Gdx.app.debug("Trade", "Accepted: " + deal);
 			resetPage();
 			deal = null;
 		} else { // Update the screen based on the current state of the deal.
+            Gdx.app.debug("Trade", "Current: " + deal);
             if(deal.isMerchantComplete()) {
                 // Update the item selection
                 sbMerchantItems.getItems().forEach(entry -> {
@@ -245,11 +251,12 @@ public class TradeScreen extends AbstractScreen {
 	}
 
 	private void resetPage() {
-		resetPageHelper(sbMerchantItems, merchant.getInventory());
-		resetPageHelper(sbPlayerItems, parent.getWorld().getPlayer().getInventory());
+		resetPageHelper(imgMerchantOffer, sbMerchantItems, merchant.getInventory());
+		resetPageHelper(imgPlayerOffer, sbPlayerItems, parent.getWorld().getPlayer().getInventory());
         updateCaption();
 	}
-	private void resetPageHelper(VisSelectBox<ItemEntry> selectBox, ObjectIntMap<Item> inventory) {
+	private void resetPageHelper(VisImage image, VisSelectBox<ItemEntry> selectBox, ObjectIntMap<Item> inventory) {
+        image.setDrawable(parent.getEmptyTexture());
 		Array<ItemEntry> entries = Array.with(BLANK);
 		inventory.forEach(i -> entries.add(new ItemEntry(i.key, i.value)));
 		entries.sort(new ItemEntry.ItemEntryComparator());

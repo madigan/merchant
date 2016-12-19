@@ -23,8 +23,7 @@ public class Merchant extends AbstractTrader {
      * @return Returns the adjusted deal or null if the deal is accepted.
      */
 	public Deal processDeal(Deal deal) {
-        if(deal == null) return null;
-        // TODO: Deal with other null values
+        if(deal == null) return null; // TODO: Deal with other null values
 
         if(deal.isMerchantComplete() && deal.isPlayerComplete()) {
             // If the item types are the same, don't accept it.
@@ -35,10 +34,10 @@ public class Merchant extends AbstractTrader {
             else if(isFair(deal)) {
                 log("I accept your proposal.");
                 deal.execute();
-                return null;
+                return deal;
             } else {
                 try {
-                    deal = adjustDeal(deal);
+                    return adjustDeal(deal);
                 } catch (NoFairTradeException e) {
                     log("I don't see any way to make that a fair trade.");
                     return deal;
@@ -47,7 +46,7 @@ public class Merchant extends AbstractTrader {
         } else if (!deal.isMerchantComplete() && !deal.isPlayerComplete()) {
             // If the player hasn't proposed *anything*, make an offer.
             try {
-                deal = proposeDeal(deal);
+                return proposeDeal(deal);
             } catch (NothingWantedException e) {
                 log("You don't appear to have anything I want.");
             } catch (NoViableTradesException e) {
@@ -56,7 +55,7 @@ public class Merchant extends AbstractTrader {
         } else {
             // If the player has offered/asked for something, complete the offer.
             try {
-                deal = completeDeal(deal);
+                return completeDeal(deal);
             } catch (NoProfitableTradesException e) {
                 log("I don't see any way I can offer a fair deal.");
             }
@@ -116,59 +115,64 @@ public class Merchant extends AbstractTrader {
      * @return
      */
     Deal completeDeal(Deal deal) throws NoProfitableTradesException {
-        deal = new Deal(deal); // Copy to avoid reference weirdness.
         if(deal.isMerchantComplete() && deal.isPlayerComplete()) {
             return deal;
-        } else {
-            if (!deal.isMerchantComplete()) {
-                Array<Item> candidates = new Array<>();
-                getInventory().keys().forEach(item -> candidates.add(item));
-                candidates.shuffle();
+        } else if (!deal.isMerchantComplete()) {
+            // Get a list of possible things to offer the player
+            Array<Item> candidates = new Array<>();
+            getInventory().keys().forEach(item -> candidates.add(item));
+            candidates.shuffle();
 
-                // Complete the merchant side
-                for(Item candidate : candidates) {
-                    int merchantQty = getMerchantQty(deal.getPlayerQty(), deal.getPlayerType(), candidate);
+            // See if a fair trade can be created using any of the candidates
+            for(Item candidate : candidates) {
+                int merchantQty = getMerchantQty(deal.getPlayerQty(), deal.getPlayerType(), candidate);
 
-                    if(merchantQty > getInventory().get(candidate, 0)) {
-                        merchantQty = getInventory().get(candidate, 0);
-                    }
-                    deal.setMerchantQty(merchantQty);
-                    deal.setMerchantType(candidate);
-                    if(isFair(deal) && !deal.isSilly()) {
-                        log("How about I give you " + deal.getMerchantQty() + " " + deal.getMerchantType() + "?");
-                        return deal;
-                    }
+                if(merchantQty > getInventory().get(candidate, 0)) {
+                    merchantQty = getInventory().get(candidate, 0);
                 }
-            } else {
-                Array<Item> candidates = new Array<>();
-                deal.getPlayer().getInventory().keys().forEach(item -> candidates.add(item));
-                candidates.shuffle();
-
-                // Complete the player side
-                for(Item candidate : candidates) {
-                    int playerQty = getPlayerQty(deal.getMerchantQty(), candidate, deal.getMerchantType());
-
-                    if(playerQty > deal.getPlayer().getInventory().get(candidate, 0)) {
-                        playerQty = deal.getPlayer().getInventory().get(candidate, 0);
-                    }
-                    deal.setPlayerQty(playerQty);
-                    deal.setPlayerType(candidate);
-                    if(isFair(deal) && !deal.isSilly()) {
-                        log("How about you give me " + deal.getPlayerQty() + " " + deal.getPlayerType() + "?");
-                        return deal;
-                    }
+                deal.setMerchantQty(merchantQty);
+                deal.setMerchantType(candidate);
+                if(isFair(deal) && !deal.isSilly()) {
+                    log("How about I give you " + deal.getMerchantQty() + " " + deal.getMerchantType() + "?");
+                    return deal;
+                } else {
+                    deal.setMerchantQty(0);
+                    deal.setMerchantType(null);
                 }
             }
-            // If we still can't make a fair deal, throw an exception.
-            throw new NoProfitableTradesException();
+        } else {
+            Array<Item> candidates = new Array<>();
+            deal.getPlayer().getInventory().keys().forEach(item -> candidates.add(item));
+            candidates.shuffle();
+
+            // Complete the player side
+            for(Item candidate : candidates) {
+                int playerQty = getPlayerQty(deal.getMerchantQty(), candidate, deal.getMerchantType());
+
+                if(playerQty > deal.getPlayer().getInventory().get(candidate, 0)) {
+                    playerQty = deal.getPlayer().getInventory().get(candidate, 0);
+                }
+                deal.setPlayerQty(playerQty);
+                deal.setPlayerType(candidate);
+                if(isFair(deal) && !deal.isSilly()) {
+                    log("How about you give me " + deal.getPlayerQty() + " " + deal.getPlayerType() + "?");
+                    return deal;
+                } else {
+                    deal.setPlayerQty(0);
+                    deal.setPlayerType(null);
+                }
+            }
         }
+        // If we still can't make a fair deal, throw an exception.
+        throw new NoProfitableTradesException();
     }
 
     int getPlayerQty(int merchantQty, Item playerItem, Item merchantItem) {
-        return MathUtils.ceil(merchantQty * valueOf(merchantItem) * (1+profitMargin) / valueOf(playerItem));
+        return MathUtils.floor(merchantQty * valueOf(merchantItem) * (1+profitMargin) / valueOf(playerItem));
     }
     int getMerchantQty(int playerQty, Item playerItem, Item merchantItem) {
-        return MathUtils.floor(playerQty * valueOf(playerItem) / valueOf(merchantItem) / (1+profitMargin));
+        int qty = MathUtils.ceil(playerQty * valueOf(playerItem) / valueOf(merchantItem) / (1+profitMargin));
+        return qty;
     }
 
     /**
