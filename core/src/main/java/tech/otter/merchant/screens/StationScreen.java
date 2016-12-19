@@ -14,88 +14,74 @@ import tech.otter.merchant.data.Station;
 
 public class StationScreen extends AbstractScreen {
 
-	public StationScreen(GameController parent) {
+    private VisImage background;
+    private VisTextButton btnClan;
+    private VisTextButton btnTrader;
+    private VisTextButton btnBar;
+    private VisTextButton btnCargo;
+    private VisTextButton btnLeave;
+    private VisTextButton btnMenu;
+    private VisLabel lblStationDescription;
+    private VisLabel lblStationName;
+
+    public StationScreen(GameController parent) {
 		super(parent);
+
+        // Create the table layout
+        VisTable tblLayout = new VisTable();
+        tblLayout.setFillParent(true);
+
+        // Create the UI elements
+        lblStationName = new VisLabel();
+        lblStationDescription = new VisLabel();
+        lblStationDescription.setWrap(true);
+        lblStationDescription.setWidth(100f);
+        VisScrollPane spStationDescription = new VisScrollPane(lblStationDescription);
+
+        // Create the buttons
+        VisTable tblButtons = new VisTable();
+        tblButtons.columnDefaults(0).pad(2f).width(300f);
+        btnClan = makeNavButton("Visit Clan", null); // TODO: Add Clan Screen
+        btnTrader = makeNavButton("Visit Trader", TradeScreen.class);
+        btnBar = makeNavButton("Visit Bar", null);  // TODO: Add Bar
+        btnCargo = makeNavButton("View Cargo", CargoScreen.class);
+        btnLeave = makeNavButton("Leave Station", DepartureScreen.class);
+        btnMenu = makeNavButton("Quit to Main Menu", MainMenuScreen.class);
+
+        // Create a holder for the background image
+        background = new VisImage();
+
+        // === Add elements to the screen === //
+        tblButtons.add(btnClan).row();
+        tblButtons.add(btnTrader).row();
+        tblButtons.add(btnBar).row();
+        tblButtons.add(btnCargo).row();
+        tblButtons.add(btnLeave).row();
+        tblButtons.addSeparator().row();
+        tblButtons.add(btnMenu);
+
+        tblLayout.add(lblStationName).colspan(2).pad(10f).row();
+        tblLayout.add(spStationDescription).width(200f).height(141f).top();
+        tblLayout.add(tblButtons);
+
+        ui.addActor(background);
+        ui.addActor(tblLayout);
 	}
 	
 	@Override
 	public void show() {
 		super.show();
-		final Station station = parent.getWorld().getPlayer().getCurrentStation();
 
-		VisTable tblLayout = new VisTable();
-		tblLayout.setFillParent(true);
+        Station station = parent.getWorld().getPlayer().getCurrentStation();
+        lblStationName.setText(station.getName());
+        lblStationDescription.setText(station.getDescription());
+        btnClan.setVisible(parent.getWorld().getPlayer().isAtHomeWorld());
 
-		VisLabel lblStationName = new VisLabel(station.getName());
-		// TODO: Make this lblTitle bigger
-
-
-		VisLabel lblStationDescription = new VisLabel(station.getDescription());
-		lblStationDescription.setWrap(true);
-		lblStationDescription.setWidth(100f);
-		VisScrollPane spStationDescription = new VisScrollPane(lblStationDescription);
-
-		VisTable tblButtons = new VisTable();
-		tblButtons.columnDefaults(0).pad(2f).width(300f);
-
-		if(parent.getWorld().getPlayer().isAtHomeWorld()) {
-			// TODO: Add Clan Screen
-			VisTextButton btnClan = new VisTextButton("Visit Clan");
-			tblButtons.add(btnClan);
-			tblButtons.row();
-		}
-
-		VisTextButton btnTrader = new VisTextButton("Visit Trader", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				parent.changeScreen(TradeScreen.class);
-			}
-		});
-		// TODO: Add Bar Screen
-		VisTextButton btnBar = new VisTextButton("Visit Bar");
-
-		VisTextButton btnCargo = new VisTextButton("View Cargo", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				parent.changeScreen(CargoScreen.class);
-			}
-		});
-
-		VisTextButton btnLeave = new VisTextButton("Leave Station", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				parent.changeScreen(DepartureScreen.class);
-			}
-		});
-
-		VisTextButton btnMenu = new VisTextButton("Quit to Main Menu", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(MainMenuScreen.class);
-			}
-		});
-
-		VisImage background = new VisImage(parent.getManagedTexture(station.getBackground()));
-		background.setSize(ui.getWidth(), ui.getWidth());
-		background.setPosition(0, -background.getHeight());
-		background.setColor(background.getColor().r, background.getColor().g, background.getColor().b, 0);
-		background.addAction(Actions.fadeIn(2.0f));
-		background.addAction(Actions.moveBy(0, ui.getHeight(), 2.0f));
-
-		tblButtons.add(btnTrader).row();
-		tblButtons.add(btnBar).row();
-		tblButtons.add(btnCargo).row();
-		tblButtons.add(btnLeave).row();
-		tblButtons.addSeparator().row();
-		tblButtons.add(btnMenu);
-
-		// === Add elements to the screen === //
-		tblLayout.add(lblStationName).colspan(2).pad(10f);
-		tblLayout.row();
-		tblLayout.add(spStationDescription).width(200f).height(141f).top();
-		tblLayout.add(tblButtons);
-
-		ui.addActor(background);
-		ui.addActor(tblLayout);
+        background.setDrawable(parent.getManagedTexture(station.getBackground()));
+        background.setSize(ui.getWidth(), ui.getWidth());
+        background.setPosition(0, -background.getHeight());
+        background.setColor(background.getColor().r, background.getColor().g, background.getColor().b, 0);
+        background.addAction(Actions.fadeIn(2.0f));
+        background.addAction(Actions.moveBy(0, ui.getHeight(), 2.0f));
 	}
 }

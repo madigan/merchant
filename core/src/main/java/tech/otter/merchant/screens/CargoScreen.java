@@ -18,49 +18,50 @@ public class CargoScreen extends AbstractScreen {
 	private VisList<ItemEntry> lstItems;
 	private VisImage imgItem;
 	private VisTextArea txtDescription;
+    private VisTextButton btnBack;
 
 	public CargoScreen(final GameController parent) {
 		super(parent);
 
-		VisTable tblLayout = new VisTable();
-		tblLayout.columnDefaults(0).pad(10f);
-		tblLayout.columnDefaults(1).pad(10f);
-		tblLayout.setFillParent(true);
+        // Initialize the image
+        imgItem = new VisImage();
+        imgItem.setSize(ui.getWidth() / 2, ui.getWidth() / 2); // TODO: Refactor to world size.
 
-		imgItem = new VisImage();
-		imgItem.setSize(ui.getWidth() / 2, ui.getWidth() / 2); // TODO: Refactor to world size.
+        // Create the item list
+        lstItems = new VisList<>();
+        lstItems.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                updateSelection(lstItems.getSelected());
+            }
+        });
 
-		lstItems = new VisList<>();
-		lstItems.addListener(new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-				updateSelection(lstItems.getSelected());
-			}
-		});
+        // Create the description field
+        txtDescription = new VisTextArea();
+        txtDescription.setDisabled(true);
 
-		txtDescription = new VisTextArea();
-		txtDescription.setDisabled(true);
+        // Add a "back" button
+        btnBack = makeNavButton("Back", StationScreen.class);
 
-		VisTextButton btnBack = new VisTextButton("Back", new ChangeListener() {
-			@Override
-			public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(StationScreen.class);
-			}
-		});
+        // Create the layout
+        VisTable tblLayout = new VisTable();
+        tblLayout.columnDefaults(0).pad(10f);
+        tblLayout.columnDefaults(1).pad(10f);
+        tblLayout.setFillParent(true);
+        tblLayout.add(imgItem).size(ui.getWidth() / 2);
+        tblLayout.add(new VisScrollPane(lstItems)).fillY();
+        tblLayout.row();
+        tblLayout.add(txtDescription).size(ui.getWidth() / 2, 100.0f);
+        tblLayout.add(btnBack).expandX().fillX();
 
-
-		tblLayout.add(imgItem).size(ui.getWidth() / 2);
-		tblLayout.add(new VisScrollPane(lstItems)).fillY();
-		tblLayout.row();
-		tblLayout.add(txtDescription).size(ui.getWidth() / 2, 100.0f);
-		tblLayout.add(btnBack).expandX().fillX();
-
-		ui.addActor(tblLayout);
+        ui.addActor(tblLayout);
 	}
 
 	@Override
 	public void show() {
 		super.show();
+
+        // Refresh the player data
 		Array<ItemEntry> items = new Array<>();
 		world.getPlayer().getInventory().forEach(i -> items.add(new ItemEntry(i.key, i.value)));
 		items.sort(new ItemEntry.ItemEntryComparator());

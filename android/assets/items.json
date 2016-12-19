@@ -208,7 +208,7 @@
   {
     "class": "tech.otter.merchant.data.Item",
     "name": "Hyooman Exotic Hair Products",
-    "description": "Prized by hairless races everywhere!",
+    "description": "Prized by folically challenged races everywhere!",
     "image": "goods16",
     "baseValue": 790,
     "baseQuantity": 10,

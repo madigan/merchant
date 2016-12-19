@@ -38,18 +38,17 @@ public class TradeScreen extends AbstractScreen {
 	private VisScrollPane spMessages;
 
 	final ItemEntry BLANK = new ItemEntry();
+    private final VisImage imgPortrait;
+    private final VisLabel lblMerchantName;
 
-	public TradeScreen(GameController parent) {
+    public TradeScreen(GameController parent) {
 		super(parent);
-	}
 
-	@Override
-    public void show() {
-        super.show();
-
-        VisImage imgPortrait = new VisImage(parent.getManagedTexture(merchant.getPortrait()));
+        // Create a placeholder for the merchant's portrait
+        imgPortrait = new VisImage();
         imgPortrait.setSize(300f, 300f);
 
+        // TODO: Refactor this into a single UI object
         // Assemble the player's trade options
         imgPlayerOffer = new VisImage();
         imgPlayerOffer.setSize(200f, 200f);
@@ -66,15 +65,14 @@ public class TradeScreen extends AbstractScreen {
         spnMerchantQty = makeSpinner(sbMerchantItems);
         sbMerchantItems.addListener( new ItemChangeListener(imgMerchantOffer, spnMerchantQty) );
 
-        btnOffer = new VisTextButton("Make an offer!", new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                updateTrade();
-            }
+        btnOffer = makeButton("Make an offer!", () -> {
+            updateTrade();
+            updateCaption();
         });
-        updateCaption();
 
         tblMessages = new VisTable();
+
+        lblMerchantName = new VisLabel();
 
         // Populate the layout //
         float PADDING = 5f;
@@ -85,11 +83,12 @@ public class TradeScreen extends AbstractScreen {
         layout.columnDefaults(1).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
         layout.columnDefaults(2).width(layout.getWidth() / 3 - 2*PADDING).pad(PADDING);
 
+        // Header Row
+        layout.add(new VisLabel("You'll give ...")).align(Align.center);
+        layout.add(lblMerchantName).align(Align.center);
+        layout.add(new VisLabel("... in exchange for ...")).align(Align.center);
 
-        layout.add(new VisLabel("You'll give ...", Align.center));
-        layout.add(new VisLabel(merchant.getName(), Align.center));
-        layout.add(new VisLabel("... in exchange for ...", Align.center));
-
+        // Image Row
         layout.row();
         layout.add(imgPlayerOffer).width(ui.getWidth() / 4).height(ui.getWidth() / 4).pad(ui.getWidth() / 24);
         layout.add(imgPortrait).height(layout.getWidth() / 3 - 2*PADDING);
@@ -102,12 +101,7 @@ public class TradeScreen extends AbstractScreen {
 
         layout.row();
         layout.add(spnPlayerQty).uniform();
-        layout.add(new VisTextButton("Back", new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(StationScreen.class);
-            }
-        })).uniform();
+        layout.add(makeNavButton("Back", StationScreen.class)).uniform();
         layout.add(spnMerchantQty).uniform();
 
         layout.row();
@@ -117,7 +111,18 @@ public class TradeScreen extends AbstractScreen {
         layout.add(spMessages).height(100f).padLeft(10f).colspan(3).width(layout.getWidth() - 2*PADDING);
 
         ui.addActor(layout);
+	}
 
+	@Override
+    public void show() {
+        super.show();
+
+        // Load the current station's information
+        merchant = parent.getWorld().getPlayer().getCurrentStation().getMerchant();
+        imgPortrait.setDrawable(parent.getManagedTexture(merchant.getPortrait()));
+        lblMerchantName.setText(merchant.getName());
+
+        // Make sure any previous offer information is cleared.
         resetPage();
     }
 
@@ -238,6 +243,7 @@ public class TradeScreen extends AbstractScreen {
 	private void resetPage() {
 		resetPageHelper(sbMerchantItems, merchant.getInventory());
 		resetPageHelper(sbPlayerItems, parent.getWorld().getPlayer().getInventory());
+        updateCaption();
 	}
 	private void resetPageHelper(VisSelectBox<ItemEntry> selectBox, ObjectIntMap<Item> inventory) {
 		Array<ItemEntry> entries = Array.with(BLANK);

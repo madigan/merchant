@@ -20,12 +20,6 @@ public class DepartureScreen extends AbstractScreen {
 
 	public DepartureScreen(GameController parent) {
 		super(parent);
-	}
-
-	@Override
-	public void show() {
-		super.show();
-        ui.clear();
 
         // Create UI Objects
         VisTable tblLayout = new VisTable();
@@ -33,20 +27,10 @@ public class DepartureScreen extends AbstractScreen {
         tblLayout.align(Align.bottom);
 
         // Create star map
-        VisImage starMapBackground = new VisImage(parent.getManagedTexture("map"));
-        starMapBackground.setFillParent(true);
-        starMapBackground.setZIndex(1);
-
         starMap = new ScalingGroup();
-        starMap.addActor(starMapBackground);
 
         // A button to go back to the station.
-        VisTextButton btnBack = new VisTextButton("Back", new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(StationScreen.class);
-            }
-        });
+        VisTextButton btnBack = makeNavButton("Back", StationScreen.class);
 
         // Add them to the table layout
         tblLayout.add(starMap).expand().fillY().center();
@@ -54,25 +38,38 @@ public class DepartureScreen extends AbstractScreen {
         tblLayout.add(btnBack).width(ui.getWidth() / 3 - 2*PADDING).pad(PADDING);
 
         ui.addActor(tblLayout);
-
-		for(final Station station : world.getGalaxy().getStations().values()) {
-			VisImage icon = new VisImage(parent.getManagedTexture("dot2"));
-			// TODO: Set relative to the map
-			VisTextButton btn = new VisTextButton(station.getName(), new ChangeListener() {
-				@Override
-				public void changed(ChangeEvent event, Actor actor) {
-					world.getPlayer().setCurrentStation(station);
-                    parent.changeScreen(StationScreen.class);
-				}
-			});
-			btn.setPosition(station.getX() + btn.getHeight(), station.getY());
-
-			icon.setSize(btn.getHeight(), btn.getHeight());
-			icon.setPosition(station.getX(), station.getY());
-			starMap.addActor(icon);
-			starMap.addActor(btn);
-		}
 	}
+
+	@Override
+	public void show() {
+		super.show();
+        starMap.clear();
+
+        // Add background
+        VisImage starMapBackground = new VisImage(parent.getManagedTexture("map"));
+        starMapBackground.setFillParent(true);
+        starMapBackground.setZIndex(1);
+        starMap.addActor(starMapBackground);
+
+        // Add stars
+        for(final Station station : world.getGalaxy().getStations().values()) {
+            VisImage icon = new VisImage(parent.getManagedTexture("dot2"));
+            // TODO: Set relative to the map
+            VisTextButton btn = new VisTextButton(station.getName(), new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    world.getPlayer().setCurrentStation(station);
+                    parent.changeScreen(StationScreen.class);
+                }
+            });
+            btn.setPosition(station.getX() + btn.getHeight(), station.getY());
+
+            icon.setSize(btn.getHeight(), btn.getHeight());
+            icon.setPosition(station.getX(), station.getY());
+            starMap.addActor(icon);
+            starMap.addActor(btn);
+        }
+    }
 
 	private class ScalingGroup extends WidgetGroup {
 		@Override

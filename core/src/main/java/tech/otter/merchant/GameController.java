@@ -38,7 +38,7 @@ public class GameController extends Game {
 						.addLogger(logger));
 
         // Load the UI first
-        VisUI.load(Gdx.files.internal(SKIN_FILE));
+        VisUI.load();
 
 		// Initialize the asset manager
         // TODO: Make a snazzy loading bar
