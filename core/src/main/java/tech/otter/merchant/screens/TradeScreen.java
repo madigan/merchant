@@ -156,27 +156,31 @@ public class TradeScreen extends AbstractScreen {
 		deal.setMerchantType(sbMerchantItems.getSelected().getType());
 		deal.setMerchantQty(((IntSpinnerModel)spnMerchantQty.getModel()).getValue());
 
-		deal = merchant.processDeal(deal);
-		if(deal.isAccepted()) {
-			// Do accepted stuff...
+        deal = merchant.processDeal(deal);
+
+        if(deal.isAccepted()) { // Reset the page to make room for a new deal.
 			resetPage();
 			deal = null;
-		} else {
-            // Refresh the page
+		} else { // Update the screen based on the current state of the deal.
             if(deal.isMerchantComplete()) {
+                // Update the item selection
                 sbMerchantItems.getItems().forEach(entry -> {
                     if(entry.getType() != null && entry.getType().equals(deal.getMerchantType())) {
                         sbMerchantItems.setSelected(entry);
                     }
                 });
+                // Update the item quantity
+                ((IntSpinnerModel) spnMerchantQty.getModel()).setValue(deal.getMerchantQty(), false);
             }
-
             if(deal.isPlayerComplete()) {
+                // Update the item selection
                 sbPlayerItems.getItems().forEach(entry -> {
                     if (entry.getType() != null && entry.getType().equals(deal.getPlayerType())) {
                         sbPlayerItems.setSelected(entry);
                     }
                 });
+                // Update the item quantity
+                ((IntSpinnerModel) spnPlayerQty.getModel()).setValue(deal.getPlayerQty(), false);
             }
         }
 	}
