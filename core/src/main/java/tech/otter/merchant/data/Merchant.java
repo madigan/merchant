@@ -63,50 +63,32 @@ public class Merchant extends AbstractTrader {
         return deal;
     }
 
-    // TODO: Safety-tize this.
-    Deal proposeDeal(Deal deal) throws NothingWantedException, NoViableTradesException {
-        // Get a list of the things the player has that the merchant would want
-        ObjectIntMap<Item> playerInventory = deal.getPlayer().getInventory();
-        Array<Item> candidates = new Array<>();
-        playerInventory.forEach((ObjectIntMap.Entry<Item> entry) -> {
-            if(desires(entry.key)) {
-                candidates.add(entry.key);
-            }
-        });
-        if(candidates.size == 0) throw new NothingWantedException();
-
-        // Now loop through the candidates and see if any of them can be traded for
-        candidates.shuffle();
-        for(int i = 0; i < candidates.size; i++) {
-            Item type = candidates.get(i);
-
-            deal.setPlayerQty(MathUtils.random(1, playerInventory.get(type, 1)));
-            deal.setPlayerType(type);
-
-            try {
-                return completeDeal(deal);
-            } catch (NoProfitableTradesException e) {
-                continue;
-            }
-        }
-        throw new NoViableTradesException();
-    }
-
     // TODO: Make safe. Assumes complete deal.
     Deal adjustDeal(Deal deal) throws NoFairTradeException {
-        // First, try to adjust the merchant offering
-        float maxValue = valueOf(deal.getPlayerQty(), deal.getPlayerType());  // The most the merchant will trade
-        float minValue = maxValue * (1 - profitMargin);             // The least the merchant will trade
+        // First we try to adjust the player's side
+        Deal newDeal = new Deal(deal); // Try saying that five times fast
+        newDeal.setPlayerQty(0);
 
-        int qty = MathUtils.ceil(minValue/valueOf(1, deal.getMerchantType()));
-        if(valueOf(qty, deal.getMerchantType()) < maxValue && qty <= getInventory().get(deal.getMerchantType(), 0)) {
-            deal.setMerchantQty(qty);
-            deal.setMerchantType(deal.getMerchantType());
+        try {
+            completeDeal(newDeal);
+            deal.setPlayerQty(newDeal.getPlayerQty());
             log("How about this deal?");
             return deal;
+        } catch (NoProfitableTradesException e) {
+            // If that fails, we try to adjust the merchant's side.
+            newDeal = new Deal(deal); // Reset the new deal
+            newDeal.setMerchantQty(0);
+            try {
+                completeDeal(newDeal);
+                deal.setMerchantQty(newDeal.getMerchantQty());
+                log("That doesn't seem fair- How about this deal?");
+                return deal;
+            } catch (NoProfitableTradesException e1) {
+                // If neither side can be adjusted, we're kinda toast.
+                log("I don't see any way to make this a fair deal.");
+                throw new NoFairTradeException();
+            }
         }
-        log("I don't see any way to make this a fair deal.");
-        throw new NoFairTradeException();
     }
 
     /**
@@ -165,6 +147,36 @@ public class Merchant extends AbstractTrader {
         }
         // If we still can't make a fair deal, throw an exception.
         throw new NoProfitableTradesException();
+    }
+
+
+    // TODO: Safety-tize this.
+    Deal proposeDeal(Deal deal) throws NothingWantedException, NoViableTradesException {
+        // Get a list of the things the player has that the merchant would want
+        ObjectIntMap<Item> playerInventory = deal.getPlayer().getInventory();
+        Array<Item> candidates = new Array<>();
+        playerInventory.forEach((ObjectIntMap.Entry<Item> entry) -> {
+            if(desires(entry.key)) {
+                candidates.add(entry.key);
+            }
+        });
+        if(candidates.size == 0) throw new NothingWantedException();
+
+        // Now loop through the candidates and see if any of them can be traded for
+        candidates.shuffle();
+        for(int i = 0; i < candidates.size; i++) {
+            Item type = candidates.get(i);
+
+            deal.setPlayerQty(MathUtils.random(1, playerInventory.get(type, 1)));
+            deal.setPlayerType(type);
+
+            try {
+                return completeDeal(deal);
+            } catch (NoProfitableTradesException e) {
+                continue;
+            }
+        }
+        throw new NoViableTradesException();
     }
 
     int getPlayerQty(int merchantQty, Item playerItem, Item merchantItem) {
