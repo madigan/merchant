@@ -149,14 +149,13 @@ public class Merchant extends AbstractTrader {
         throw new NoProfitableTradesException();
     }
 
-
     // TODO: Safety-tize this.
     Deal proposeDeal(Deal deal) throws NothingWantedException, NoViableTradesException {
         // Get a list of the things the player has that the merchant would want
         ObjectIntMap<Item> playerInventory = deal.getPlayer().getInventory();
         Array<Item> candidates = new Array<>();
         playerInventory.forEach((ObjectIntMap.Entry<Item> entry) -> {
-            if(desires(entry.key)) {
+            if(provides(entry.key)) {
                 candidates.add(entry.key);
             }
         });
@@ -173,7 +172,7 @@ public class Merchant extends AbstractTrader {
             try {
                 return completeDeal(deal);
             } catch (NoProfitableTradesException e) {
-                continue;
+                // Continue to the next candidate
             }
         }
         throw new NoViableTradesException();
