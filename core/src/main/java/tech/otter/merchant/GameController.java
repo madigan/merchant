@@ -130,5 +130,6 @@ public class GameController extends Game {
         screens.put(NewGameScreen.class, new NewGameScreen(this));
         screens.put(StationScreen.class, new StationScreen(this));
         screens.put(TradeScreen.class, new TradeScreen(this));
+        screens.put(ClanScreen.class, new ClanScreen(this));
     }
 }
