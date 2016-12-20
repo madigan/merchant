@@ -30,7 +30,7 @@ public class ItemEntry {
     @Override
     public String toString() {
         if(type == null || type.getName() == null || type.getName().equals("")) return "";
-        return String.format("[%03d] %s", this.count, this.type.getName()); // TODO "[%1$4s] %2$s"
+        return "[" + this.count + "] " + this.type.getName(); // TODO "[%1$4s] %2$s"
     }
 
     public static class ItemEntryComparator implements Comparator<ItemEntry> {

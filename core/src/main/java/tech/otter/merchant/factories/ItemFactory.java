@@ -35,7 +35,6 @@ public class ItemFactory {
 				typesByTag.get(tag).add(type);
 			}
 		}
-		for(Item i : types) Gdx.app.debug(getClass().getCanonicalName(), String.format("Loaded Item: '%s'", i.getName()));
 	}
 
 	public static ItemFactory get() {
@@ -51,7 +50,7 @@ public class ItemFactory {
 				return map;
 			}
 		}
-		Gdx.app.error(getClass().getCanonicalName(), String.format("Couldn't find an item named '%s'", name));
+		Gdx.app.error(getClass().getCanonicalName(), "Couldn't find an item named '" + name + "'");
 		map.put(new Item("Sneaky Droids", "This is not the item you're looking for.", null, 1.0f, 1, 1.0f, null), 0);
 		return map;
 	}

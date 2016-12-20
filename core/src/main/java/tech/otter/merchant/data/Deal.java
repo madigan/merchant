@@ -69,13 +69,13 @@ public class Deal {
 
     @Override public String toString() {
         if(isMerchantComplete() && isPlayerComplete()) {
-            return String.format("Merchant will trade %d %s (%f) for %d %s (%f)",
-                    merchantQty, merchantType, merchantQty * merchantType.getBaseValue(),
-                    playerQty, playerType, playerQty * playerType.getBaseValue());
+            return "Merchant will trade " +
+                    merchantQty + " " + merchantType + " (" + merchantQty * merchantType.getBaseValue() + ") for " +
+                    playerQty + " " + playerType + " (" + playerQty * playerType.getBaseValue() + ")";
         } else if(isMerchantComplete()) {
-            return String.format("Merchant will trade %d %s for something.", merchantQty, merchantType);
+            return "Merchant will trade " + merchantQty + " " + merchantType + " for something.";
         } else if(isPlayerComplete()) {
-            return String.format("Player will trade %d %s for something.", playerQty, playerType);
+            return "Player will trade " + playerQty + " " + playerType + " for something.";
         } else {
             return "Neither side has made an offer.";
         }
