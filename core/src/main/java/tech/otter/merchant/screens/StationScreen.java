@@ -41,7 +41,7 @@ public class StationScreen extends AbstractScreen {
         // Create the buttons
         VisTable tblButtons = new VisTable();
         tblButtons.columnDefaults(0).pad(2f).width(300f);
-        btnClan = makeNavButton("Visit Clan", null); // TODO: Add Clan Screen
+        btnClan = makeNavButton("Visit Clan", ClanScreen.class);
         btnTrader = makeNavButton("Visit Trader", TradeScreen.class);
         btnBar = makeNavButton("Visit Bar", null);  // TODO: Add Bar
         btnCargo = makeNavButton("View Cargo", CargoScreen.class);
