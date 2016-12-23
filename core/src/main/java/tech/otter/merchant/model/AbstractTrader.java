@@ -1,4 +1,4 @@
-package tech.otter.merchant.data;
+package tech.otter.merchant.model;
 
 import com.badlogic.gdx.utils.ObjectIntMap;
 

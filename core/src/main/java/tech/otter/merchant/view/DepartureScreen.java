@@ -1,19 +1,17 @@
-package tech.otter.merchant.screens;
+package tech.otter.merchant.view;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisImage;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.GameController;
-import tech.otter.merchant.data.StarLane;
-import tech.otter.merchant.data.Station;
+import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.model.Station;
 
-public class DepartureScreen extends AbstractScreen {
+public class DepartureScreen extends GameScreen {
 	private final float PADDING = 2f;
 
 	private ScalingGroup starMap;
@@ -30,7 +28,7 @@ public class DepartureScreen extends AbstractScreen {
         starMap = new ScalingGroup();
 
         // A button to go back to the station.
-        VisTextButton btnBack = makeNavButton("Back", StationScreen.class);
+        VisTextButton btnBack = makeNavButton("Back", tech.otter.merchant.view.StationScreen.class);
 
         // Add them to the table layout
         tblLayout.add(starMap).expand().fillY().center();
@@ -46,20 +44,20 @@ public class DepartureScreen extends AbstractScreen {
         starMap.clear();
 
         // Add background
-        VisImage starMapBackground = new VisImage(parent.getManagedTexture("map"));
+        VisImage starMapBackground = new VisImage(controller.getManagedTexture("map"));
         starMapBackground.setFillParent(true);
         starMapBackground.setZIndex(1);
         starMap.addActor(starMapBackground);
 
         // Add stars
         for(final Station station : world.getGalaxy().getStations().values()) {
-            VisImage icon = new VisImage(parent.getManagedTexture("dot2"));
+            VisImage icon = new VisImage(controller.getManagedTexture("dot2"));
             // TODO: Set relative to the map
             VisTextButton btn = new VisTextButton(station.getName(), new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     world.getPlayer().setCurrentStation(station);
-                    parent.changeScreen(StationScreen.class);
+                    controller.changeScreen(tech.otter.merchant.view.StationScreen.class);
                 }
             });
             btn.setPosition(station.getX() + btn.getHeight(), station.getY());

@@ -6,20 +6,23 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import tech.otter.merchant.model.Deal;
+import tech.otter.merchant.model.Item;
+import tech.otter.merchant.model.Player;
 
 public class MerchantTest {
-    private Merchant merchant;
-    private Player player;
-    private Item item1;
-    private Item item2;
-    private Deal deal;
+    private tech.otter.merchant.model.Merchant merchant;
+    private tech.otter.merchant.model.Player player;
+    private tech.otter.merchant.model.Item item1;
+    private tech.otter.merchant.model.Item item2;
+    private tech.otter.merchant.model.Deal deal;
 
     @Before public void setUp() {
-        merchant = new Merchant();
+        merchant = new tech.otter.merchant.model.Merchant();
         player = new Player();
-        item1 = new Item().setName("Atomic Tofu");
-        item2 = new Item().setName("Off-brand Muzzlefluffers");
-        deal = new Deal().setMerchant(merchant).setPlayer(player);
+        item1 = new tech.otter.merchant.model.Item().setName("Atomic Tofu");
+        item2 = new tech.otter.merchant.model.Item().setName("Off-brand Muzzlefluffers");
+        deal = new tech.otter.merchant.model.Deal().setMerchant(merchant).setPlayer(player);
     }
     @After public void tearDown() {
         merchant = null;
@@ -33,7 +36,7 @@ public class MerchantTest {
      * Basic test to make sure value is calculated as a form of quantity * base value.
      */
     @Test public void testValueOf() {
-        Item type = new Item().setBaseValue(20f);
+        tech.otter.merchant.model.Item type = new tech.otter.merchant.model.Item().setBaseValue(20f);
         Assert.assertEquals("The values should have been equal.", 80.0f, merchant.valueOf(4, type), 0);
     }
 
@@ -41,7 +44,7 @@ public class MerchantTest {
      * Test to make sure that 'desires' correctly influence the value.
      */
     @Test public void testValueOf_desires() {
-        Item type = new Item().setBaseValue(20f);
+        tech.otter.merchant.model.Item type = new tech.otter.merchant.model.Item().setBaseValue(20f);
         merchant.setDesires(new String[] {"category-test"});
         Assert.assertEquals("The value should be the same if the item doesn't have a tag.", 60.0f, merchant.valueOf(3, type), 0);
 
@@ -64,7 +67,7 @@ public class MerchantTest {
      * Test to make sure that 'provides' correctly influence the value.
      */
     @Test public void testValueOf_provides() {
-        Item type = new Item().setBaseValue(20f);
+        tech.otter.merchant.model.Item type = new tech.otter.merchant.model.Item().setBaseValue(20f);
         merchant.setProvides(new String[] {"category-test"});
         Assert.assertEquals("The value should be the same if the item doesn't have a tag.", 60.0f, merchant.valueOf(3, type), 0);
 
@@ -133,7 +136,7 @@ public class MerchantTest {
 
         try {
             deal = merchant.completeDeal(deal);
-        } catch (Merchant.NoProfitableTradesException e) {
+        } catch (tech.otter.merchant.model.Merchant.NoProfitableTradesException e) {
             Assert.fail("No profitable trade: " + e.getMessage());
         }
 
@@ -156,7 +159,7 @@ public class MerchantTest {
         try {
             deal = merchant.completeDeal(deal);
             Assert.fail("The test should have failed; the deal would've been silly.");
-        } catch (Merchant.NoProfitableTradesException e) {
+        } catch (tech.otter.merchant.model.Merchant.NoProfitableTradesException e) {
             Assert.assertTrue("The deal must not be set: " + deal, !deal.isMerchantComplete());
         }
     }
@@ -174,11 +177,11 @@ public class MerchantTest {
             player.getInventory().put(item1, MathUtils.floor(5000 / item1.getBaseValue()));
             merchant.getInventory().put(item2, MathUtils.floor(5000 / item2.getBaseValue()));
 
-            deal = new Deal();
+            deal = new tech.otter.merchant.model.Deal();
             deal.setPlayerType(item1).setPlayerQty(MathUtils.random(1, player.getInventory().get(item1, 1) / 2));
             try {
                 deal = merchant.completeDeal(deal);
-            } catch (Merchant.NoProfitableTradesException e) {
+            } catch (tech.otter.merchant.model.Merchant.NoProfitableTradesException e) {
                 Assert.fail("Couldn't find a profitable trade: " + deal);
             }
 
@@ -202,7 +205,7 @@ public class MerchantTest {
 
         try {
             deal = merchant.completeDeal(deal);
-        } catch (Merchant.NoProfitableTradesException e) {
+        } catch (tech.otter.merchant.model.Merchant.NoProfitableTradesException e) {
             Assert.fail("No profitable trade: " + e.getMessage());
         }
 
@@ -223,16 +226,16 @@ public class MerchantTest {
      * Test the merchant's logic to see if it can correct a bad deal.
      */
     @Test public void testAdjustDeal() {
-        Item a = new Item().setBaseValue(15.0f);
-        Item b = new Item().setBaseValue(5.0f);
+        tech.otter.merchant.model.Item a = new tech.otter.merchant.model.Item().setBaseValue(15.0f);
+        tech.otter.merchant.model.Item b = new Item().setBaseValue(5.0f);
 
-        Deal deal = new Deal();
+        tech.otter.merchant.model.Deal deal = new Deal();
         deal.setMerchant(merchant).setMerchantQty(20).setMerchantType(a);
         deal.setPlayer(player).setPlayerQty(25).setPlayerType(b);
 
         try {
             deal = merchant.adjustDeal(deal);
-        } catch (Merchant.NoFairTradeException e) {
+        } catch (tech.otter.merchant.model.Merchant.NoFairTradeException e) {
             Assert.fail("A fair trade was totally possible.");
         }
     }

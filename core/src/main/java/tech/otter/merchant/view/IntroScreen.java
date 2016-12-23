@@ -1,4 +1,4 @@
-package tech.otter.merchant.screens;
+package tech.otter.merchant.view;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -11,9 +11,9 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import java.util.ArrayList;
 import java.util.List;
 
-import tech.otter.merchant.GameController;
+import tech.otter.merchant.controller.GameController;
 
-public class IntroScreen extends AbstractScreen {
+public class IntroScreen extends GameScreen {
 	private final float DELAY = 3.0f;
 	private final float LENGTH = 5.0f;
     private List<String> story;
@@ -57,7 +57,7 @@ public class IntroScreen extends AbstractScreen {
 
 			@Override
 			public boolean act(float delta) {
-                parent.changeScreen(NewGameScreen.class);
+                controller.changeScreen(tech.otter.merchant.view.NewGameScreen.class);
 				return false;
 			}
 		}));
@@ -68,7 +68,7 @@ public class IntroScreen extends AbstractScreen {
 			public boolean keyUp (InputEvent event, int keyCode) {
 				boolean consumed;
 				if(consumed = (keyCode == Keys.ESCAPE || keyCode == Keys.ENTER || keyCode == Keys.SPACE)) {
-                    parent.changeScreen(NewGameScreen.class);
+                    controller.changeScreen(tech.otter.merchant.view.NewGameScreen.class);
 				}
 				return consumed;
 			}

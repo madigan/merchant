@@ -1,15 +1,13 @@
-package tech.otter.merchant.screens;
+package tech.otter.merchant.view;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.GameController;
+import tech.otter.merchant.controller.GameController;
 
-public class MainMenuScreen extends AbstractScreen {
+public class MainMenuScreen extends GameScreen {
     private VisTextButton btnContinue;
     private final VisTextButton btnLoadGame;
     private final VisTextButton btnSaveGame;
@@ -57,7 +55,7 @@ public class MainMenuScreen extends AbstractScreen {
         super.show();
 
         // Only show the continue button if there is a game to continue
-        btnContinue.setVisible(parent.getWorld().isActive());
+        btnContinue.setVisible(controller.getWorld().isActive());
 
         // Only show save/load on platforms that support it
         btnLoadGame.setVisible(!Gdx.app.getType().equals(ApplicationType.WebGL));

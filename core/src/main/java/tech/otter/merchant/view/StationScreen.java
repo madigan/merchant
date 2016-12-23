@@ -1,20 +1,16 @@
-package tech.otter.merchant.screens;
+package tech.otter.merchant.view;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.VisImage;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.GameController;
-import tech.otter.merchant.data.Station;
+import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.model.Station;
 
-public class StationScreen extends AbstractScreen {
-
-    private VisImage background;
+public class StationScreen extends GameScreen {
     private VisTextButton btnClan;
     private VisTextButton btnTrader;
     private VisTextButton btnBar;
@@ -26,62 +22,66 @@ public class StationScreen extends AbstractScreen {
 
     public StationScreen(GameController parent) {
 		super(parent);
-
-        // Create the table layout
-        VisTable tblLayout = new VisTable();
-        tblLayout.setFillParent(true);
-
         // Create the UI elements
         lblStationName = new VisLabel();
         lblStationDescription = new VisLabel();
         lblStationDescription.setWrap(true);
         lblStationDescription.setWidth(100f);
-        VisScrollPane spStationDescription = new VisScrollPane(lblStationDescription);
 
         // Create the buttons
-        VisTable tblButtons = new VisTable();
-        tblButtons.columnDefaults(0).pad(2f).width(300f);
         btnClan = makeNavButton("Visit Clan", ClanScreen.class);
         btnTrader = makeNavButton("Visit Trader", TradeScreen.class);
         btnBar = makeNavButton("Visit Bar", null);  // TODO: Add Bar
         btnCargo = makeNavButton("View Cargo", CargoScreen.class);
         btnLeave = makeNavButton("Leave Station", DepartureScreen.class);
-        btnMenu = makeNavButton("Quit to Main Menu", MainMenuScreen.class);
-
-        // Create a holder for the background image
-        background = new VisImage();
-
-        // === Add elements to the screen === //
-        tblButtons.add(btnClan).row();
-        tblButtons.add(btnTrader).row();
-        tblButtons.add(btnBar).row();
-        tblButtons.add(btnCargo).row();
-        tblButtons.add(btnLeave).row();
-        tblButtons.addSeparator().row();
-        tblButtons.add(btnMenu);
-
-        tblLayout.add(lblStationName).colspan(2).pad(10f).row();
-        tblLayout.add(spStationDescription).width(200f).height(141f).top();
-        tblLayout.add(tblButtons);
-
-        ui.addActor(background);
-        ui.addActor(tblLayout);
+        btnMenu = makeNavButton("Quit to Main Menu", tech.otter.merchant.view.MainMenuScreen.class);
 	}
 	
 	@Override
 	public void show() {
 		super.show();
+        ui.clear();
 
-        Station station = parent.getWorld().getPlayer().getCurrentStation();
+        // Configure the dynamic UI elements
+        Station station = controller.getWorld().getPlayer().getCurrentStation();
         lblStationName.setText(station.getName());
         lblStationDescription.setText(station.getDescription());
-        btnClan.setVisible(parent.getWorld().getPlayer().isAtHomeWorld());
 
-        background.setDrawable(parent.getManagedTexture(station.getBackground()));
+        VisImage background = new VisImage();
+        background.setDrawable(controller.getManagedTexture(station.getBackground()));
         background.setSize(ui.getWidth(), ui.getWidth());
         background.setPosition(0, -background.getHeight());
         background.setColor(background.getColor().r, background.getColor().g, background.getColor().b, 0);
         background.addAction(Actions.fadeIn(2.0f));
         background.addAction(Actions.moveBy(0, ui.getHeight(), 2.0f));
+
+        // Create the table layout
+        VisTable tblLayout = new VisTable();
+        tblLayout.setFillParent(true);
+
+        // === Add elements to the screen === //
+        VisTable tblButtons = new VisTable();
+        tblButtons.columnDefaults(0).pad(2f).width(300f);
+
+        if(world.getPlayer().isAtHomeWorld() && world.getPlayer().getQuests().size > 0) {
+            tblButtons.add(btnClan).row();
+        }
+        if(world.getPlayer().getCurrentStation().getMerchant().isOpen()) {
+            tblButtons.add(btnTrader).row();
+        }
+        tblButtons.add(btnBar).row();
+        tblButtons.add(btnCargo).row();
+        if(controller.getWorld().getPlayer().canLeave()) {
+            tblButtons.add(btnLeave).row();
+        }
+        tblButtons.addSeparator().row();
+        tblButtons.add(btnMenu);
+
+        tblLayout.add(lblStationName).colspan(2).pad(10f).row();
+        tblLayout.add(new VisScrollPane(lblStationDescription)).width(200f).height(141f).top();
+        tblLayout.add(tblButtons);
+
+        ui.addActor(background);
+        ui.addActor(tblLayout);
 	}
 }

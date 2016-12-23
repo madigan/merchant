@@ -1,4 +1,4 @@
-package tech.otter.merchant.data;
+package tech.otter.merchant.model;
 
 public class Deal {
     private AbstractTrader player;

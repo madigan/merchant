@@ -1,7 +1,6 @@
-package tech.otter.merchant.screens;
+package tech.otter.merchant.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -18,13 +17,14 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.Spinner;
 
-import tech.otter.merchant.GameController;
-import tech.otter.merchant.data.Deal;
-import tech.otter.merchant.data.Item;
-import tech.otter.merchant.data.Merchant;
+import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.GameEvent;
+import tech.otter.merchant.model.Deal;
+import tech.otter.merchant.model.Item;
+import tech.otter.merchant.model.Merchant;
 import tech.otter.merchant.util.ItemEntry;
 
-public class TradeScreen extends AbstractScreen {
+public class TradeScreen extends GameScreen {
 	private VisTextButton btnOffer;
 
 	private VisImage imgPlayerOffer;
@@ -104,7 +104,7 @@ public class TradeScreen extends AbstractScreen {
 
         layout.row();
         layout.add(spnPlayerQty).uniform();
-        layout.add(makeNavButton("Back", StationScreen.class)).uniform();
+        layout.add(makeNavButton("Back", tech.otter.merchant.view.StationScreen.class)).uniform();
         layout.add(spnMerchantQty).uniform();
 
         layout.row();
@@ -121,8 +121,8 @@ public class TradeScreen extends AbstractScreen {
         super.show();
 
         // Load the current station's information
-        merchant = parent.getWorld().getPlayer().getCurrentStation().getMerchant();
-        imgPortrait.setDrawable(parent.getManagedTexture(merchant.getPortrait()));
+        merchant = controller.getWorld().getPlayer().getCurrentStation().getMerchant();
+        imgPortrait.setDrawable(controller.getManagedTexture(merchant.getPortrait()));
         lblMerchantName.setText(merchant.getName());
 
         // Make sure any previous offer information is cleared.
@@ -151,7 +151,7 @@ public class TradeScreen extends AbstractScreen {
 	private Deal deal = null;
 	public void updateTrade() {
 		if(deal == null) deal = new Deal();
-		deal.setPlayer(parent.getWorld().getPlayer());
+		deal.setPlayer(controller.getWorld().getPlayer());
 		deal.setMerchant(merchant);
 
 		deal.setPlayerType(sbPlayerItems.getSelected().getType());
@@ -164,6 +164,7 @@ public class TradeScreen extends AbstractScreen {
 
         if(deal.isAccepted()) { // Reset the page to make room for a new deal.
             Gdx.app.debug("Trade", "Accepted: " + deal);
+            controller.handle(new GameEvent("TRADE_COMPLETE").set("DEAL", deal));
 			resetPage();
 			deal = null;
 		} else { // Update the screen based on the current state of the deal.
@@ -230,7 +231,7 @@ public class TradeScreen extends AbstractScreen {
 		public void changed(ChangeEvent event, Actor actor) {
 			ItemEntry selected = ((VisSelectBox<ItemEntry>)actor).getSelected();
 			if(selected.getType() != null) {
-				image.setDrawable(parent.getManagedTexture(selected.getType().getImage()));
+				image.setDrawable(controller.getManagedTexture(selected.getType().getImage()));
 			}
 			// Reset the spinner
 			IntSpinnerModel spinnerModel = ((IntSpinnerModel)spinner.getModel());
@@ -252,11 +253,11 @@ public class TradeScreen extends AbstractScreen {
 
 	private void resetPage() {
 		resetPageHelper(imgMerchantOffer, sbMerchantItems, merchant.getInventory());
-		resetPageHelper(imgPlayerOffer, sbPlayerItems, parent.getWorld().getPlayer().getInventory());
+		resetPageHelper(imgPlayerOffer, sbPlayerItems, controller.getWorld().getPlayer().getInventory());
         updateCaption();
 	}
 	private void resetPageHelper(VisImage image, VisSelectBox<ItemEntry> selectBox, ObjectIntMap<Item> inventory) {
-        image.setDrawable(parent.getEmptyTexture());
+        image.setDrawable(controller.getEmptyTexture());
 		Array<ItemEntry> entries = Array.with(BLANK);
 		inventory.forEach(i -> entries.add(new ItemEntry(i.key, i.value)));
 		entries.sort(new ItemEntry.ItemEntryComparator());

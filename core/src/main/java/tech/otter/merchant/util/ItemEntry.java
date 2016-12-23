@@ -1,6 +1,6 @@
 package tech.otter.merchant.util;
 
-import tech.otter.merchant.data.Item;
+import tech.otter.merchant.model.Item;
 
 import java.util.Comparator;
 

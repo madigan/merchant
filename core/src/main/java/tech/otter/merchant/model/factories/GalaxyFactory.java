@@ -1,15 +1,12 @@
-package tech.otter.merchant.factories;
+package tech.otter.merchant.model.factories;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.github.czyzby.kiwi.log.Logger;
 import com.github.czyzby.kiwi.log.LoggerService;
 
-import tech.otter.merchant.data.Galaxy;
-import tech.otter.merchant.data.StarLane;
-import tech.otter.merchant.data.Station;
+import tech.otter.merchant.model.Galaxy;
+import tech.otter.merchant.model.Station;
 
 public class GalaxyFactory {
 	private static GalaxyFactory INSTANCE = new GalaxyFactory();

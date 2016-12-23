@@ -1,10 +1,10 @@
-package tech.otter.merchant.data;
+package tech.otter.merchant.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectIntMap;
-import tech.otter.merchant.factories.ItemFactory;
+import tech.otter.merchant.model.factories.ItemFactory;
 
 public class Merchant extends AbstractTrader {
     // TODO: Abstract this to file
@@ -16,6 +16,8 @@ public class Merchant extends AbstractTrader {
     private float providesModifier = -0.1f;
     private String[] desires = new String[0];
     private float desiredModifier = 0.1f;
+
+    private boolean open = true;
 
     /**
      * Processes the deal. Assumes that the player is already set.
@@ -242,6 +244,15 @@ public class Merchant extends AbstractTrader {
             Gdx.app.log("[" + name + "]", message);
         else
             System.out.println(message);
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public Merchant setOpen(boolean open) {
+        this.open = open;
+        return this;
     }
 
     // == Exceptions == //

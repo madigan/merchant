@@ -1,6 +1,6 @@
 [
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Bindookian Spices",
     "description": "Sweet, yet spicy.",
     "image": "goods0",
@@ -13,7 +13,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Italiluminum Rods",
     "description": "Shiny.",
     "image": "goods1",
@@ -26,7 +26,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Cryo-Pod",
     "description": "Used for refrigeration.",
     "image": "goods2",
@@ -39,7 +39,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Zandooki Holo-Crystal",
     "description": "The future of nano-digital entertainment! No home is complete without one.",
     "image": "goods3",
@@ -52,7 +52,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Hypnoponics Bay",
     "description": "Watched plants *do* grow, it just takes a while. Fortunately, you aren't going anywhere with this mesmerizing device.",
     "image": "goods4",
@@ -65,7 +65,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "MuffMouse Puff",
     "description": "This inflatable treat may be considered less-than-ethical by some, but the Kleeth love it!",
     "image": "goods5",
@@ -78,7 +78,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Cubic Yaks",
     "description": "Highly prized for their milk and cheese.",
     "image": "goods6",
@@ -91,7 +91,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Organic Moon Crisps",
     "description": "Made with genuine moon dust!",
     "image": "goods7",
@@ -103,7 +103,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Boco Levicrystals",
     "description": "Some lovers of physics find these objects profoundly offensive.",
     "image": "goods8",
@@ -115,7 +115,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Kleeth Astrocharts",
     "description": "Through arcane ceremonies known only to Kreeth mystics, these crystal spheres are imbued with complex star charts.",
     "image": "goods9",
@@ -129,7 +129,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Glurf Bonzai Bush",
     "description": "The Glurf trim consider these plants a sign of sophistication and artistry- the Ewian consider them a snack.",
     "image": "goods10",
@@ -143,7 +143,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "ASTRO(C) Nano-Beans",
     "description": "So technologically advanced they might as well be magic!",
     "image": "goods11",
@@ -155,7 +155,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Zapatronic 5000",
     "description": "This baby can heat food faster than a Bartoolian Supernova! Don't use it with MuffMice though.",
     "image": "goods12",
@@ -168,7 +168,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Hyooman Abstract Art",
     "description": "Many races find these objects to be puzzling... or sophisticated?",
     "image": "goods13",
@@ -181,7 +181,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "MuffMice",
     "description": "These cute little critters taste Surprisingly Fantastic(C) whether they're live, fried and battered, or frozen on a stick!",
     "image": "goods14",
@@ -194,7 +194,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Zymmick Plastiques",
     "description": "These plastiques are used to manufacture all sorts of things- from toothbrushes to starships!",
     "image": "goods15",
@@ -206,7 +206,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Hyooman Exotic Hair Products",
     "description": "Prized by folically challenged races everywhere!",
     "image": "goods16",
@@ -220,7 +220,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Ewian Jewelry",
     "description": "Ewian craftsheep have perfected the art of carving intricate tear-shaped gemstones and fasioning them into beautiful works of art that all neck-enabled creatures will enjoy!",
     "image": "goods17",
@@ -233,7 +233,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Triple-Zork Batteries",
     "description": "They aren't included with most products.",
     "image": "goods18",
@@ -246,7 +246,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Plutranium Kleeth Tea Set",
     "description": "A sign of sophistication and culture in any Kleeth world.",
     "image": "goods19",
@@ -260,7 +260,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Ewian Ginger",
     "description": "Highly regarded for its medical and ... recreational uses.",
     "image": "goods20",
@@ -273,7 +273,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Data Cubes",
     "description": "Everybody likes data! Cyntix even eat them!",
     "image": "goods21",
@@ -287,7 +287,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Glurf Fuzzy-Silk",
     "description": "This curious cloth is naturally plaid-colored and completely natural!",
     "image": "goods22",
@@ -300,7 +300,7 @@
     ]
   },
   {
-    "class": "tech.otter.merchant.data.Item",
+    
     "name": "Universal Credit",
     "description": "These credits are the galaxy's universal credit- so long as you're Cyntix.",
     "image": "goods23",

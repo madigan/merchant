@@ -1,4 +1,4 @@
-package tech.otter.merchant.factories;
+package tech.otter.merchant.model.factories;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
@@ -10,7 +10,7 @@ import com.github.czyzby.kiwi.log.LoggerService;
 
 import java.util.HashMap;
 
-import tech.otter.merchant.data.Item;
+import tech.otter.merchant.model.Item;
 
 public class ItemFactory {
     private static final String FILE_NAME = "items.json";
@@ -43,17 +43,21 @@ public class ItemFactory {
 	}
 
 	public ObjectIntMap<Item> make(String name) {
-		ObjectIntMap<Item> map = new ObjectIntMap<>();
-		for(Item type : types) {
-			if(type.getName().equals(name)) {
-				map.put(type, 0);
-				return map;
-			}
-		}
-		Gdx.app.error(getClass().getCanonicalName(), "Couldn't find an item named '" + name + "'");
-		map.put(new Item("Sneaky Droids", "This is not the item you're looking for.", null, 1.0f, 1, 1.0f, null), 0);
-		return map;
+		return make(name, 1);
 	}
+
+	public ObjectIntMap<Item> make(String name, int count) {
+        ObjectIntMap<Item> map = new ObjectIntMap<>();
+        for(Item type : types) {
+            if(type.getName().equals(name)) {
+                map.put(type, count);
+                return map;
+            }
+        }
+        Gdx.app.error(getClass().getSimpleName(), "Couldn't find an item named '" + name + "'");
+        map.put(new Item("Sneaky Droids", "This is not the item you're looking for.", null, 1.0f, 1, 1.0f, null), 0);
+        return map;
+    }
 
 	/**
 	 * Generate a list of random items

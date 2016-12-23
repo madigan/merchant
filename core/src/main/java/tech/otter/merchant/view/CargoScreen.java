@@ -1,4 +1,4 @@
-package tech.otter.merchant.screens;
+package tech.otter.merchant.view;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -10,11 +10,11 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextArea;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.GameController;
+import tech.otter.merchant.controller.GameController;
 import tech.otter.merchant.util.ItemEntry;
 
 
-public class CargoScreen extends AbstractScreen {
+public class CargoScreen extends GameScreen {
 	private VisList<ItemEntry> lstItems;
 	private VisImage imgItem;
 	private VisTextArea txtDescription;
@@ -41,7 +41,7 @@ public class CargoScreen extends AbstractScreen {
         txtDescription.setDisabled(true);
 
         // Add a "back" button
-        btnBack = makeNavButton("Back", StationScreen.class);
+        btnBack = makeNavButton("Back", tech.otter.merchant.view.StationScreen.class);
 
         // Create the layout
         VisTable tblLayout = new VisTable();
@@ -80,7 +80,7 @@ public class CargoScreen extends AbstractScreen {
     }
 
 	private void updateSelection(ItemEntry selected) {
-		imgItem.setDrawable(parent.getManagedTexture(selected.getType().getImage()));
+		imgItem.setDrawable(controller.getManagedTexture(selected.getType().getImage()));
 		txtDescription.setText(selected.getType().getDescription());
 	}
 }

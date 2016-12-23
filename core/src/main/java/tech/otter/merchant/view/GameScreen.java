@@ -1,4 +1,4 @@
-package tech.otter.merchant.screens;
+package tech.otter.merchant.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,26 +14,28 @@ import com.github.czyzby.kiwi.log.Logger;
 import com.github.czyzby.kiwi.log.LoggerService;
 
 import com.kotcrab.vis.ui.widget.VisTextButton;
-import tech.otter.merchant.GameController;
-import tech.otter.merchant.data.GameWorld;
+import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.model.Dialog;
+import tech.otter.merchant.model.GameWorld;
 
-public abstract class AbstractScreen implements Screen {
+public abstract class GameScreen implements Screen {
 	protected Logger logger = LoggerService.forClass(getClass());
-	protected GameController parent;
+	protected GameController controller;
     protected GameWorld world;
 	protected Stage ui;
 	
-	public AbstractScreen(final GameController parent) {
-		this.parent = parent;
-        this.world = parent.getWorld();
+	public GameScreen(final GameController controller) {
+		this.controller = controller;
+        this.world = controller.getWorld();
 		
 		ui = new Stage(new ScreenViewport());
 	}
 
+	// === Lifecycle Methods === //
 	@Override
 	public void show() {
 		// Set Debug Mode
-		ui.setDebugAll(parent.isDebugOn());
+		ui.setDebugAll(controller.isDebugOn());
 
         // Map the controller
         InputMultiplexer input = new InputMultiplexer();
@@ -81,6 +83,15 @@ public abstract class AbstractScreen implements Screen {
 		ui = null;
 	}
 
+	// === UI Manipulation Methods === //
+    public void createDialog(Dialog dialogTemplate) {
+        GameDialog dialog = new GameDialog(controller, dialogTemplate);
+        dialog.setCenterOnAdd(true);
+
+        ui.addActor(dialog);
+    }
+
+	// === Debug Methods === //
 	private class DebugProcessor implements InputProcessor {
         @Override
         public boolean keyDown(int keycode) {
@@ -90,8 +101,8 @@ public abstract class AbstractScreen implements Screen {
         @Override
         public boolean keyUp(int keycode) {
             if(keycode == Input.Keys.F3) {
-                parent.setDebugOn(!parent.isDebugOn());
-                ui.setDebugAll(parent.isDebugOn());
+                controller.setDebugOn(!controller.isDebugOn());
+                ui.setDebugAll(controller.isDebugOn());
             }
             return true;
         }
@@ -128,10 +139,10 @@ public abstract class AbstractScreen implements Screen {
     }
 
     // === Button Helpers === //
-    protected VisTextButton makeNavButton(String label, Class<? extends AbstractScreen> screen) {
+    protected VisTextButton makeNavButton(String label, Class<? extends GameScreen> screen) {
         if(screen == null) return makeButton(label, () -> System.out.println("Screen not implemented."));
 
-        return makeButton(label, () -> parent.changeScreen(screen));
+        return makeButton(label, () -> controller.changeScreen(screen));
     }
     protected VisTextButton makeButton(String label, NavAction action) {
         return new VisTextButton(label, new ChangeListener() {
