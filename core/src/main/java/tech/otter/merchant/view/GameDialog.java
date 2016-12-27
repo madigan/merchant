@@ -1,10 +1,10 @@
 package tech.otter.merchant.view;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.*;
-import org.lwjgl.util.vector.Vector2f;
-import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.Controller;
 import tech.otter.merchant.model.Dialog;
 import tech.otter.merchant.model.DialogOption;
 
@@ -12,13 +12,13 @@ import tech.otter.merchant.model.DialogOption;
  * Renders a quest dialog window.
  */
 public class GameDialog extends VisWindow {
-    private static final Vector2f DEFAULT_SIZE = new Vector2f(400f, 200f);
-    private static final Vector2f IMAGE_SIZE = new Vector2f(128f, 128f);
+    private static final Vector2 DEFAULT_SIZE = new Vector2(400f, 200f);
+    private static final Vector2 IMAGE_SIZE = new Vector2(128f, 128f);
     private static final float PADDING = 5f;
 
     private Runnable finalAction = null;
 
-    public GameDialog(GameController controller, Dialog template) {
+    public GameDialog(Controller controller, Dialog template) {
         super(template.getTitle());
         setModal(true);
         setSize(DEFAULT_SIZE.x, DEFAULT_SIZE.y);

@@ -23,15 +23,15 @@ public class GalaxyFactory {
 
 	public Galaxy make() {
 		Json json = new Json();
-		logger.debug("Loading galaxy from '{0}'", GALACTIC_FILE);
+		Gdx.app.debug(getClass().getSimpleName(), "Loading galaxy from '" + GALACTIC_FILE + "'");
 		Galaxy galaxy = json.fromJson(Galaxy.class, Gdx.files.internal(GALACTIC_FILE));
-		logger.debug("Populating a galaxy-full of merchants...");
+        Gdx.app.debug(getClass().getSimpleName(), "Populating a galaxy-full of merchants...");
 		for(Station station : galaxy.getStations().values()) {
-			logger.debug("Restocking merchant {0} ... ", station.getMerchant().getName());
+            Gdx.app.debug(getClass().getSimpleName(), "Restocking merchant " + station.getMerchant().getName() + " ... ");
 			station.getMerchant().restock();
-			logger.debug("Merchant {0} has {1}", station.getMerchant().getName(), station.getMerchant().getInventory());
+            Gdx.app.debug(getClass().getSimpleName(), "Merchant " + station.getMerchant().getName() + " has " + station.getMerchant().getInventory());
 		}
-		logger.debug("... merchants populated.");
+        Gdx.app.debug(getClass().getSimpleName(), "... merchants populated.");
 
 		return galaxy;
 	}

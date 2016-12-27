@@ -1,18 +1,21 @@
 package tech.otter.merchant.view;
 
-import tech.otter.merchant.controller.GameController;
+import com.badlogic.gdx.Gdx;
+import tech.otter.merchant.controller.Controller;
+import tech.otter.merchant.model.Model;
 
-public class NewGameScreen extends GameScreen {
+public class NewGameScreen extends View {
 
-	public NewGameScreen(GameController parent) {
-		super(parent);
+	public NewGameScreen(Controller controller, Model model) {
+        super(controller, model);
 	}
 	
 	@Override
-	public void show() {
-		super.show();
+	public void init() {
+        Gdx.app.debug("WEB", "Starting new game...");
 		controller.newGame();
-        controller.changeScreen(tech.otter.merchant.view.StationScreen.class);
+        Gdx.app.debug("WEB", "... new game loaded!");
+        controller.changeScreen(StationScreen.class);
 	}
 
 }

@@ -11,20 +11,21 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import java.util.ArrayList;
 import java.util.List;
 
-import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.Controller;
+import tech.otter.merchant.model.Model;
 
-public class IntroScreen extends GameScreen {
+public class IntroScreen extends View {
 	private final float DELAY = 3.0f;
 	private final float LENGTH = 5.0f;
     private List<String> story;
 
-    public IntroScreen(GameController parent) {
-		super(parent);
+    public IntroScreen(Controller controller, Model model) {
+        super(controller, model);
 
         story = new ArrayList<>();
         story.add("Your planet is dying ...");
         story.add("  ... Your people struggle for survival amidst the dust ...");
-        story.add("    ... with the right technology, your world might be saved ...");
+        story.add("    ... with the right technology, your model might be saved ...");
         story.add("      ... if only they could afford their salvation.");
         story.add("");
         story.add("");
@@ -43,9 +44,7 @@ public class IntroScreen extends GameScreen {
 	}
 	
 	@Override
-	public void show() {
-		super.show();
-
+	public void init() {
 		for(int i = 0; i < story.size(); i++) {
 			Actor label = getFadedLabel(story.get(i), i * DELAY, LENGTH);
 			label.setPosition(10f, ui.getHeight() - label.getHeight() * (i+1));

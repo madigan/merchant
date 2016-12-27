@@ -1,5 +1,7 @@
 package tech.otter.merchant.controller;
 
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,15 +19,20 @@ public class GameEvent {
         return this;
     }
 
-    public <T> T get(String key, Class<T> cls) {
-        return get(key, cls, null);
+    public <T> T get(String key) {
+        return get(key, null);
     }
 
-    public <T> T get(String key, Class<T> cls, T deflt) {
+    /**
+     * This is like totally not safe.
+     * @param key The key to look up
+     * @param deflt The default value to return should the key not be present.
+     * @param <T> The type of return object.
+     * @return
+     */
+    public <T> T get(String key, T deflt) {
         if(data.containsKey(key)) {
-            if(cls.isInstance(data.get(key))) {
-                return cls.cast(data.get(key));
-            }
+            return (T)data.get(key);
         }
         return deflt;
     }

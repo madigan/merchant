@@ -1,10 +1,10 @@
 package tech.otter.merchant.model.quests;
 
-import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.Controller;
 import tech.otter.merchant.controller.GameEvent;
 import tech.otter.merchant.model.*;
 import tech.otter.merchant.model.factories.ItemFactory;
-import tech.otter.merchant.view.GameScreen;
+import tech.otter.merchant.view.View;
 import tech.otter.merchant.view.ClanScreen;
 import tech.otter.merchant.view.StationScreen;
 import tech.otter.merchant.view.TradeScreen;
@@ -17,7 +17,7 @@ public class IntroQuest extends Quest {
     private State state = State.Visiting;
     private Deal deal;
 
-    public IntroQuest(String name, GameController controller, GameWorld world) {
+    public IntroQuest(String name, Controller controller, Model world) {
         super(name, controller, world);
     }
 
@@ -35,10 +35,10 @@ public class IntroQuest extends Quest {
 
                 break;
             case "SCREEN_CHANGE":
-                GameScreen screen = event.get("SCREEN", GameScreen.class);
+                View screen = event.get("SCREEN");
                 switch(state) {
                     case Visiting:
-                        if(ClanScreen.class.isInstance(screen)) {
+                        if(screen instanceof ClanScreen) {
                             // Add "You're almost a trader but you need to do that which totally isn't a tutorial" dialogs
                             Dialog d1 = new Dialog(auntieEm, "You're almost a trader! Before you fly off, could you run one last errand for your favorite auntie while we fuel up your ship?");
                             Dialog d2 = new Dialog(auntieEm, "Great! As you know, times have been tough. Last night some of our Cryo-Pods broke down. I hate to do it, but I need you to go see if you can procure some more.");
@@ -68,19 +68,19 @@ public class IntroQuest extends Quest {
                         }
                         break;
                     case Trading:
-                        if(ClanScreen.class.isInstance(screen)) {
+                        if(screen instanceof ClanScreen) {
                             // Add "Well get on with it!" dialog
                             screen.createDialog(
                                     new Dialog(
                                             auntieEm,
                                             "Well, what are you waiting for?",
                                             new DialogOption("<Head Back>", () -> controller.changeScreen(StationScreen.class))));
-                        } else if(TradeScreen.class.isInstance(screen)) {
+                        } else if(screen instanceof TradeScreen) {
                             // TODO: Add merchant dialogue
                         }
                         break;
                     case TradeComplete:
-                        if(ClanScreen.class.isInstance(screen)) {
+                        if(screen instanceof ClanScreen) {
                             // Judge the trade
                             float profitMargin = (deal.getMerchantQty() * deal.getMerchantType().getBaseValue())
                                     / (deal.getPlayerQty() * deal.getPlayerType().getBaseValue());
@@ -117,7 +117,7 @@ public class IntroQuest extends Quest {
                             world.getPlayer().getQuests().removeValue(this, true);
 
                             // Trigger Next Quest
-                            //world.getPlayer().getQuests().add(QuestFactory.make("YAK_DELIVERY")); // TODO: Refactor to use class type
+                            //model.getPlayer().getQuests().add(QuestFactory.make("YAK_DELIVERY")); // TODO: Refactor to use class type
                         }
                         break;
                 }
@@ -125,7 +125,7 @@ public class IntroQuest extends Quest {
             case "TRADE_COMPLETE":
                 switch(state) {
                     case Trading:
-                        deal = event.get("DEAL", Deal.class);
+                        deal = event.get("DEAL");
                         state = State.TradeComplete;
                         break;
                 }

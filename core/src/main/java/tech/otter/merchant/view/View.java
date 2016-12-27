@@ -1,9 +1,7 @@
 package tech.otter.merchant.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,26 +12,26 @@ import com.github.czyzby.kiwi.log.Logger;
 import com.github.czyzby.kiwi.log.LoggerService;
 
 import com.kotcrab.vis.ui.widget.VisTextButton;
-import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.Controller;
 import tech.otter.merchant.model.Dialog;
-import tech.otter.merchant.model.GameWorld;
+import tech.otter.merchant.model.Model;
 
-public abstract class GameScreen implements Screen {
+public abstract class View implements Screen {
 	protected Logger logger = LoggerService.forClass(getClass());
-	protected GameController controller;
-    protected GameWorld world;
+	protected Controller controller;
+    protected Model model;
 	protected Stage ui;
 	
-	public GameScreen(final GameController controller) {
+	public View(Controller controller, Model model) {
 		this.controller = controller;
-        this.world = controller.getWorld();
+        this.model = model;
 		
 		ui = new Stage(new ScreenViewport());
 	}
 
 	// === Lifecycle Methods === //
 	@Override
-	public void show() {
+	final public void show() {
 		// Set Debug Mode
 		ui.setDebugAll(controller.isDebugOn());
 
@@ -42,9 +40,14 @@ public abstract class GameScreen implements Screen {
         input.addProcessor(ui);
 
         // Add an input processor to toggle debug mode via F3.
-        input.addProcessor(new DebugProcessor());
+        input.addProcessor(new DebugProcessor(ui, controller));
         Gdx.input.setInputProcessor(input);
+
+        // Screen-specific initialization
+        init();
 	}
+
+	public void init() { }
 
 	@Override
 	public void pause() { }
@@ -76,7 +79,7 @@ public abstract class GameScreen implements Screen {
 	public void resize(int width, int height) {
 		ui.getViewport().update(width, height);
 	}
-	
+
 	@Override
 	public void dispose() {
 		if(ui != null) ui.dispose();
@@ -91,58 +94,11 @@ public abstract class GameScreen implements Screen {
         ui.addActor(dialog);
     }
 
-	// === Debug Methods === //
-	private class DebugProcessor implements InputProcessor {
-        @Override
-        public boolean keyDown(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyUp(int keycode) {
-            if(keycode == Input.Keys.F3) {
-                controller.setDebugOn(!controller.isDebugOn());
-                ui.setDebugAll(controller.isDebugOn());
-            }
-            return true;
-        }
-
-        @Override
-        public boolean keyTyped(char character) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            return false;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            return false;
-        }
-
-        @Override
-        public boolean mouseMoved(int screenX, int screenY) {
-            return false;
-        }
-
-        @Override
-        public boolean scrolled(int amount) {
-            return false;
-        }
-    }
-
     // === Button Helpers === //
-    protected VisTextButton makeNavButton(String label, Class<? extends GameScreen> screen) {
+    protected VisTextButton makeNavButton(String label, Class<? extends View> screen) {
         if(screen == null) return makeButton(label, () -> System.out.println("Screen not implemented."));
 
-        return makeButton(label, () -> controller.changeScreen(screen));
+        return makeButton(label, () -> this.controller.changeScreen(screen));
     }
     protected VisTextButton makeButton(String label, NavAction action) {
         return new VisTextButton(label, new ChangeListener() {

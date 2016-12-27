@@ -17,14 +17,15 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.spinner.IntSpinnerModel;
 import com.kotcrab.vis.ui.widget.spinner.Spinner;
 
-import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.Controller;
 import tech.otter.merchant.controller.GameEvent;
 import tech.otter.merchant.model.Deal;
 import tech.otter.merchant.model.Item;
 import tech.otter.merchant.model.Merchant;
+import tech.otter.merchant.model.Model;
 import tech.otter.merchant.util.ItemEntry;
 
-public class TradeScreen extends GameScreen {
+public class TradeScreen extends View {
 	private VisTextButton btnOffer;
 
 	private VisImage imgPlayerOffer;
@@ -43,8 +44,8 @@ public class TradeScreen extends GameScreen {
     private final VisImage imgPortrait;
     private final VisLabel lblMerchantName;
 
-    public TradeScreen(GameController parent) {
-		super(parent);
+    public TradeScreen(Controller controller, Model model) {
+        super(controller, model);
 
         // Create a placeholder for the merchant's portrait
         imgPortrait = new VisImage();
@@ -117,11 +118,9 @@ public class TradeScreen extends GameScreen {
 	}
 
 	@Override
-    public void show() {
-        super.show();
-
+    public void init() {
         // Load the current station's information
-        merchant = controller.getWorld().getPlayer().getCurrentStation().getMerchant();
+        merchant = controller.getModel().getPlayer().getCurrentStation().getMerchant();
         imgPortrait.setDrawable(controller.getManagedTexture(merchant.getPortrait()));
         lblMerchantName.setText(merchant.getName());
 
@@ -151,7 +150,7 @@ public class TradeScreen extends GameScreen {
 	private Deal deal = null;
 	public void updateTrade() {
 		if(deal == null) deal = new Deal();
-		deal.setPlayer(controller.getWorld().getPlayer());
+		deal.setPlayer(controller.getModel().getPlayer());
 		deal.setMerchant(merchant);
 
 		deal.setPlayerType(sbPlayerItems.getSelected().getType());
@@ -253,7 +252,7 @@ public class TradeScreen extends GameScreen {
 
 	private void resetPage() {
 		resetPageHelper(imgMerchantOffer, sbMerchantItems, merchant.getInventory());
-		resetPageHelper(imgPlayerOffer, sbPlayerItems, controller.getWorld().getPlayer().getInventory());
+		resetPageHelper(imgPlayerOffer, sbPlayerItems, controller.getModel().getPlayer().getInventory());
         updateCaption();
 	}
 	private void resetPageHelper(VisImage image, VisSelectBox<ItemEntry> selectBox, ObjectIntMap<Item> inventory) {

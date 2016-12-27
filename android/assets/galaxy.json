@@ -1,14 +1,14 @@
 {
   "stations": {
     "Homeworld": {
-      
+      "class": "tech.otter.merchant.model.Station",
       "name": "Homeworld",
       "description": "The barren landscape of this world is dotted with ancient stone ruins that remind its inhabitants of better days. Most of its inhabitants are nomadic Yak-herders.",
       "background": "planet1",
       "x": 246.0,
       "y": 280.0,
       "merchant": {
-        
+        "class": "tech.otter.merchant.model.Merchant",
         "name": "Jaak Bill",
         "portrait": "merchant1",
         "desires": ["category-appliances", "category-kreen"],
@@ -16,14 +16,14 @@
       }
     },
     "Kreen": {
-      
+      "class": "tech.otter.merchant.model.Station",
       "name": "Kreen",
       "description": "The Kreeth homeworld consists of dank swamps and temperate rainforests. Its starport is built on top of one of its few mountains which stands above the morass.",
       "background": null,
       "x": 97.0,
       "y": 50.0,
       "merchant": {
-        
+        "class": "tech.otter.merchant.model.Merchant",
         "name": "Erk Groll",
         "portrait": "merchant1",
         "desires": ["category-appliance", "category-luxury"],
@@ -31,14 +31,14 @@
       }
     },
     "Bocan": {
-      
+      "class": "tech.otter.merchant.model.Station",
       "name": "Bocan",
       "description": "While the Boco Homeworld doesn’t support any life on its air-less surface, your ship is guided through giant mechanical airlocks into one of the world’s many natural caverns. To your surprise, you find a thriving ecosystem built underground to support trade between the planet’s breathless inhabitants and visitor such as yourself.",
       "background": null,
       "x": 150.0,
       "y": 135.0,
       "merchant": {
-        
+        "class": "tech.otter.merchant.model.Merchant",
         "name": "Lukluk",
         "portrait": "merchant2",
         "desires": ["category-material"],
@@ -46,14 +46,14 @@
       }
     },
     "Tethsmun": {
-      
+      "class": "tech.otter.merchant.model.Station",
       "name": "Tethsmun",
       "description": "Tethsmun is the second homeworld of the Ewian Empire. Through a freak of astronomy the world has one side perpetually facing the sun, and the other staring into the dark galactic abyss. A sophisticated mass transit system allows Ewian citizens to travel from sunny parks to dark nightlife to twilight temples in a matter of minutes.",
       "background": null,
       "x": 200.0,
       "y": 90.0,
       "merchant": {
-        
+        "class": "tech.otter.merchant.model.Merchant",
         "name": "Gran Xu",
         "portrait": "merchant3",
         "desires": ["category-luxury"],
@@ -61,14 +61,14 @@
       }
     },
     "Pondera": {
-      
+      "class": "tech.otter.merchant.model.Station",
       "name": "Pondera",
       "description": "The majority of Glurf society lives beneath the waters which envelope the ocean world. Though Tsunami-sized waves may crash above, its people live below in carefully-constructed cities built upon naturally occurring ice formations caused by the ocean’s pressure.",
       "background": null,
       "x": 120.0,
       "y": 350.0,
       "merchant": {
-        
+        "class": "tech.otter.merchant.model.Merchant",
         "name": "Klevick",
         "portrait": "merchant5",
         "desires": ["category-food"],

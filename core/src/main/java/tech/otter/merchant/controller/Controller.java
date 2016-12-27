@@ -12,22 +12,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.Queue;
 import com.kotcrab.vis.ui.VisUI;
-import tech.otter.merchant.model.GameWorld;
+import tech.otter.merchant.model.Model;
 import tech.otter.merchant.util.GameLogger;
 import tech.otter.merchant.util.MultiLogger;
 import tech.otter.merchant.view.*;
 
-public class GameController extends Game {
+public class Controller extends Game {
 	private static final String SKIN_FILE = "skin/neon-ui.json";
 	private static final String ATLAS_NAME = "images/merchant.atlas";
 
-	private ObjectMap<Class<? extends GameScreen>, GameScreen> screens = new ObjectMap<>();
+	private ObjectMap<Class<? extends View>, View> screens = new ObjectMap<>();
 	private boolean debugOn = false;
 	private AssetManager assetManager;
 	private GameLogger logger;
-	private GameWorld world;
+	private Model model;
 
 	// libGDX Game Methods //
 	@Override
@@ -52,7 +51,7 @@ public class GameController extends Game {
         this.setDebugOn(false);
 
         // TODO: Make this file-driven
-        world = new GameWorld();
+        model = new Model();
 
         // Load the screens
         loadScreens();
@@ -68,7 +67,7 @@ public class GameController extends Game {
         if(VisUI.isLoaded()) VisUI.dispose();
 
 		// Dispose of the model
-		world.dispose();
+		model.dispose();
 
 		// Dispose of any other resources
 		assetManager.dispose();
@@ -134,19 +133,19 @@ public class GameController extends Game {
 	 */
 	public void newGame() {
         this.subscriptions.clear(); // Just in case
-		world.startNewGame(this);
+		model.startNewGame(this);
 		this.changeScreen(IntroScreen.class);
 	}
 
-    public GameWorld getWorld() {
-        return world;
+    public Model getModel() {
+        return model;
     }
 
 	// === Debug Logic === //
     public boolean isDebugOn() {
         return debugOn;
     }
-	public GameController setDebugOn(boolean on) {
+	public Controller setDebugOn(boolean on) {
 		this.debugOn = on;
 		Gdx.app.setLogLevel(on ? Application.LOG_DEBUG : Application.LOG_INFO);
 		return this;
@@ -157,23 +156,19 @@ public class GameController extends Game {
 	 * Eventually this will just be a state machine that takes some sort of event
 	 * @param key
 	 */
-	public void changeScreen(Class<? extends GameScreen> key) {
+	public void changeScreen(Class<? extends View> key) {
 		this.setScreen(screens.get(key));
         handle(new GameEvent("SCREEN_CHANGE").set("SCREEN", screens.get(key)));
 	}
 
-	public <T extends GameScreen> T getScreen(Class<T> type) {
-        return type.cast(screens.get(type));
-    }
-
 	public void loadScreens() {
-        screens.put(CargoScreen.class, new CargoScreen(this));
-        screens.put(DepartureScreen.class, new DepartureScreen(this));
-        screens.put(IntroScreen.class, new IntroScreen(this));
-        screens.put(MainMenuScreen.class, new MainMenuScreen(this));
-        screens.put(NewGameScreen.class, new NewGameScreen(this));
-        screens.put(StationScreen.class, new StationScreen(this));
-        screens.put(TradeScreen.class, new TradeScreen(this));
-        screens.put(ClanScreen.class, new ClanScreen(this));
+        screens.put(CargoScreen.class, new CargoScreen(this, model));
+        screens.put(DepartureScreen.class, new DepartureScreen(this, model));
+        screens.put(IntroScreen.class, new IntroScreen(this, model));
+        screens.put(MainMenuScreen.class, new MainMenuScreen(this, model));
+        screens.put(NewGameScreen.class, new NewGameScreen(this, model));
+        screens.put(StationScreen.class, new StationScreen(this, model));
+        screens.put(TradeScreen.class, new TradeScreen(this, model));
+        screens.put(ClanScreen.class, new ClanScreen(this, model));
     }
 }

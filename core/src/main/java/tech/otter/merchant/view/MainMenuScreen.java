@@ -5,9 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.Controller;
+import tech.otter.merchant.model.Model;
 
-public class MainMenuScreen extends GameScreen {
+public class MainMenuScreen extends View {
     private VisTextButton btnContinue;
     private final VisTextButton btnLoadGame;
     private final VisTextButton btnSaveGame;
@@ -15,8 +16,8 @@ public class MainMenuScreen extends GameScreen {
     private final VisTextButton btnExit;
     private final VisTextButton btnNewGame;
 
-    public MainMenuScreen(final GameController parent) {
-		super(parent);
+    public MainMenuScreen(Controller controller, Model model) {
+		super(controller, model);
 
 		btnContinue = makeNavButton("Continue Game", StationScreen.class);
         btnNewGame = makeNavButton("New Game", IntroScreen.class);
@@ -24,21 +25,22 @@ public class MainMenuScreen extends GameScreen {
         btnSaveGame = makeNavButton("Save Game", null);
         btnOptions = makeNavButton("Options", null);
         btnExit = makeButton("Exit", () -> Gdx.app.exit());
+	}
 
+	@Override
+    public void init() {
         // Create the layout
         VisTable tblButtons = new VisTable();
         tblButtons.setFillParent(true);
         tblButtons.columnDefaults(0).pad(2f).width(300f);
 
         // Only give the option to continue if a game is active
-        tblButtons.add(btnContinue);
-        tblButtons.row();
-        tblButtons.add(btnNewGame);
-        tblButtons.row();
-        tblButtons.add(btnLoadGame);
-        tblButtons.row();
-        tblButtons.add(btnSaveGame);
-        tblButtons.row();
+        if(model.isActive()) tblButtons.add(btnContinue).row();
+        tblButtons.add(btnNewGame).row();
+        if(Gdx.app.getType().equals(ApplicationType.Desktop)) {
+            tblButtons.add(btnLoadGame).row();
+            tblButtons.add(btnSaveGame).row();
+        }
         tblButtons.add(btnOptions);
 
         // Web and mobile devices don't need no exit buttons!
@@ -48,18 +50,5 @@ public class MainMenuScreen extends GameScreen {
         }
 
         ui.addActor(tblButtons);
-	}
-
-	@Override
-    public void show() {
-        super.show();
-
-        // Only show the continue button if there is a game to continue
-        btnContinue.setVisible(controller.getWorld().isActive());
-
-        // Only show save/load on platforms that support it
-        btnLoadGame.setVisible(!Gdx.app.getType().equals(ApplicationType.WebGL));
-        btnSaveGame.setVisible(!Gdx.app.getType().equals(ApplicationType.WebGL));
-        btnExit.setVisible(!Gdx.app.getType().equals(ApplicationType.WebGL) && !Gdx.app.getType().equals(ApplicationType.Android));
     }
 }

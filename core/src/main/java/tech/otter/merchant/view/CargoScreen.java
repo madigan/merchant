@@ -10,22 +10,23 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextArea;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.Controller;
+import tech.otter.merchant.model.Model;
 import tech.otter.merchant.util.ItemEntry;
 
 
-public class CargoScreen extends GameScreen {
+public class CargoScreen extends View {
 	private VisList<ItemEntry> lstItems;
 	private VisImage imgItem;
 	private VisTextArea txtDescription;
     private VisTextButton btnBack;
 
-	public CargoScreen(final GameController parent) {
-		super(parent);
+	public CargoScreen(Controller parent, Model model) {
+		super(parent, model);
 
         // Initialize the image
         imgItem = new VisImage();
-        imgItem.setSize(ui.getWidth() / 2, ui.getWidth() / 2); // TODO: Refactor to world size.
+        imgItem.setSize(ui.getWidth() / 2, ui.getWidth() / 2); // TODO: Refactor to model size.
 
         // Create the item list
         lstItems = new VisList<>();
@@ -41,7 +42,7 @@ public class CargoScreen extends GameScreen {
         txtDescription.setDisabled(true);
 
         // Add a "back" button
-        btnBack = makeNavButton("Back", tech.otter.merchant.view.StationScreen.class);
+        btnBack = makeNavButton("Back", StationScreen.class);
 
         // Create the layout
         VisTable tblLayout = new VisTable();
@@ -58,12 +59,10 @@ public class CargoScreen extends GameScreen {
 	}
 
 	@Override
-	public void show() {
-		super.show();
-
+	public void init() {
         // Refresh the player data
 		Array<ItemEntry> items = new Array<>();
-		world.getPlayer().getInventory().forEach(i -> items.add(new ItemEntry(i.key, i.value)));
+		model.getPlayer().getInventory().forEach(i -> items.add(new ItemEntry(i.key, i.value)));
 		items.sort(new ItemEntry.ItemEntryComparator());
 		lstItems.setItems(items);
 		updateSelection(lstItems.getSelected());

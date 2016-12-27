@@ -7,10 +7,11 @@ import com.kotcrab.vis.ui.widget.VisScrollPane;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.Controller;
+import tech.otter.merchant.model.Model;
 import tech.otter.merchant.model.Station;
 
-public class StationScreen extends GameScreen {
+public class StationScreen extends View {
     private VisTextButton btnClan;
     private VisTextButton btnTrader;
     private VisTextButton btnBar;
@@ -20,8 +21,8 @@ public class StationScreen extends GameScreen {
     private VisLabel lblStationDescription;
     private VisLabel lblStationName;
 
-    public StationScreen(GameController parent) {
-		super(parent);
+    public StationScreen(Controller controller, Model model) {
+        super(controller, model);
         // Create the UI elements
         lblStationName = new VisLabel();
         lblStationDescription = new VisLabel();
@@ -38,12 +39,11 @@ public class StationScreen extends GameScreen {
 	}
 	
 	@Override
-	public void show() {
-		super.show();
+	public void init() {
         ui.clear();
 
         // Configure the dynamic UI elements
-        Station station = controller.getWorld().getPlayer().getCurrentStation();
+        Station station = controller.getModel().getPlayer().getCurrentStation();
         lblStationName.setText(station.getName());
         lblStationDescription.setText(station.getDescription());
 
@@ -63,15 +63,15 @@ public class StationScreen extends GameScreen {
         VisTable tblButtons = new VisTable();
         tblButtons.columnDefaults(0).pad(2f).width(300f);
 
-        if(world.getPlayer().isAtHomeWorld() && world.getPlayer().getQuests().size > 0) {
+        if(model.getPlayer().isAtHomeWorld() && model.getPlayer().getQuests().size > 0) {
             tblButtons.add(btnClan).row();
         }
-        if(world.getPlayer().getCurrentStation().getMerchant().isOpen()) {
+        if(model.getPlayer().getCurrentStation().getMerchant().isOpen()) {
             tblButtons.add(btnTrader).row();
         }
         tblButtons.add(btnBar).row();
         tblButtons.add(btnCargo).row();
-        if(controller.getWorld().getPlayer().canLeave()) {
+        if(controller.getModel().getPlayer().canLeave()) {
             tblButtons.add(btnLeave).row();
         }
         tblButtons.addSeparator().row();

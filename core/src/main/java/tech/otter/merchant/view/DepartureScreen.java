@@ -8,16 +8,17 @@ import com.kotcrab.vis.ui.widget.VisImage;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-import tech.otter.merchant.controller.GameController;
+import tech.otter.merchant.controller.Controller;
+import tech.otter.merchant.model.Model;
 import tech.otter.merchant.model.Station;
 
-public class DepartureScreen extends GameScreen {
+public class DepartureScreen extends View {
 	private final float PADDING = 2f;
 
 	private ScalingGroup starMap;
 
-	public DepartureScreen(GameController parent) {
-		super(parent);
+	public DepartureScreen(Controller controller, Model model) {
+        super(controller, model);
 
         // Create UI Objects
         VisTable tblLayout = new VisTable();
@@ -39,8 +40,7 @@ public class DepartureScreen extends GameScreen {
 	}
 
 	@Override
-	public void show() {
-		super.show();
+	public void init() {
         starMap.clear();
 
         // Add background
@@ -50,13 +50,13 @@ public class DepartureScreen extends GameScreen {
         starMap.addActor(starMapBackground);
 
         // Add stars
-        for(final Station station : world.getGalaxy().getStations().values()) {
+        for(final Station station : model.getGalaxy().getStations().values()) {
             VisImage icon = new VisImage(controller.getManagedTexture("dot2"));
             // TODO: Set relative to the map
             VisTextButton btn = new VisTextButton(station.getName(), new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    world.getPlayer().setCurrentStation(station);
+                    model.getPlayer().setCurrentStation(station);
                     controller.changeScreen(tech.otter.merchant.view.StationScreen.class);
                 }
             });
