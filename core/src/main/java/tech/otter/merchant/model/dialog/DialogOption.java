@@ -1,13 +1,15 @@
-package tech.otter.merchant.model;
+package tech.otter.merchant.model.dialog;
+
+import tech.otter.merchant.model.dialog.DialogAction;
 
 /**
  * Used by the view to render a dialog button.
  */
 public class DialogOption {
     private String label;
-    private Runnable action;
+    private DialogAction action;
 
-    public DialogOption(String label, Runnable action) {
+    public DialogOption(String label, DialogAction action) {
         this.label = label;
         this.action = action;
     }
@@ -16,7 +18,7 @@ public class DialogOption {
         return label;
     }
 
-    public Runnable getAction() {
+    public DialogAction getAction() {
         return action;
     }
 }

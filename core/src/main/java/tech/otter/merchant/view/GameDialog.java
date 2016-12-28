@@ -5,8 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.kotcrab.vis.ui.widget.*;
 import tech.otter.merchant.controller.Controller;
-import tech.otter.merchant.model.Dialog;
-import tech.otter.merchant.model.DialogOption;
+import tech.otter.merchant.model.Model;
+import tech.otter.merchant.model.dialog.Dialog;
+import tech.otter.merchant.model.dialog.DialogAction;
+import tech.otter.merchant.model.dialog.DialogOption;
 
 /**
  * Renders a quest dialog window.
@@ -16,10 +18,19 @@ public class GameDialog extends VisWindow {
     private static final Vector2 IMAGE_SIZE = new Vector2(128f, 128f);
     private static final float PADDING = 5f;
 
-    private Runnable finalAction = null;
+    private Model model;
+    private View view;
+    private Controller controller;
 
-    public GameDialog(Controller controller, Dialog template) {
+    private DialogAction finalAction = null;
+
+    public GameDialog(Model model, View view, Controller controller, Dialog template) {
         super(template.getTitle());
+
+        this.model = model;
+        this.view = view;
+        this.controller = controller;
+
         setModal(true);
         setSize(DEFAULT_SIZE.x, DEFAULT_SIZE.y);
 
@@ -48,7 +59,7 @@ public class GameDialog extends VisWindow {
 
     @Override
     public boolean remove() {
-        if(finalAction != null) finalAction.run();
+        if(finalAction != null) finalAction.act(model, view, controller);
         return super.remove();
     }
 }

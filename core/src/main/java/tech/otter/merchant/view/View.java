@@ -13,7 +13,7 @@ import com.github.czyzby.kiwi.log.LoggerService;
 
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import tech.otter.merchant.controller.Controller;
-import tech.otter.merchant.model.Dialog;
+import tech.otter.merchant.model.dialog.Dialog;
 import tech.otter.merchant.model.Model;
 
 public abstract class View implements Screen {
@@ -88,7 +88,7 @@ public abstract class View implements Screen {
 
 	// === UI Manipulation Methods === //
     public void createDialog(Dialog dialogTemplate) {
-        GameDialog dialog = new GameDialog(controller, dialogTemplate);
+        GameDialog dialog = new GameDialog(model, this, controller, dialogTemplate);
         dialog.setCenterOnAdd(true);
 
         ui.addActor(dialog);

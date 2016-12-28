@@ -57,7 +57,7 @@ public class DepartureScreen extends View {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     model.getPlayer().setCurrentStation(station);
-                    controller.changeScreen(tech.otter.merchant.view.StationScreen.class);
+                    controller.changeScreen(StationScreen.class);
                 }
             });
             btn.setPosition(station.getX() + btn.getHeight(), station.getY());

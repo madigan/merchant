@@ -82,7 +82,7 @@ public class Controller extends Game {
 		try {
 			return new TextureRegionDrawable(assetManager.get(ATLAS_NAME, TextureAtlas.class).findRegion(imageName));
 		} catch(Exception e) {
-			Gdx.app.error(getClass().getCanonicalName(), "Couldn't get managed texture.", e);
+			Gdx.app.error(getClass().getSimpleName(), "Couldn't get managed texture.", e);
 			return getEmptyTexture();
 		}
 	}

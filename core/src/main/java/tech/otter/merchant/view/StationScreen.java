@@ -35,7 +35,7 @@ public class StationScreen extends View {
         btnBar = makeNavButton("Visit Bar", null);  // TODO: Add Bar
         btnCargo = makeNavButton("View Cargo", CargoScreen.class);
         btnLeave = makeNavButton("Leave Station", DepartureScreen.class);
-        btnMenu = makeNavButton("Quit to Main Menu", tech.otter.merchant.view.MainMenuScreen.class);
+        btnMenu = makeNavButton("Quit to Main Menu", MainMenuScreen.class);
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public class StationScreen extends View {
         VisTable tblLayout = new VisTable();
         tblLayout.setFillParent(true);
 
-        // === Add elements to the screen === //
+        // === Add buttons to the screen === //
         VisTable tblButtons = new VisTable();
         tblButtons.columnDefaults(0).pad(2f).width(300f);
 
@@ -69,7 +69,7 @@ public class StationScreen extends View {
         if(model.getPlayer().getCurrentStation().getMerchant().isOpen()) {
             tblButtons.add(btnTrader).row();
         }
-        tblButtons.add(btnBar).row();
+        //tblButtons.add(btnBar).row();
         tblButtons.add(btnCargo).row();
         if(controller.getModel().getPlayer().canLeave()) {
             tblButtons.add(btnLeave).row();

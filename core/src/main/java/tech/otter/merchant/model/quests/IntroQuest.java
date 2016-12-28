@@ -3,11 +3,13 @@ package tech.otter.merchant.model.quests;
 import tech.otter.merchant.controller.Controller;
 import tech.otter.merchant.controller.GameEvent;
 import tech.otter.merchant.model.*;
+import tech.otter.merchant.model.dialog.Dialog;
+import tech.otter.merchant.model.dialog.DialogOption;
 import tech.otter.merchant.model.factories.ItemFactory;
-import tech.otter.merchant.view.View;
 import tech.otter.merchant.view.ClanScreen;
 import tech.otter.merchant.view.StationScreen;
 import tech.otter.merchant.view.TradeScreen;
+import tech.otter.merchant.view.View;
 
 /**
  * This quest introduces the player to the basic haggling process.
@@ -45,10 +47,10 @@ public class IntroQuest extends Quest {
                             Dialog d3 = new Dialog(auntieEm, "Here, take this old trinket I collected back in my trading days... it should still be worth something.");
                             Dialog d4 = new Dialog(auntieEm, "Make sure you get a good bargain! That old beak-face will rob you blind if you let him!");
 
-                            d1.addOption("<Continue>", () -> screen.createDialog(d2));
-                            d2.addOption("<Continue>", () -> screen.createDialog(d3));
-                            d3.addOption("<Continue>", () -> screen.createDialog(d4));
-                            d4.addOption("<Head back>", () -> controller.changeScreen(StationScreen.class));
+                            d1.addOption("<Continue>", (m, v, c) -> v.createDialog(d2));
+                            d2.addOption("<Continue>", (m, v, c) -> v.createDialog(d3));
+                            d3.addOption("<Continue>", (m, v, c) -> v.createDialog(d4));
+                            d4.addOption("<Head back>", (m, v, c) -> c.changeScreen(StationScreen.class));
 
                             screen.createDialog(d1);
 
@@ -74,7 +76,7 @@ public class IntroQuest extends Quest {
                                     new Dialog(
                                             auntieEm,
                                             "Well, what are you waiting for?",
-                                            new DialogOption("<Head Back>", () -> controller.changeScreen(StationScreen.class))));
+                                            new DialogOption("<Head Back>", (m, v, c) -> c.changeScreen(StationScreen.class))));
                         } else if(screen instanceof TradeScreen) {
                             // TODO: Add merchant dialogue
                         }
@@ -98,8 +100,8 @@ public class IntroQuest extends Quest {
                             }
                             Dialog d2 = new Dialog(auntieEm, "Well, it looks like your ship is ready. I'm gonna miss you...");
 
-                            d1.addOption("<Continue>", () -> screen.createDialog(d2));
-                            d2.addOption("<Head Back>", () -> controller.changeScreen(StationScreen.class));
+                            d1.addOption("<Continue>", (m,v,c) -> v.createDialog(d2));
+                            d2.addOption("<Head Back>", (m,v,c) -> c.changeScreen(StationScreen.class));
 
                             screen.createDialog(d1);
 

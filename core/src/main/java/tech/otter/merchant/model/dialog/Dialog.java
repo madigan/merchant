@@ -1,6 +1,7 @@
-package tech.otter.merchant.model;
+package tech.otter.merchant.model.dialog;
 
 import com.badlogic.gdx.utils.Array;
+import tech.otter.merchant.model.NPC;
 
 /**
  * A Dialogue is a series of windows that prompt the user to do something. It's most often used by the quest system,
@@ -67,7 +68,7 @@ public class Dialog {
         options.add(option);
         return this;
     }
-    public Dialog addOption(String label, Runnable action) {
+    public Dialog addOption(String label, DialogAction action) {
         return addOption(new DialogOption(label, action));
     }
 

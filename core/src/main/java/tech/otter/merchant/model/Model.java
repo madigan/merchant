@@ -1,14 +1,18 @@
 package tech.otter.merchant.model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import tech.otter.merchant.controller.Controller;
+import tech.otter.merchant.model.factories.EncounterFactory;
 import tech.otter.merchant.model.factories.GalaxyFactory;
 import tech.otter.merchant.model.factories.QuestFactory;
 
 public class Model {
-    private tech.otter.merchant.model.Galaxy galaxy;
+    private Galaxy galaxy;
     private Player player;
+    private Array<tech.otter.merchant.model.dialog.Dialog> encounters;
 
     private boolean active = false;
 
@@ -16,13 +20,14 @@ public class Model {
      * Future: Initialize Model based on a JSON file
      */
     public Model() {
-
+        encounters = new Array<tech.otter.merchant.model.dialog.Dialog>();
     }
 
     /**
      * Start a new game.
      */
-    public void startNewGame(Controller controller) { // TODO: Clean up magic screens
+    public void startNewGame(Controller controller) {
+        encounters.clear();
         Gdx.app.debug("WEB", "I got this far :)");
         this.galaxy = GalaxyFactory.get().make();
         Gdx.app.debug("WEB", "But not this far :(");
@@ -40,9 +45,25 @@ public class Model {
         return player;
     }
 
-    public tech.otter.merchant.model.Galaxy getGalaxy() { return galaxy; }
+    public Galaxy getGalaxy() { return galaxy; }
 
     public boolean isActive() {
         return active;
     }
+
+    public tech.otter.merchant.model.dialog.Dialog getNextEncounter() {
+        if(encounters.size > 0)
+            return encounters.pop();
+        else {
+            if(MathUtils.random(1, 4) == 4) {
+                Gdx.app.debug(getClass().getSimpleName(), "Making a random encounter!");
+                return EncounterFactory.get().makeRandom(this);
+            } else {
+                Gdx.app.debug(getClass().getSimpleName(), "No random encounter!");
+                return null;
+            }
+        }
+    }
+
+
 }
