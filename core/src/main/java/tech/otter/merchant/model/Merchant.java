@@ -30,18 +30,18 @@ public class Merchant extends AbstractTrader {
         if(deal.isMerchantComplete() && deal.isPlayerComplete()) {
             // If the item types are the same, don't accept it.
             if(deal.isSilly()) {
-                log("That's just silly.");
+                deal.setMessage("That's just silly.");
             }
             // If a complete deal is proposed, accept or adjust it.
             else if(isFair(deal)) {
-                log("I accept your proposal.");
+                deal.setMessage("I accept your proposal.");
                 deal.execute();
                 return deal;
             } else {
                 try {
                     return adjustDeal(deal);
                 } catch (NoFairTradeException e) {
-                    log("I don't see any way to make that a fair trade.");
+                    deal.setMessage("I don't see any way to make that a fair trade.");
                     return deal;
                 }
             }
@@ -50,16 +50,16 @@ public class Merchant extends AbstractTrader {
             try {
                 return proposeDeal(deal);
             } catch (NothingWantedException e) {
-                log("You don't appear to have anything I want.");
+                deal.setMessage("You don't appear to have anything I want.");
             } catch (NoViableTradesException e) {
-                log("I don't see any viable trades.");
+                deal.setMessage("I don't see any viable trades.");
             }
         } else {
             // If the player has offered/asked for something, complete the offer.
             try {
                 return completeDeal(deal);
             } catch (NoProfitableTradesException e) {
-                log("I don't see any way I can offer a fair deal.");
+                deal.setMessage("I don't see any way I can offer a fair deal.");
             }
         }
         return deal;
@@ -74,7 +74,7 @@ public class Merchant extends AbstractTrader {
         try {
             completeDeal(newDeal);
             deal.setPlayerQty(newDeal.getPlayerQty());
-            log("How about this deal?");
+            deal.setMessage("How about this deal?");
             return deal;
         } catch (NoProfitableTradesException e) {
             // If that fails, we try to adjust the merchant's side.
@@ -83,11 +83,11 @@ public class Merchant extends AbstractTrader {
             try {
                 completeDeal(newDeal);
                 deal.setMerchantQty(newDeal.getMerchantQty());
-                log("That doesn't seem fair- How about this deal?");
+                deal.setMessage("That doesn't seem fair- How about this deal?");
                 return deal;
             } catch (NoProfitableTradesException e1) {
                 // If neither side can be adjusted, we're kinda toast.
-                log("I don't see any way to make this a fair deal.");
+                deal.setMessage("I don't see any way to make this a fair deal.");
                 throw new NoFairTradeException();
             }
         }
@@ -117,7 +117,7 @@ public class Merchant extends AbstractTrader {
                 deal.setMerchantQty(merchantQty);
                 deal.setMerchantType(candidate);
                 if(isFair(deal) && !deal.isSilly()) {
-                    log("How about I give you " + deal.getMerchantQty() + " " + deal.getMerchantType() + "?");
+                    deal.setMessage("How about I give you " + deal.getMerchantQty() + " " + deal.getMerchantType() + "?");
                     return deal;
                 } else {
                     deal.setMerchantQty(0);
@@ -139,7 +139,7 @@ public class Merchant extends AbstractTrader {
                 deal.setPlayerQty(playerQty);
                 deal.setPlayerType(candidate);
                 if(isFair(deal) && !deal.isSilly()) {
-                    log("How about you give me " + deal.getPlayerQty() + " " + deal.getPlayerType() + "?");
+                    deal.setMessage("How about you give me " + deal.getPlayerQty() + " " + deal.getPlayerType() + "?");
                     return deal;
                 } else {
                     deal.setPlayerQty(0);
@@ -239,12 +239,12 @@ public class Merchant extends AbstractTrader {
         return false;
     }
 
-    private void log(String message) {
+    /*private void log(String message) {
         if(Gdx.app != null)
             Gdx.app.log("[" + name + "]", message);
         else
             System.out.println(message);
-    }
+    }*/
 
     public boolean isOpen() {
         return open;

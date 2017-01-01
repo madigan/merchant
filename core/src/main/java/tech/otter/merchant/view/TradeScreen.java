@@ -126,6 +126,7 @@ public class TradeScreen extends View {
 
         // Make sure any previous offer information is cleared.
         resetPage();
+        addMessage("Welcome to my shop!");
     }
 
 	/**
@@ -134,15 +135,19 @@ public class TradeScreen extends View {
 	public void updateCaption() {
 		if(sbPlayerItems.getSelected().equals(BLANK)) {
 			if(sbMerchantItems.getSelected().equals(BLANK)) {
-				btnOffer.setText("Make me a deal.");
+				btnOffer.setText("<Suggest a deal>");
+                btnOffer.setDisabled(true);
 			} else {
 				btnOffer.setText("What do you want for this?");
+                btnOffer.setDisabled(false);
 			}
 		} else {
 			if(sbMerchantItems.getSelected().equals(BLANK)) {
 				btnOffer.setText("What will you give for this?");
+                btnOffer.setDisabled(false);
 			} else {
 				btnOffer.setText("How about this?");
+                btnOffer.setDisabled(false);
 			}
 		}
 	}
@@ -160,6 +165,7 @@ public class TradeScreen extends View {
 
         Gdx.app.debug("Trade", "Proposal: " + deal);
         merchant.processDeal(deal);
+        addMessage(deal.getMessage());
 
         if(deal.isAccepted()) { // Reset the page to make room for a new deal.
             Gdx.app.debug("Trade", "Accepted: " + deal);

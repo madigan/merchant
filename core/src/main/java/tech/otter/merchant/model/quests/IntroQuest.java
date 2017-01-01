@@ -99,9 +99,17 @@ public class IntroQuest extends Quest {
                                 d1 = new Dialog(auntieEm, "Eesh... looks like that old beak-face got the better of you.");
                             }
                             Dialog d2 = new Dialog(auntieEm, "Well, it looks like your ship is ready. I'm gonna miss you...");
+                            Dialog d3 = new Dialog(auntieEm, "Oh! And take these Yaks! I'm sure you can get something for them.");
 
-                            d1.addOption("<Continue>", (m,v,c) -> v.createDialog(d2));
-                            d2.addOption("<Head Back>", (m,v,c) -> c.changeScreen(StationScreen.class));
+                            d1.addOption("<Continue>", (m,v,c) -> {
+                                m.getPlayer().getInventory().clear();
+                                v.createDialog(d2);
+                            });
+                            d2.addOption("<Continue>", (m,v,c) -> {
+                                m.getPlayer().getInventory().putAll(ItemFactory.get().make("Cubic Yaks", 47));
+                                v.createDialog(d3);
+                            });
+                            d3.addOption("<Head Back>", (m,v,c) -> c.changeScreen(StationScreen.class));
 
                             screen.createDialog(d1);
 

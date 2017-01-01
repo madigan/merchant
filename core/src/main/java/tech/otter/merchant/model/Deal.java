@@ -9,6 +9,8 @@ public class Deal {
     private int merchantQty;
     private Item merchantType;
 
+    private String message = "";
+
     private boolean accepted = false;
 
     public Deal() {}
@@ -138,5 +140,14 @@ public class Deal {
 
     public boolean isAccepted() {
         return accepted;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Deal setMessage(String message) {
+        this.message = message;
+        return this;
     }
 }

@@ -79,6 +79,7 @@ public class CargoScreen extends View {
     }
 
 	private void updateSelection(ItemEntry selected) {
+        if(selected == null) return;
 		imgItem.setDrawable(controller.getManagedTexture(selected.getType().getImage()));
 		txtDescription.setText(selected.getType().getDescription());
 	}

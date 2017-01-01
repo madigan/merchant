@@ -59,6 +59,9 @@ public class StationScreen extends View {
         VisTable tblLayout = new VisTable();
         tblLayout.setFillParent(true);
 
+        VisTable tblMenu = new VisTable();
+        tblMenu.setBackground("window");
+
         // === Add buttons to the screen === //
         VisTable tblButtons = new VisTable();
         tblButtons.columnDefaults(0).pad(2f).width(300f);
@@ -77,9 +80,11 @@ public class StationScreen extends View {
         tblButtons.addSeparator().row();
         tblButtons.add(btnMenu);
 
-        tblLayout.add(lblStationName).colspan(2).pad(10f).row();
-        tblLayout.add(new VisScrollPane(lblStationDescription)).width(200f).height(141f).top();
-        tblLayout.add(tblButtons);
+        tblMenu.add(lblStationName).colspan(2).pad(10f).row();
+        tblMenu.add(new VisScrollPane(lblStationDescription)).width(200f).height(141f).top();
+        tblMenu.add(tblButtons);
+
+        tblLayout.add(tblMenu);
 
         ui.addActor(background);
         ui.addActor(tblLayout);
