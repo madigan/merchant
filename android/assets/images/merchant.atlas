@@ -46,21 +46,21 @@ goods11
   orig: 508, 508
   offset: 0, 0
   index: -1
-goods12
+goods13
   rotate: false
   xy: 512, 2
   size: 508, 508
   orig: 508, 508
   offset: 0, 0
   index: -1
-goods13
+goods14
   rotate: false
   xy: 1022, 2
   size: 508, 508
   orig: 508, 508
   offset: 0, 0
   index: -1
-goods14
+goods15
   rotate: false
   xy: 1532, 2
   size: 508, 508
@@ -138,42 +138,28 @@ filter: Linear,Linear
 repeat: none
 cockpit
   rotate: false
-  xy: 2, 993
+  xy: 1024, 991
   size: 745, 1053
   orig: 745, 1053
   offset: 0, 0
   index: -1
-goods15
+merchant1
   rotate: false
-  xy: 1370, 2
-  size: 508, 508
-  orig: 508, 508
-  offset: 0, 0
-  index: -1
-map
-  rotate: false
-  xy: 1370, 512
-  size: 512, 512
-  orig: 512, 512
+  xy: 2, 1024
+  size: 1020, 1020
+  orig: 1020, 1020
   offset: 0, 0
   index: -1
 merchant4
   rotate: false
-  xy: 2, 312
+  xy: 1024, 310
   size: 683, 679
   orig: 683, 679
   offset: 0, 0
   index: -1
-merchant5
-  rotate: false
-  xy: 687, 314
-  size: 681, 677
-  orig: 681, 677
-  offset: 0, 0
-  index: -1
 planet1
   rotate: false
-  xy: 749, 1026
+  xy: 2, 2
   size: 1020, 1020
   orig: 1020, 1020
   offset: 0, 0
@@ -184,93 +170,107 @@ size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+goods12
+  rotate: false
+  xy: 1369, 953
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 goods16
   rotate: false
-  xy: 2, 1188
+  xy: 684, 333
   size: 508, 508
   orig: 508, 508
   offset: 0, 0
   index: -1
 goods17
   rotate: false
-  xy: 512, 1188
-  size: 508, 508
-  orig: 508, 508
+  xy: 1369, 1467
+  size: 564, 564
+  orig: 564, 564
   offset: 0, 0
   index: -1
 goods18
   rotate: false
-  xy: 1022, 1188
+  xy: 1194, 333
   size: 508, 508
   orig: 508, 508
   offset: 0, 0
   index: -1
-goods19
+map
   rotate: false
-  xy: 1532, 1188
-  size: 508, 508
-  orig: 508, 508
-  offset: 0, 0
-  index: -1
-goods20
-  rotate: false
-  xy: 2, 678
-  size: 508, 508
-  orig: 508, 508
-  offset: 0, 0
-  index: -1
-goods21
-  rotate: false
-  xy: 512, 678
-  size: 508, 508
-  orig: 508, 508
-  offset: 0, 0
-  index: -1
-goods22
-  rotate: false
-  xy: 1022, 678
-  size: 508, 508
-  orig: 508, 508
-  offset: 0, 0
-  index: -1
-goods23
-  rotate: false
-  xy: 1532, 678
-  size: 508, 508
-  orig: 508, 508
-  offset: 0, 0
-  index: -1
-merchant1
-  rotate: false
-  xy: 2, 3
-  size: 679, 673
-  orig: 679, 673
+  xy: 685, 843
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
 merchant2
   rotate: false
-  xy: 683, 2
+  xy: 685, 1357
   size: 682, 674
   orig: 682, 674
   offset: 0, 0
   index: -1
 merchant3
   rotate: false
-  xy: 1367, 2
+  xy: 2, 2
   size: 679, 674
   orig: 679, 674
   offset: 0, 0
   index: -1
+merchant5
+  rotate: false
+  xy: 2, 1354
+  size: 681, 677
+  orig: 681, 677
+  offset: 0, 0
+  index: -1
+merchant6
+  rotate: false
+  xy: 2, 678
+  size: 680, 674
+  orig: 680, 674
+  offset: 0, 0
+  index: -1
 
 merchant4.png
-size: 1024,1024
+size: 2048,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-merchant6
+goods19
+  rotate: false
+  xy: 2, 512
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods20
   rotate: false
   xy: 2, 2
-  size: 680, 674
-  orig: 680, 674
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods21
+  rotate: false
+  xy: 512, 512
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods22
+  rotate: false
+  xy: 512, 2
+  size: 508, 508
+  orig: 508, 508
+  offset: 0, 0
+  index: -1
+goods23
+  rotate: false
+  xy: 1022, 512
+  size: 508, 508
+  orig: 508, 508
   offset: 0, 0
   index: -1
